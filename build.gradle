@@ -1,0 +1,86 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.3.2'
+    id 'io.spring.dependency-management' version '1.1.6'
+}
+
+group = 'com.sbsj'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'com.oracle.database.jdbc:ojdbc11'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    // MyBatis Spring Boot Starter Test
+    testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
+
+    // Log4jdbc Log4j2 JDBC 4.1
+    implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
+
+    // Oracle Database Security Dependencies
+    implementation 'com.oracle.database.security:oraclepki:19.9.0.0'
+    implementation 'com.oracle.database.security:osdt_core:21.3.0.0'
+    implementation 'com.oracle.database.security:osdt_cert:19.9.0.0'
+
+    // Gson
+    implementation 'com.google.code.gson:gson:2.8.8'
+
+    // Apache HttpClient
+    implementation 'org.apache.httpcomponents:httpclient:4.5.13'
+
+    // Spring Boot Actuator
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    // Commons Codec
+    implementation 'commons-codec:commons-codec:1.15' // MyBatis Spring Boot Starter Test
+    testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
+
+    // Log4jdbc Log4j2 JDBC 4.1
+    implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
+
+    // Oracle Database Security Dependencies
+    implementation 'com.oracle.database.security:oraclepki:19.9.0.0'
+    implementation 'com.oracle.database.security:osdt_core:21.3.0.0'
+    implementation 'com.oracle.database.security:osdt_cert:19.9.0.0'
+
+    // Gson
+    implementation 'com.google.code.gson:gson:2.8.8'
+
+    // Apache HttpClient
+    implementation 'org.apache.httpcomponents:httpclient:4.5.13'
+
+    // Spring Boot Actuator
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    // Commons Codec
+    implementation 'commons-codec:commons-codec:1.15'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
