@@ -11,7 +11,7 @@ public class UserServiceImpl implements UserService {
     private UserDAO userDAO;
 
     @Override
-    public UserDTO getUserById(int userId) throws Exception {
-        return userDAO.getUserById(userId);
+    public UserDTO getUserById(int user_id) throws Exception {
+        return userDAO.getUserById(user_id);
     }
 }

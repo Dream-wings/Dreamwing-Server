@@ -15,11 +15,11 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/user")
-    public UserDTO getUserById(@RequestParam Integer userId) throws Exception {
-        if (userId == null) {
+    public UserDTO getUserById(@RequestParam Integer user_id) throws Exception {
+        if (user_id == null) {
             throw new IllegalArgumentException("User ID must be provided");
         }
-        UserDTO userDTO = userService.getUserById(userId);
+        UserDTO userDTO = userService.getUserById(user_id);
 
         return userDTO;
     }

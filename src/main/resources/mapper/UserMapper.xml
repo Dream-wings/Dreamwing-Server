@@ -5,7 +5,7 @@
 
 
     <select id="getUserById" parameterType="int" resultType="com.sbsj.dreamwing.dto.UserDTO">
-        SELECT * FROM "USER_INFO" WHERE "userId" = #{userId}
+        SELECT * FROM "USER_INFO" WHERE "USER_ID" = #{user_id}
     </select>
 
 </mapper>

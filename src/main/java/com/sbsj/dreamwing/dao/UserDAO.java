@@ -5,6 +5,6 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface UserDAO {
-//    @Select("SELECT * FROM user_info WHERE userId = #{userId}")
-    UserDTO getUserById(int userId);
+    //    @Select("SELECT * FROM user_info WHERE userId = #{userId}")
+    UserDTO getUserById(int user_id);
 }

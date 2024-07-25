@@ -8,12 +8,12 @@ import lombok.ToString;
 @Setter
 @ToString
 public class UserDTO {
-    private int userId;
-    private String loginId;
+    private int user_id;
+    private String login_id;
     private String password;
     private String name;
     private String phone;
-    private String point;
-    private String withdraw;
+    private int total_point;
+    private int withdraw;
 
 }
