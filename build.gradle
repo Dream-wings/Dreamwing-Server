@@ -79,6 +79,9 @@ dependencies {
 
     // Commons Codec
     implementation 'commons-codec:commons-codec:1.15'
+
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
 }
 
 tasks.named('test') {
