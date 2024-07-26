@@ -12,6 +12,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO getUserById(int user_id) throws Exception {
+
         return userDAO.getUserById(user_id);
     }
 }
