@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+* 관리자 Mybatis 매퍼
+* @author 정은지
+* @since 2024.07.28
+* @version 1.0
+*
+* <pre>
+* 수정일        	수정자        수정내용
+* ==========  =========    =========
+* 2024.07.28   정은지         최초 생성
+* 2024.07.28   정은지         봉사활동 승인 기능 추가
+*
+* </pre>
+-->
+<mapper namespace="com.sbsj.dreamwing.admin.mapper.AdminMapper">
+    <update id="updateVolunteerStatus">
+        UPDATE USER_VOLUNTEER
+        SET    STATUS = 1
+        WHERE  VOLUNTEER_ID = #{volunteerId}
+               AND USER_ID = #{userId}
+    </update>
+
+</mapper>
