@@ -1,0 +1,46 @@
+package com.sbsj.dreamwing.support.mapper;
+
+import com.sbsj.dreamwing.support.dto.GetTotalSupportResponseDTO;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+/**
+ * 후원 매퍼 테스트 클래스
+ * @author 정은지
+ * @since 2024.07.28
+ * @version 1.0
+ *
+ * <pre>
+ * 수정일        	수정자        수정내용
+ * ----------  --------    ---------------------------
+ * 2024.07.28  	정은지        최초 생성
+ * </pre>
+ */
+
+@Slf4j
+@SpringBootTest
+public class SupportMapperTests {
+
+    @Autowired
+    private SupportMapper mapper;
+
+    @Test
+    @DisplayName("총 후원 금액 및 횟수 조회 매퍼 테스트")
+    public void testSelectTotalSupport() {
+
+        // given
+
+        // when
+        GetTotalSupportResponseDTO dto = mapper.selectTotalSupport();
+
+        // then
+        log.info(dto.toString());
+        Assertions.assertNotNull(dto, "조회에 실패하였습니다.");
+    }
+}

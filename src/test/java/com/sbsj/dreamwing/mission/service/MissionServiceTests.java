@@ -68,6 +68,6 @@ public class MissionServiceTests {
         boolean success = service.awardDailyQuizPoints(dto);
 
         // then
-        assertTrue(success, "포인트 부여 성공");
+        assertTrue(success, "포인트 부여 실패");
     }
 }
