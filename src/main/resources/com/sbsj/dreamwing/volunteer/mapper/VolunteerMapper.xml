@@ -30,7 +30,7 @@
                RECRUIT_END_DATE,
                IMAGE_URL
         FROM   VOLUNTEER
-        WHERE  VOLUNTEER_ID = # {volunteerId}
+        WHERE  VOLUNTEER_ID = #{volunteerId}
     </select>
 
 </mapper>
