@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
  * 수정일        	수정자        수정내용
  * ----------  --------    ---------------------------
  * 2024.07.26   정은지        최초 생성
- * 2024.07.27   정은지        데일리 퀴즈 정답 시 포인트 부여 기능 추가
+ * 2024.07.28   정은지        데일리 퀴즈 정답 시 포인트 부여 기능 추가
  * </pre>
  */
 
@@ -41,7 +41,7 @@ public class MissionController {
      */
     @GetMapping("/quiz")
     public ResponseEntity<ApiResponse<QuizVO>> getDailyQuiz() throws Exception {
-        QuizVO response = service.getRandomQuiz();
+        QuizVO response = service.getDailyQuiz();
         return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, response));
     }
 

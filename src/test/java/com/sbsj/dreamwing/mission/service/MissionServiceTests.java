@@ -8,6 +8,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+
+//import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -33,14 +38,24 @@ public class MissionServiceTests {
     private MissionService service;
 
     @Test
-    @DisplayName("퀴즈 조회 테스트")
+    @DisplayName("퀴즈 조회 서비스 테스트")
     public void testGetRandomQuiz() throws Exception {
-        QuizVO quiz = service.getRandomQuiz();
+        // given
+        LocalDate currentDate = LocalDate.now();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        // when
+        QuizVO quiz = service.getDailyQuiz();
+
+        // then
         log.info(String.valueOf(quiz));
+        log.info(dateFormat.format(quiz.getQuizDate()));
+        log.info(currentDate.toString());
+        assertThat(dateFormat.format(quiz.getQuizDate())).isEqualTo(currentDate.toString());
     }
 
     @Test
-    @DisplayName("포인트 부여 테스트")
+    @DisplayName("포인트 부여 서비스 테스트")
     public void testAwardDailyQuizPoints() throws Exception {
         // given
         AwardPointsRequestDTO dto = new AwardPointsRequestDTO();
@@ -53,6 +68,6 @@ public class MissionServiceTests {
         boolean success = service.awardDailyQuizPoints(dto);
 
         // then
-        assertTrue(success, "포인트 부여 성공");
+        assertTrue(success, "포인트 부여 실패");
     }
 }

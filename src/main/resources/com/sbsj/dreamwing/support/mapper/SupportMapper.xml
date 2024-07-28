@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+* 후원 Mybatis 매퍼
+* @author 정은지
+* @since 2024.07.28
+* @version 1.0
+*
+* <pre>
+* 수정일        	수정자        수정내용
+* ==========  =========    =========
+* 2024.07.28   정은지         최초 생성
+*
+* </pre>
+-->
+<mapper namespace="com.sbsj.dreamwing.support.mapper.SupportMapper">
+    <select id="selectTotalSupport" resultType="GetTotalSupportResponseDTO">
+        SELECT COUNT(HISTORY_ID) AS TOTALCOUNT,
+               SUM(POINT)        AS TOTALPOINTS
+        FROM   SUPPORT_HISTORY
+    </select>
+
+</mapper>

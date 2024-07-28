@@ -13,11 +13,11 @@ import com.sbsj.dreamwing.mission.dto.AwardPointsRequestDTO;
  * 수정일        	수정자        수정내용
  * ----------  --------    ---------------------------
  * 2024.07.26  	정은지        최초 생성
- * 2024.07.27   정은지        포인트 부여 메서드 추가
+ * 2024.07.28   정은지        포인트 부여 메서드 추가
  * </pre>
  */
 public interface MissionService {
 
-    QuizVO getRandomQuiz() throws Exception;
+    QuizVO getDailyQuiz() throws Exception;
     boolean awardDailyQuizPoints(AwardPointsRequestDTO dto) throws Exception;
 }
