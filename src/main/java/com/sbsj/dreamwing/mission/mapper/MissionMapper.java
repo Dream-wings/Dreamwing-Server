@@ -20,6 +20,6 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface MissionMapper {
 
-    public QuizVO getQuiz(Long quizId);
+    public QuizVO selectQuiz();
     public void callAwardPointsProcedure(AwardPointsRequestDTO dto);
 }
