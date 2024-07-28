@@ -3,6 +3,7 @@ package com.sbsj.dreamwing.support.controller;
 import com.sbsj.dreamwing.mission.domain.QuizVO;
 import com.sbsj.dreamwing.mission.dto.AwardPointsRequestDTO;
 import com.sbsj.dreamwing.mission.service.MissionService;
+import com.sbsj.dreamwing.support.dto.GetAllSupportListResponseDTO;
 import com.sbsj.dreamwing.support.dto.GetSupportListResponseDTO;
 import com.sbsj.dreamwing.support.dto.GetTotalSupportResponseDTO;
 import com.sbsj.dreamwing.support.service.SupportService;
@@ -27,6 +28,7 @@ import java.util.List;
  * ----------  --------    ---------------------------
  * 2024.07.28   정은지        최초 생성
  * 2024.07.28   정은지        후원 총 횟수,금액 조회/후원 리스트 조회 추가
+ * 2024.07.28   임재성        모든 후원 리스트 조회 추가
  * </pre>
  */
 
@@ -57,6 +59,19 @@ public class SupportController {
     @GetMapping("/list/5")
     public ResponseEntity<ApiResponse<List<GetSupportListResponseDTO>>> getSupportList() throws Exception {
         List<GetSupportListResponseDTO> response = service.getSupportList();
+        return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, response));
+    }
+
+    /**
+     * 모든 후원 리스트 조회
+     * @return
+     * @throws Exception
+     */
+
+
+    @GetMapping("/list")
+    public ResponseEntity<ApiResponse<List<GetAllSupportListResponseDTO>>> getAllSupportList() throws Exception {
+        List<GetAllSupportListResponseDTO> response = service.getAllSupportList();
         return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, response));
     }
 }
