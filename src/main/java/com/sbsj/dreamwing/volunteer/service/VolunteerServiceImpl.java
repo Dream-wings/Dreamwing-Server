@@ -27,6 +27,7 @@ import java.util.List;
 
 @Service
 public class VolunteerServiceImpl implements VolunteerService{
+
     @Autowired
     private VolunteerMapper volunteerMapper;
 
@@ -34,10 +35,12 @@ public class VolunteerServiceImpl implements VolunteerService{
     public List<VolunteerListDTO> getVolunteerList() throws Exception {
         return volunteerMapper.getVolunteerList();
     }
+
     @Override
     public VolunteerDetailDTO getVolunteerDetail(long volunteerId) throws Exception{
         return volunteerMapper.getVolunteerDetail(volunteerId);
     }
+
 }
 
 

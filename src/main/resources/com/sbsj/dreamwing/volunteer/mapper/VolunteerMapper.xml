@@ -5,15 +5,32 @@
 
 
     <select id="getVolunteerList" resultType="com.sbsj.dreamwing.volunteer.dto.VolunteerListDTO">
-        SELECT TITLE,TYPE,CATEGORY,VOLUNTEER_START_DATE,VOLUNTEER_END_DATE,ADDRESS,STATUS,IMAGE_URL FROM VOLUNTEER
-        <!-- WHERE CATEGORY = #{CATEGORY_ID} -->
+            SELECT TITLE,
+            TYPE,
+            CATEGORY,
+            VOLUNTEER_START_DATE,
+            VOLUNTEER_END_DATE,
+            ADDRESS,
+            STATUS,
+            IMAGE_URL
+            FROM   VOLUNTEER <!-- WHERE CATEGORY = #{CATEGORY_ID} -->
 </select>
 
     <select id="getVolunteerDetail" parameterType="long" resultType="com.sbsj.dreamwing.volunteer.dto.VolunteerDetailDTO">
-        SELECT TITLE,CONTENT,TYPE,CATEGORY,VOLUNTEER_START_DATE,VOLUNTEER_END_DATE,ADDRESS,TOTAL_COUNT,STATUS,RECRUIT_START_DATE,RECRUIT_END_DATE,IMAGE_URL FROM "VOLUNTEER" WHERE "VOLUNTEER_ID" = #{volunteerId}
+        SELECT TITLE,
+               CONTENT,
+               TYPE,
+               CATEGORY,
+               VOLUNTEER_START_DATE,
+               VOLUNTEER_END_DATE,
+               ADDRESS,
+               TOTAL_COUNT,
+               STATUS,
+               RECRUIT_START_DATE,
+               RECRUIT_END_DATE,
+               IMAGE_URL
+        FROM   VOLUNTEER
+        WHERE  VOLUNTEER_ID = #{volunteerId}
     </select>
-
-
-
 
 </mapper>

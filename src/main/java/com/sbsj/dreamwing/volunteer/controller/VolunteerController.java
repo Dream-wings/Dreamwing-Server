@@ -47,16 +47,13 @@ public class VolunteerController {
         return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, response));
     }
 
-    @GetMapping("/detail")
-    public VolunteerDetailDTO getVolunteerDetail(@RequestParam long volunteerId) throws Exception {
-        // long 타입은 기본 타입이므로 null 체크가 필요 없음
-        // 따라서 null 체크를 제거했습니다.
 
+    @GetMapping("/detail")
+    public ResponseEntity<ApiResponse<VolunteerDetailDTO>> getVolunteerDetail(@RequestParam long volunteerId) throws Exception {
         // Service 호출 시 인스턴스를 통해 호출
         VolunteerDetailDTO volunteerDetailDTO = volunteerService.getVolunteerDetail(volunteerId);
 
-        return volunteerDetailDTO;
+        return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, volunteerDetailDTO));
     }
-
 
 }
