@@ -1,13 +1,15 @@
-package com.sbsj.dreamwing.volunteer.service;
+package com.sbsj.dreamwing.volunteer.mapper;
 
 
 import com.sbsj.dreamwing.volunteer.dto.VolunteerDetailDTO;
 import com.sbsj.dreamwing.volunteer.dto.VolunteerListDTO;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
+
 /**
- * 봉사 서비스 인터페이스
+ * 봉사 매퍼 인터페이스
  * @author 임재성
  * @since 2024.07.26
  * @version 1.0
@@ -20,11 +22,10 @@ import java.util.List;
  * </pre>
  */
 
+@Mapper
+public interface VolunteerMapper {
 
+    List<VolunteerListDTO> getVolunteerList();
 
-
-
-public interface VolunteerService {
-    List<VolunteerListDTO> getVolunteerList() throws Exception;
-    VolunteerDetailDTO getVolunteerDetail(long volunteerId) throws Exception;
+    VolunteerDetailDTO getVolunteerDetail(long volunteerId);
 }
