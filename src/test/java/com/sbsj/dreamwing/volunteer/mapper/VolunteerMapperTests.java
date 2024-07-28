@@ -1,5 +1,6 @@
 package com.sbsj.dreamwing.volunteer.mapper;
 
+import com.sbsj.dreamwing.volunteer.dto.VolunteerDetailDTO;
 import com.sbsj.dreamwing.volunteer.mapper.VolunteerMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -21,13 +22,24 @@ public class VolunteerMapperTests {
     @Test
     public void testGetVolunteerList() {
 
-
-
         // when
         List<VolunteerListDTO> volunteerDTO = mapper.getVolunteerList();
 
         // then
         log.info(String.valueOf(volunteerDTO));
         assertThat(volunteerDTO).isNotNull();
+    }
+
+    @Test
+    public void testGetVolunteerDetail() {
+
+
+        long volunteerId =5L;
+        // when
+        VolunteerDetailDTO volunteerDetailDTO = mapper.getVolunteerDetail(volunteerId);
+
+        // then
+        log.info(String.valueOf(volunteerDetailDTO));
+        assertThat(volunteerDetailDTO).isNotNull();
     }
 }
