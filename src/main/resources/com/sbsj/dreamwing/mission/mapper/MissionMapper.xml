@@ -11,11 +11,12 @@
 * 수정일        	수정자        수정내용
 * ==========  =========    =========
 * 2024.07.26   정은지         최초 생성
+* 2024.07.27   정은지         퀴즈 정답 시 포인트 부여 기능 추가
 *
 * </pre>
 -->
 <mapper namespace="com.sbsj.dreamwing.mission.mapper.MissionMapper">
-    <select id="getQuiz" resultType="com.sbsj.dreamwing.mission.domain.QuizVO">
+    <select id="getQuiz" resultType="QuizVO">
         SELECT QUIZ_ID,
                QUESTION,
                ANSWER,
@@ -26,4 +27,13 @@
         FROM   QUIZ
         WHERE  QUIZ_ID = #{quizId}
     </select>
+
+    <insert id="callAwardPointsProcedure" statementType="CALLABLE">
+        {CALL PROC_AWARD_POINTS(
+                #{userId, jdbcType=NUMERIC},
+                #{activityType, jdbcType=NUMERIC},
+                #{activityTitle, jdbcType=VARCHAR},
+                #{point, jdbcType=NUMERIC}
+              )}
+    </insert>
 </mapper>

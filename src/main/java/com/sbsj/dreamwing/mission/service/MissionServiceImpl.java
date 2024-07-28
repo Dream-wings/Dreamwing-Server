@@ -1,6 +1,7 @@
 package com.sbsj.dreamwing.mission.service;
 
 import com.sbsj.dreamwing.mission.domain.QuizVO;
+import com.sbsj.dreamwing.mission.dto.AwardPointsRequestDTO;
 import com.sbsj.dreamwing.mission.mapper.MissionMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +19,7 @@ import java.util.Random;
  * 수정일        	수정자        수정내용
  * ----------  --------    ---------------------------
  * 2024.07.26  	정은지        최초 생성
+ * 2024.07.27   정은지        데일리 퀴즈 정답 시 포인트 부여 기능 추가
  * </pre>
  */
 @Slf4j
@@ -34,5 +36,16 @@ public class MissionServiceImpl implements MissionService{
         long randomLong = rand.nextLong(5);
         log.info(randomLong+"");
         return mapper.getQuiz(randomLong);
+    }
+
+    @Override
+    public boolean awardDailyQuizPoints(AwardPointsRequestDTO dto) throws Exception {
+        try {
+            mapper.callAwardPointsProcedure(dto);
+            return true;
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return false;
+        }
     }
 }

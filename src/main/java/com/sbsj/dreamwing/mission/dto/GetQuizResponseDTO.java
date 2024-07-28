@@ -16,6 +16,6 @@ import lombok.Data;
  */
 
 @Data
-public class GetQuizResponse {
+public class GetQuizResponseDTO {
 
 }

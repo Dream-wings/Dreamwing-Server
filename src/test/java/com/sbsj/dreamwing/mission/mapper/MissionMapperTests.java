@@ -1,6 +1,7 @@
 package com.sbsj.dreamwing.mission.mapper;
 
 import com.sbsj.dreamwing.mission.domain.QuizVO;
+import com.sbsj.dreamwing.mission.dto.AwardPointsRequestDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,5 +41,22 @@ public class MissionMapperTests {
         // then
         log.info(String.valueOf(quiz));
         assertThat(quiz).isNotNull();
+    }
+
+    @Test
+    public void testCallAwardPointsProcedure() {
+
+        // given
+        AwardPointsRequestDTO dto = new AwardPointsRequestDTO();
+        dto.setUserId(1L);
+        dto.setActivityType(4);
+        dto.setActivityTitle("데일리 퀴즈");
+        dto.setPoint(30);
+
+        // when
+        mapper.callAwardPointsProcedure(dto);
+
+        // then
+
     }
 }
