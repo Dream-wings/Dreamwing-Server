@@ -12,20 +12,22 @@
 * ==========  =========    =========
 * 2024.07.26   정은지         최초 생성
 * 2024.07.27   정은지         퀴즈 정답 시 포인트 부여 기능 추가
+* 2024.07.28   정은지         selectQuizByDate 쿼리 수정
 *
 * </pre>
 -->
 <mapper namespace="com.sbsj.dreamwing.mission.mapper.MissionMapper">
-    <select id="getQuiz" resultType="QuizVO">
+    <select id="selectQuiz" resultType="QuizVO">
         SELECT QUIZ_ID,
                QUESTION,
                ANSWER,
                CHOICE_1,
                CHOICE_2,
                CHOICE_3,
-               CHOICE_4
+               CHOICE_4,
+               QUIZ_DATE
         FROM   QUIZ
-        WHERE  QUIZ_ID = #{quizId}
+        WHERE  QUIZ_DATE = TO_DATE(SYSDATE+9/24)
     </select>
 
     <insert id="callAwardPointsProcedure" statementType="CALLABLE">

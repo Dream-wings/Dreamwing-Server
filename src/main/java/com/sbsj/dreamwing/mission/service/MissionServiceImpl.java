@@ -19,7 +19,7 @@ import java.util.Random;
  * 수정일        	수정자        수정내용
  * ----------  --------    ---------------------------
  * 2024.07.26  	정은지        최초 생성
- * 2024.07.27   정은지        데일리 퀴즈 정답 시 포인트 부여 기능 추가
+ * 2024.07.28   정은지        데일리 퀴즈 정답 시 포인트 부여 기능 추가, 퀴즈 조회 방식 변경
  * </pre>
  */
 @Slf4j
@@ -30,12 +30,8 @@ public class MissionServiceImpl implements MissionService{
     private final MissionMapper mapper;
 
     @Override
-    public QuizVO getRandomQuiz() throws Exception {
-        Random rand = new Random();
-
-        long randomLong = rand.nextLong(5);
-        log.info(randomLong+"");
-        return mapper.getQuiz(randomLong);
+    public QuizVO getDailyQuiz() throws Exception {
+        return mapper.selectQuiz();
     }
 
     @Override
