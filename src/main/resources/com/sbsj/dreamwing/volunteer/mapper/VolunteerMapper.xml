@@ -17,20 +17,20 @@
 </select>
 
     <select id="getVolunteerDetail" parameterType="long" resultType="com.sbsj.dreamwing.volunteer.dto.VolunteerDetailDTO">
-        SELECT title,
-               content,
-               type,
-               category,
-               volunteer_start_date,
-               volunteer_end_date,
-               address,
-               total_count,
-               status,
-               recruit_start_date,
-               recruit_end_date,
-               image_url
-        FROM   volunteer
-        WHERE  volunteer_id = # {volunteerId}
+        SELECT TITLE,
+               CONTENT,
+               TYPE,
+               CATEGORY,
+               VOLUNTEER_START_DATE,
+               VOLUNTEER_END_DATE,
+               ADDRESS,
+               TOTAL_COUNT,
+               STATUS,
+               RECRUIT_START_DATE,
+               RECRUIT_END_DATE,
+               IMAGE_URL
+        FROM   VOLUNTEER
+        WHERE  VOLUNTEER_ID = # {volunteerId}
     </select>
 
 </mapper>

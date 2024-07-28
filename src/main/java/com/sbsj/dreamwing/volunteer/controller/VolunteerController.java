@@ -47,7 +47,7 @@ public class VolunteerController {
         return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, response));
     }
 
-    
+
     @GetMapping("/detail")
     public ResponseEntity<ApiResponse<VolunteerDetailDTO>> getVolunteerDetail(@RequestParam long volunteerId) throws Exception {
         // Service 호출 시 인스턴스를 통해 호출
