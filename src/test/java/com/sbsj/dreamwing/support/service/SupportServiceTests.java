@@ -1,7 +1,6 @@
 package com.sbsj.dreamwing.support.service;
 
 
-import com.sbsj.dreamwing.support.dto.GetAllSupportListResponseDTO;
 import com.sbsj.dreamwing.support.dto.GetSupportListResponseDTO;
 import com.sbsj.dreamwing.support.dto.GetTotalSupportResponseDTO;
 import lombok.extern.slf4j.Slf4j;
@@ -66,7 +65,7 @@ public class SupportServiceTests {
         // given
 
         // when
-        List<GetAllSupportListResponseDTO> response = service.getAllSupportList();
+        List<GetSupportListResponseDTO> response = service.getAllSupportList();
 
         // then
         log.info(String.valueOf(response));

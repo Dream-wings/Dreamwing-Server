@@ -3,7 +3,6 @@ package com.sbsj.dreamwing.support.controller;
 import com.sbsj.dreamwing.mission.domain.QuizVO;
 import com.sbsj.dreamwing.mission.dto.AwardPointsRequestDTO;
 import com.sbsj.dreamwing.mission.service.MissionService;
-import com.sbsj.dreamwing.support.dto.GetAllSupportListResponseDTO;
 import com.sbsj.dreamwing.support.dto.GetSupportListResponseDTO;
 import com.sbsj.dreamwing.support.dto.GetTotalSupportResponseDTO;
 import com.sbsj.dreamwing.support.service.SupportService;
@@ -70,8 +69,8 @@ public class SupportController {
 
 
     @GetMapping("/list")
-    public ResponseEntity<ApiResponse<List<GetAllSupportListResponseDTO>>> getAllSupportList() throws Exception {
-        List<GetAllSupportListResponseDTO> response = service.getAllSupportList();
+    public ResponseEntity<ApiResponse<List<GetSupportListResponseDTO>>> getAllSupportList() throws Exception {
+        List<GetSupportListResponseDTO> response = service.getAllSupportList();
         return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, response));
     }
 }

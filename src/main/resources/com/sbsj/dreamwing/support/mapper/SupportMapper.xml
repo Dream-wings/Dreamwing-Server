@@ -35,7 +35,7 @@
         FETCH FIRST 5 ROWS ONLY
     </select>
 
-    <select id="selectAllSupportList" resultType="GetAllSupportListResponseDTO">
+    <select id="selectAllSupportList" resultType="GetSupportListResponseDTO">
         SELECT SUPPORT_ID,
                GOAL_POINT,
                CURRENT_POINT,

@@ -1,6 +1,5 @@
 package com.sbsj.dreamwing.support.mapper;
 
-import com.sbsj.dreamwing.support.dto.GetAllSupportListResponseDTO;
 import com.sbsj.dreamwing.support.dto.GetSupportListResponseDTO;
 import com.sbsj.dreamwing.support.dto.GetTotalSupportResponseDTO;
 import org.apache.ibatis.annotations.Mapper;
@@ -25,6 +24,6 @@ import java.util.List;
 public interface SupportMapper {
     public GetTotalSupportResponseDTO selectTotalSupport();
     public List<GetSupportListResponseDTO> selectSupportList();
-    public List<GetAllSupportListResponseDTO> selectAllSupportList();
+    public List<GetSupportListResponseDTO> selectAllSupportList();
 
 }

@@ -1,6 +1,5 @@
 package com.sbsj.dreamwing.support.mapper;
 
-import com.sbsj.dreamwing.support.dto.GetAllSupportListResponseDTO;
 import com.sbsj.dreamwing.support.dto.GetSupportListResponseDTO;
 import com.sbsj.dreamwing.support.dto.GetTotalSupportResponseDTO;
 import lombok.extern.slf4j.Slf4j;
@@ -71,7 +70,7 @@ public class SupportMapperTests {
         // given
 
         // when
-        List<GetAllSupportListResponseDTO> dto = mapper.selectAllSupportList();
+        List<GetSupportListResponseDTO> dto = mapper.selectAllSupportList();
 
         // then
         log.info(dto.toString());
