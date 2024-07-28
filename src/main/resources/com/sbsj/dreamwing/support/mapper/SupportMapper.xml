@@ -11,7 +11,7 @@
 * 수정일        	수정자        수정내용
 * ==========  =========    =========
 * 2024.07.28   정은지         최초 생성
-*
+* 2024.07.28   정은지         후원 총 횟수,금액 조회/후원 리스트 조회 추가
 * </pre>
 -->
 <mapper namespace="com.sbsj.dreamwing.support.mapper.SupportMapper">
@@ -19,6 +19,19 @@
         SELECT COUNT(HISTORY_ID) AS TOTALCOUNT,
                SUM(POINT)        AS TOTALPOINTS
         FROM   SUPPORT_HISTORY
+    </select>
+
+    <select id="selectSupportList" resultType="GetSupportListResponseDTO">
+        SELECT SUPPORT_ID,
+               GOAL_POINT,
+               CURRENT_POINT,
+               TITLE,
+               END_DATE,
+               IMAGE_URL,
+               SYSDATE+9/24 - END_DATE AS DDAY
+        FROM SUPPORT
+        ORDER BY DDAY
+        FETCH FIRST 5 ROWS ONLY
     </select>
 
 </mapper>
