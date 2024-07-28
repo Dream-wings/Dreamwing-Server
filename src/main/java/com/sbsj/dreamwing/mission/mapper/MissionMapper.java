@@ -1,6 +1,7 @@
 package com.sbsj.dreamwing.mission.mapper;
 
 import com.sbsj.dreamwing.mission.domain.QuizVO;
+import com.sbsj.dreamwing.mission.dto.AwardPointsRequestDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -13,10 +14,12 @@ import org.apache.ibatis.annotations.Mapper;
  * 수정일        	수정자        수정내용
  * ----------  --------    ---------------------------
  * 2024.07.26  	정은지        최초 생성
+ * 2024.07.28   정은지        포인트 부여 메서드 추가
  * </pre>
  */
 @Mapper
 public interface MissionMapper {
 
     public QuizVO getQuiz(Long quizId);
+    public void callAwardPointsProcedure(AwardPointsRequestDTO dto);
 }
