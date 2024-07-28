@@ -23,6 +23,7 @@ import java.util.List;
  * ----------  --------    ---------------------------
  * 2024.07.28  	정은지        최초 생성
  * 2024.07.28   정은지        후원 총 횟수,금액 조회/후원 리스트 조회 테스트 추가
+ * 2024.07.28   임재성        모든 후원 리스트 조회 테스트 추가
  * </pre>
  */
 @Slf4j
@@ -52,6 +53,19 @@ public class SupportServiceTests {
 
         // when
         List<GetSupportListResponseDTO> response = service.getSupportList();
+
+        // then
+        log.info(String.valueOf(response));
+        Assertions.assertNotNull(response, "조회에 실패하였습니다.");
+    }
+
+    @Test
+    @DisplayName("모든 후원 리스트 조회 서비스 테스트")
+    public void testGetAllSupportList() throws Exception {
+        // given
+
+        // when
+        List<GetSupportListResponseDTO> response = service.getAllSupportList();
 
         // then
         log.info(String.valueOf(response));

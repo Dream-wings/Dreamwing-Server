@@ -17,9 +17,11 @@ import java.util.List;
  * ----------  --------    ---------------------------
  * 2024.07.28   정은지        최초 생성
  * 2024.07.28   정은지        후원 총 횟수,금액 조회/후원 리스트 조회 추가
+ * 2024.07.28   임재성        모든 후원 리스트 조회 추가
  * </pre>
  */
 public interface SupportService {
     GetTotalSupportResponseDTO getTotalSupport() throws Exception;
     List<GetSupportListResponseDTO> getSupportList() throws Exception;
+    List<GetSupportListResponseDTO> getAllSupportList() throws Exception;
 }

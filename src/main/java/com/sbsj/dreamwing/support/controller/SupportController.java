@@ -27,6 +27,7 @@ import java.util.List;
  * ----------  --------    ---------------------------
  * 2024.07.28   정은지        최초 생성
  * 2024.07.28   정은지        후원 총 횟수,금액 조회/후원 리스트 조회 추가
+ * 2024.07.28   임재성        모든 후원 리스트 조회 추가
  * </pre>
  */
 
@@ -57,6 +58,19 @@ public class SupportController {
     @GetMapping("/list/5")
     public ResponseEntity<ApiResponse<List<GetSupportListResponseDTO>>> getSupportList() throws Exception {
         List<GetSupportListResponseDTO> response = service.getSupportList();
+        return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, response));
+    }
+
+    /**
+     * 모든 후원 리스트 조회
+     * @return
+     * @throws Exception
+     */
+
+
+    @GetMapping("/list")
+    public ResponseEntity<ApiResponse<List<GetSupportListResponseDTO>>> getAllSupportList() throws Exception {
+        List<GetSupportListResponseDTO> response = service.getAllSupportList();
         return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, response));
     }
 }
