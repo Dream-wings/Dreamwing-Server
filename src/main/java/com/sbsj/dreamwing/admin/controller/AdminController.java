@@ -35,7 +35,7 @@ public class AdminController {
     private final AdminService service;
 
     /**
-     *
+     * 사용자 봉사활동 신청 승인
      * @param request
      * @return
      * @throws Exception
