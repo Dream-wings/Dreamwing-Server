@@ -12,6 +12,7 @@
 * ==========  =========    =========
 * 2024.07.28   정은지         최초 생성
 * 2024.07.28   정은지         봉사활동 승인 기능 추가
+* 2024.07.29   정은지         봉사활동 인증 기능 추가
 *
 * </pre>
 -->
@@ -23,4 +24,10 @@
                AND USER_ID = #{userId}
     </update>
 
+    <update id="updateVolunteerVerified">
+        UPDATE USER_VOLUNTEER
+        SET    VERIFIED = 1
+        WHERE  VOLUNTEER_ID = #{volunteerId}
+               AND USER_ID = #{userId}
+    </update>
 </mapper>

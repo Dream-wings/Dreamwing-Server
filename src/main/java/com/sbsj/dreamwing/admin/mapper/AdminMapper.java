@@ -14,9 +14,11 @@ import org.apache.ibatis.annotations.Mapper;
  * ----------  --------    ---------------------------
  * 2024.07.28  	정은지        최초 생성
  * 2024.07.28   정은지        봉사활동 승인 기능 추가
+ * 2024.07.29   정은지        봉사활동 인증 기능 추가
  * </pre>
  */
 @Mapper
 public interface AdminMapper {
     public int updateVolunteerStatus(UpdateVolunteerStatusRequestDTO request);
+    public int updateVolunteerVerified(UpdateVolunteerStatusRequestDTO request);
 }

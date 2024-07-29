@@ -1,11 +1,9 @@
 package com.sbsj.dreamwing.admin.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
- * 봉사활동 승인 요청 DTO
+ * 봉사활동 포인트 부여 요청 DTO
  * @author 정은지
  * @since 2024.07.26
  * @version 1.0
@@ -17,9 +15,10 @@ import lombok.NoArgsConstructor;
  * </pre>
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class UpdateVolunteerStatusRequestDTO {
+public class AwardVolunteerPointsRequestDTO {
     private long volunteerId;
     private long userId;
+    private int activityType;
+    private String activityTitle;
+    private int point;
 }
