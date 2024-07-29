@@ -1,12 +1,18 @@
 package com.sbsj.dreamwing.mission.mapper;
 
 import com.sbsj.dreamwing.mission.domain.QuizVO;
+import com.sbsj.dreamwing.mission.dto.AwardPointsRequestDTO;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * 미션 매퍼 테스트 클래스
@@ -18,6 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * 수정일        	수정자        수정내용
  * ----------  --------    ---------------------------
  * 2024.07.26  	정은지        최초 생성
+ * 2024.07.28   정은지        포인트 부여 기능 테스트 추가
  * </pre>
  */
 
@@ -29,16 +36,37 @@ public class MissionMapperTests {
     private MissionMapper mapper;
 
     @Test
-    public void testGetQuiz() {
+    @DisplayName("퀴즈 조회 매퍼 테스트")
+    public void testGetDailyQuiz() {
 
         // given
-        Long quizId = 1L;
+        LocalDate currentDate = LocalDate.now();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         // when
-        QuizVO quiz = mapper.getQuiz(quizId);
+        QuizVO quiz = mapper.selectQuiz();
 
         // then
         log.info(String.valueOf(quiz));
-        assertThat(quiz).isNotNull();
+        log.info(dateFormat.format(quiz.getQuizDate()));
+        log.info(currentDate.toString());
+        assertThat(dateFormat.format(quiz.getQuizDate())).isEqualTo(currentDate.toString());
+    }
+
+    @Test
+    @DisplayName("포인트 부여 매퍼 테스트")
+    public void testCallAwardPointsProcedure() {
+
+        // given
+        AwardPointsRequestDTO dto = new AwardPointsRequestDTO();
+        dto.setUserId(1L);
+        dto.setActivityType(4);
+        dto.setActivityTitle("데일리 퀴즈");
+        dto.setPoint(30);
+
+        // when
+        mapper.callAwardPointsProcedure(dto);
+
+        // then
     }
 }

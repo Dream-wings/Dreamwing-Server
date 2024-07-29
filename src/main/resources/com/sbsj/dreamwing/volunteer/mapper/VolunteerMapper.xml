@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sbsj.dreamwing.volunteer.mapper.VolunteerMapper">
+
+
+    <select id="getVolunteerList" resultType="com.sbsj.dreamwing.volunteer.dto.VolunteerListDTO">
+            SELECT TITLE,
+            TYPE,
+            CATEGORY,
+            VOLUNTEER_START_DATE,
+            VOLUNTEER_END_DATE,
+            ADDRESS,
+            STATUS,
+            IMAGE_URL
+            FROM   VOLUNTEER <!-- WHERE CATEGORY = #{CATEGORY_ID} -->
+</select>
+
+    <select id="getVolunteerDetail" parameterType="long" resultType="com.sbsj.dreamwing.volunteer.dto.VolunteerDetailDTO">
+        SELECT TITLE,
+               CONTENT,
+               TYPE,
+               CATEGORY,
+               VOLUNTEER_START_DATE,
+               VOLUNTEER_END_DATE,
+               ADDRESS,
+               TOTAL_COUNT,
+               STATUS,
+               RECRUIT_START_DATE,
+               RECRUIT_END_DATE,
+               IMAGE_URL
+        FROM   VOLUNTEER
+        WHERE  VOLUNTEER_ID = #{volunteerId}
+    </select>
+
+</mapper>

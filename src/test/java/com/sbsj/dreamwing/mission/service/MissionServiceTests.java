@@ -1,10 +1,20 @@
 package com.sbsj.dreamwing.mission.service;
 
 import com.sbsj.dreamwing.mission.domain.QuizVO;
+import com.sbsj.dreamwing.mission.dto.AwardPointsRequestDTO;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+
+//import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
+
 
 /**
  * 미션 서비스 테스트
@@ -16,6 +26,7 @@ import org.springframework.boot.test.context.SpringBootTest;
  * 수정일        	수정자        수정내용
  * ----------  --------    ---------------------------
  * 2024.07.26  	정은지        최초 생성
+ * 2024.07.28   정은지        포인트 부여 테스트 추가
  * </pre>
  */
 
@@ -27,14 +38,36 @@ public class MissionServiceTests {
     private MissionService service;
 
     @Test
-    public void testGetRandomQuiz() {
-        try {
-            QuizVO quiz = service.getRandomQuiz();
-            log.info("test");
-            log.info(String.valueOf(quiz));
-        } catch (Exception e) {
-            log.info(e.getMessage());
-        }
+    @DisplayName("퀴즈 조회 서비스 테스트")
+    public void testGetRandomQuiz() throws Exception {
+        // given
+        LocalDate currentDate = LocalDate.now();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
+        // when
+        QuizVO quiz = service.getDailyQuiz();
+
+        // then
+        log.info(String.valueOf(quiz));
+        log.info(dateFormat.format(quiz.getQuizDate()));
+        log.info(currentDate.toString());
+        assertThat(dateFormat.format(quiz.getQuizDate())).isEqualTo(currentDate.toString());
+    }
+
+    @Test
+    @DisplayName("포인트 부여 서비스 테스트")
+    public void testAwardDailyQuizPoints() throws Exception {
+        // given
+        AwardPointsRequestDTO dto = new AwardPointsRequestDTO();
+        dto.setUserId(1L);
+        dto.setActivityType(3);
+        dto.setActivityTitle("테스트");
+        dto.setPoint(300);
+
+        // when
+        boolean success = service.awardDailyQuizPoints(dto);
+
+        // then
+        assertTrue(success, "포인트 부여 실패");
     }
 }

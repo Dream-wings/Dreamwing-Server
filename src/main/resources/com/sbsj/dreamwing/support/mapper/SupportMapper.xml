@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+* 후원 Mybatis 매퍼
+* @author 정은지
+* @since 2024.07.28
+* @version 1.0
+*
+* <pre>
+* 수정일        	수정자        수정내용
+* ==========  =========    =========
+* 2024.07.28   정은지         최초 생성
+* 2024.07.28   정은지         후원 총 횟수,금액 조회/후원 리스트 조회 추가
+* 2024.07.28   임재성         모든 후원 리스트 조회 테스트 추가
+* </pre>
+-->
+<mapper namespace="com.sbsj.dreamwing.support.mapper.SupportMapper">
+    <select id="selectTotalSupport" resultType="GetTotalSupportResponseDTO">
+        SELECT COUNT(HISTORY_ID) AS TOTALCOUNT,
+               SUM(POINT)        AS TOTALPOINTS
+        FROM   SUPPORT_HISTORY
+    </select>
+
+    <select id="selectSupportList" resultType="GetSupportListResponseDTO">
+        SELECT SUPPORT_ID,
+               GOAL_POINT,
+               CURRENT_POINT,
+               TITLE,
+               END_DATE,
+               IMAGE_URL,
+               SYSDATE+9/24 - END_DATE AS DDAY
+        FROM SUPPORT
+        ORDER BY DDAY
+        FETCH FIRST 5 ROWS ONLY
+    </select>
+
+    <select id="selectAllSupportList" resultType="GetSupportListResponseDTO">
+        SELECT SUPPORT_ID,
+               GOAL_POINT,
+               CURRENT_POINT,
+               TITLE,
+               END_DATE,
+               IMAGE_URL,
+               SYSDATE+9/24 - END_DATE AS DDAY
+        FROM SUPPORT
+        ORDER BY DDAY
+    </select>
+
+</mapper>
