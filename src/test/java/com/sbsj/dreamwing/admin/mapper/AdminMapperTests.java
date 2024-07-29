@@ -26,6 +26,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * ----------  --------    ---------------------------
  * 2024.07.28  	정은지        최초 생성
  * 2024.07.28   정은지        봉사활동 신청 승인 테스트 추가
+ * 2024.07.29   정은지        봉사활동 인증 테스트 추가
  * </pre>
  */
 
@@ -47,6 +48,22 @@ public class AdminMapperTests {
 
         // when
         int success = mapper.updateVolunteerStatus(dto);
+
+        // then
+        Assertions.assertEquals(success, 1);
+    }
+
+    @Test
+    @DisplayName("봉사활동 인증 매퍼 테스트")
+    public void testUpdateVolunteerVerified() {
+
+        // given
+        UpdateVolunteerStatusRequestDTO dto = new UpdateVolunteerStatusRequestDTO();
+        dto.setVolunteerId(2L);
+        dto.setUserId(1L);
+
+        // when
+        int success = mapper.updateVolunteerVerified(dto);
 
         // then
         Assertions.assertEquals(success, 1);
