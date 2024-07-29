@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+* 사용자 Mybatis 매퍼
+* @author 정은찬
+* @since 2024.07.28
+* @version 1.0
+*
+* <pre>
+* 수정일        	수정자        수정내용
+* ==========  =========    =========
+* 2024.07.29   정은찬          checkLoginIdExistence SQL문 작성
+* 2024.07.28   정은찬         최초 생성
+*
+* </pre>
+-->
+<mapper namespace="com.sbsj.dreamwing.user.mapper.UserMapper">
+    <!--  사용자 정보를 삽입하는 쿼리  -->
+    <insert id="insertUser" parameterType="UserVO">
+        INSERT INTO USER_INFO
+        (USER_ID,
+         LOGIN_ID,
+         PASSWORD,
+         NAME,
+         PHONE,
+         TOTAL_POINT,
+         WITHDRAW,
+         PROFILE_IMAGE_URL,
+         CREATED_DATE)
+        VALUES      (SEQ_USER_INFO.nextval,
+                     #{loginId},
+                     #{password},
+                     #{name},
+                     #{phone},
+                     0,
+                     0,
+                     #{profileImageUrl},
+                     #{createdDate})
+    </insert>
+
+    <select id="checkLoginIdExistence" parameterType="String" resultType="String">
+        SELECT LOGIN_ID
+        FROM USER_INFO
+        WHERE LOGIN_ID = '${value}'
+    </select>
+</mapper>
