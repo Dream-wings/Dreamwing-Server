@@ -25,6 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * 2024.07.28  	정은지        최초 생성
  * 2024.07.28   정은지        후원 총 횟수,금액 조회/후원 리스트 조회 테스트 추가
  * 2024.07.28   임재성        모든 후원 리스트 조회 테스트 추가
+ * 2024.07.29   임재성        후원 하기 요청 테스트 추가
  * </pre>
  */
 
@@ -76,4 +77,40 @@ public class SupportMapperTests {
         log.info(dto.toString());
         Assertions.assertNotNull(dto, "조회에 실패하였습니다.");
     }
+
+
+
+    ////후원하기////
+
+    @Test
+    void testGetUserPoints() {
+        long userId = 1L; // 존재하는 사용자 ID로 대체
+        int point = mapper.getUserPoints(userId);
+        log.info("User Points: {}", point);
+        assertThat(point).isGreaterThanOrEqualTo(0);
+    }
+
+    @Test
+    void testUpdateUserPoints() {
+        long userId = 1L; // 존재하는 사용자 ID로 대체
+        int newPoints = 500;
+        int result = mapper.updateUserPoints(userId, newPoints);
+        int updatedPoints = mapper.getUserPoints(userId);
+        log.info("Updated User Points: {}", updatedPoints);
+        assertThat(result).isEqualTo(1);
+    }
+
+    @Test
+    void testUpdateSupportPoints() {
+        long supportId = 6L; // 존재하는 지원 항목 ID로 대체
+        int currentPoint = mapper.getSupportPoints(supportId);
+        int pointsToAdd = 200;
+        mapper.updateSupportPoints(supportId, pointsToAdd);
+        int updatedPoints = mapper.getSupportPoints(supportId);
+        log.info("Updated Support Points: {}", updatedPoints);
+        assertThat(updatedPoints).isEqualTo(currentPoint + pointsToAdd);
+    }
+
+
+
 }

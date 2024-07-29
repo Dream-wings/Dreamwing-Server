@@ -13,6 +13,7 @@
 * 2024.07.28   정은지         최초 생성
 * 2024.07.28   정은지         후원 총 횟수,금액 조회/후원 리스트 조회 추가
 * 2024.07.28   임재성         모든 후원 리스트 조회 테스트 추가
+* 2024.07.29   임재성         후원 하기 요청 기능 추가
 * </pre>
 -->
 <mapper namespace="com.sbsj.dreamwing.support.mapper.SupportMapper">
@@ -46,5 +47,32 @@
         FROM SUPPORT
         ORDER BY DDAY
     </select>
+
+    <!-- 사용자 포인트 가져오기 -->
+    <select id="getUserPoints" parameterType="long" resultType="int">
+        SELECT TOTAL_POINT
+        FROM   USER_INFO
+        WHERE  USER_ID = #{userId}
+    </select>
+
+    <!-- 사용자 포인트 업데이트 -->
+    <update id="updateUserPoints">
+        UPDATE USER_INFO
+        SET    TOTAL_POINT = TOTAL_POINT - #{newPoints}
+        WHERE  USER_ID = #{userId}
+    </update>
+
+    <select id="getSupportPoints" resultType="int" parameterType="long">
+        SELECT CURRENT_POINT
+        FROM   SUPPORT
+        WHERE  SUPPORT_ID = #{supportId}
+    </select>
+
+    <!-- 지원 항목 포인트 업데이트 -->
+    <update id="updateSupportPoints">
+        UPDATE SUPPORT
+        SET    CURRENT_POINT = CURRENT_POINT + #{pointsToAdd}
+        WHERE  SUPPORT_ID = #{supportId}
+    </update>
 
 </mapper>

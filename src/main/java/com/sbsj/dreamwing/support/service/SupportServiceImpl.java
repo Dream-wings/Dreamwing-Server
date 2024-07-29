@@ -2,10 +2,12 @@ package com.sbsj.dreamwing.support.service;
 
 import com.sbsj.dreamwing.support.dto.GetSupportListResponseDTO;
 import com.sbsj.dreamwing.support.dto.GetTotalSupportResponseDTO;
+import com.sbsj.dreamwing.support.dto.PostSupportGiveRequestDTO;
 import com.sbsj.dreamwing.support.mapper.SupportMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -44,4 +46,24 @@ public class SupportServiceImpl implements SupportService {
     public List<GetSupportListResponseDTO> getAllSupportList() throws Exception {
         return mapper.selectAllSupportList();
     }
+
+    @Transactional
+    @Override
+    public boolean SupportGivePoints(PostSupportGiveRequestDTO request) throws Exception {
+        // 사용자의 보유 포인트를 가져와서 확인 (보유 포인트 확인 로직 필요)
+        int userPoints = mapper.getUserPoints(request.getUserId());
+        if (userPoints < request.getPoint()) {
+            return false; // 포인트가 부족하면 false 반환
+        }
+
+        // 사용자의 포인트 차감
+        mapper.updateUserPoints(request.getUserId(), request.getPoint());
+
+        // 기부 내역 업데이트
+        mapper.updateSupportPoints(request.getSupportId(), request.getPoint());
+
+        return true;
+    }
+
+
 }

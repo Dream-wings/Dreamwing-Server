@@ -3,6 +3,7 @@ package com.sbsj.dreamwing.support.service;
 
 import com.sbsj.dreamwing.support.dto.GetSupportListResponseDTO;
 import com.sbsj.dreamwing.support.dto.GetTotalSupportResponseDTO;
+import com.sbsj.dreamwing.support.dto.PostSupportGiveRequestDTO;
 
 import java.util.List;
 
@@ -24,4 +25,6 @@ public interface SupportService {
     GetTotalSupportResponseDTO getTotalSupport() throws Exception;
     List<GetSupportListResponseDTO> getSupportList() throws Exception;
     List<GetSupportListResponseDTO> getAllSupportList() throws Exception;
+    boolean SupportGivePoints(PostSupportGiveRequestDTO request) throws Exception;
+
 }
