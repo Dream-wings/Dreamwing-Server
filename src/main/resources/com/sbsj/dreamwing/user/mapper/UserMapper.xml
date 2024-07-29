@@ -37,4 +37,10 @@
                      #{profileImageUrl},
                      #{createdDate})
     </insert>
+
+    <select id="checkLoginIdExistence" parameterType="String" resultType="String">
+        SELECT LOGIN_ID
+        FROM USER_INFO
+        WHERE LOGIN_ID = '${value}'
+    </select>
 </mapper>

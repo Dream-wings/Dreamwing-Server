@@ -32,6 +32,9 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     public boolean signUp(SignUpRequestDTO signUpRequestDTO) {
+        // loginId 중복 여부 확인
+
+
         // 현재 시간을 TIMESTAMP로 설정
         Timestamp currentTimestamp = new Timestamp(new Date().getTime());
 

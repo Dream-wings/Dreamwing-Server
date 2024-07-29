@@ -31,7 +31,6 @@ public class UserMapperTests {
 
     @Test
     public void testInsert() {
-
         UserVO userVO = UserVO.builder()
                 .loginId("test2")
                 .password("test12345")
@@ -48,9 +47,5 @@ public class UserMapperTests {
 
         int check = userMapper.insertUser(userVO);
         Assertions.assertEquals(check, 1);
-
-
-
-
     }
 }
