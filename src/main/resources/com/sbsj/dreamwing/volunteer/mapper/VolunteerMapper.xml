@@ -33,4 +33,20 @@
         WHERE  VOLUNTEER_ID = #{volunteerId}
     </select>
 
+
+    <!-- 봉사 신청하기 -->
+    <insert id="insertVolunteerApplication" parameterType="com.sbsj.dreamwing.volunteer.dto.PostApplyVolunteerRequestDTO">
+        INSERT INTO USER_VOLUNTEER (VOLUNTEER_ID, USER_ID,  STATUS, VERIFIED)
+        VALUES (#{volunteerId},#{userId},  DEFAULT, DEFAULT)
+    </insert>
+
+    <!-- 이미 신청했는지 체크 -->
+    <select id="checkIfAlreadyApplied" parameterType="com.sbsj.dreamwing.volunteer.dto.PostApplyVolunteerRequestDTO" resultType="int">
+        SELECT COUNT(*)
+        FROM USER_VOLUNTEER
+        WHERE VOLUNTEER_ID = #{volunteerId} AND USER_ID = #{userId}
+    </select>
+
+
+
 </mapper>
