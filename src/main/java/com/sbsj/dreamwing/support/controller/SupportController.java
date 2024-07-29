@@ -5,6 +5,7 @@ import com.sbsj.dreamwing.mission.dto.AwardPointsRequestDTO;
 import com.sbsj.dreamwing.mission.service.MissionService;
 import com.sbsj.dreamwing.support.dto.GetSupportListResponseDTO;
 import com.sbsj.dreamwing.support.dto.GetTotalSupportResponseDTO;
+import com.sbsj.dreamwing.support.dto.PostSupportGiveRequestDTO;
 import com.sbsj.dreamwing.support.service.SupportService;
 import com.sbsj.dreamwing.util.ApiResponse;
 import lombok.AllArgsConstructor;
@@ -73,4 +74,23 @@ public class SupportController {
         List<GetSupportListResponseDTO> response = service.getAllSupportList();
         return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, response));
     }
+
+    /**
+     * 포인트 기부
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("/give")
+    public ResponseEntity<ApiResponse<Void>> SupportGivePoints(@RequestBody PostSupportGiveRequestDTO request) throws Exception {
+        boolean success = service.SupportGivePoints(request);
+        if (success) {
+            return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK));
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiResponse.failure(HttpStatus.BAD_REQUEST, "포인트가 부족합니다."));
+        }
+    }
+
+
+
 }
