@@ -15,5 +15,5 @@ import com.sbsj.dreamwing.user.dto.SignUpRequestDTO;
  * </pre>
  */
 public interface UserService {
-    public boolean signUp(SignUpRequestDTO signUpRequestDTO);
+    public String signUp(SignUpRequestDTO signUpRequestDTO);
 }

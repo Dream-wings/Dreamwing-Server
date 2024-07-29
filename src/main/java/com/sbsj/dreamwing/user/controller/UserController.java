@@ -31,10 +31,13 @@ public class UserController {
 
     @PostMapping("/signUp")
     public ResponseEntity<ApiResponse<Void>> signUp(@RequestBody SignUpRequestDTO signUpRequestDTO) throws Exception {
-        boolean success = userService.signUp(signUpRequestDTO);
+        String result = userService.signUp(signUpRequestDTO);
 
-        if (success) {
+        if (result.equals("사용자 등록 성공")) {
             return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK));
+        }
+        else if (result.equals("중복 아이디 존재")) {
+            return ResponseEntity.badRequest().body(ApiResponse.failure(HttpStatus.BAD_REQUEST, "회원가입 실패 - 중복 아이디가 존재합니다."));
         }
         else {
             return ResponseEntity.badRequest().body(ApiResponse.failure(HttpStatus.BAD_REQUEST, "회원가입 실패"));

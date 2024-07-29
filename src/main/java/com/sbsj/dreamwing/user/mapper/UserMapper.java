@@ -12,6 +12,7 @@ import org.apache.ibatis.annotations.Mapper;
  * <pre>
  * 수정일        		수정자       				    수정내용
  * ----------  ----------------    ---------------------------------
+ *  2024.07.29      정은찬                      checkLoginIdExistence 메서드 작성
  *  2024.07.28     	정은찬        		       최초 생성
  * </pre>
  */

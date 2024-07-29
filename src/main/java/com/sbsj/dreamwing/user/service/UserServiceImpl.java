@@ -31,10 +31,11 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public boolean signUp(SignUpRequestDTO signUpRequestDTO) {
+    public String signUp(SignUpRequestDTO signUpRequestDTO) {
         // loginId 중복 여부 확인
-
-
+        if(userMapper.checkLoginIdExistence(signUpRequestDTO.getLoginId()) != null) {
+            return "중복 아이디 존재";
+        }
         // 현재 시간을 TIMESTAMP로 설정
         Timestamp currentTimestamp = new Timestamp(new Date().getTime());
 
@@ -50,10 +51,10 @@ public class UserServiceImpl implements UserService {
         int saved = userMapper.insertUser(userVO);
 
         if (saved != 0) {
-            return true;
+            return "사용자 등록 성공";
         }
         else {
-            return false;
+            return "사용자 등록 실패";
         }
     }
 }

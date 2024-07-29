@@ -20,6 +20,7 @@ import java.sql.Timestamp;
  * <pre>
  * 수정일        	수정자        수정내용
  * ----------  --------    ---------------------------
+ * 2024.07.29   정은찬         testCheckLoginIdExistence 테스트 코드 작성
  * 2024.07.28  	정은찬        최초 생성
  * </pre>
  */
@@ -47,5 +48,11 @@ public class UserMapperTests {
 
         int check = userMapper.insertUser(userVO);
         Assertions.assertEquals(check, 1);
+    }
+
+    @Test
+    public void testCheckLoginIdExistence() {
+        String loginId = userMapper.checkLoginIdExistence("test2");
+        Assertions.assertEquals(loginId, "test2");
     }
 }
