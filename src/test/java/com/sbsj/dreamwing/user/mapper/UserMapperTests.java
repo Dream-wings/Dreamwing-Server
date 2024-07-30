@@ -2,6 +2,7 @@ package com.sbsj.dreamwing.user.mapper;
 
 import com.sbsj.dreamwing.user.domain.UserVO;
 
+import com.sbsj.dreamwing.user.dto.UserDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -54,5 +55,11 @@ public class UserMapperTests {
     public void testCheckLoginIdExistence() {
         String loginId = userMapper.checkLoginIdExistence("test2");
         Assertions.assertEquals(loginId, "test2");
+    }
+
+    @Test
+    public void testFindUserByLoginId() {
+        UserDTO userDTO = userMapper.findUserByLoginId("test2");
+        Assertions.assertEquals(userDTO.getUserId(), 1);
     }
 }

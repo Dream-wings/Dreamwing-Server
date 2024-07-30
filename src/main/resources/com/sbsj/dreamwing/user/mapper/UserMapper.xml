@@ -44,4 +44,10 @@
         FROM USER_INFO
         WHERE LOGIN_ID = '${value}'
     </select>
+
+    <select id="findUserByLoginId" resultType="UserDTO">
+        SELECT USER_ID, LOGIN_ID, PASSWORD
+        FROM USER_INFO
+        WHERE LOGIN_ID = #{loginId}
+    </select>
 </mapper>
