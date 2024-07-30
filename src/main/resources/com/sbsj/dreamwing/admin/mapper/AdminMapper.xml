@@ -13,7 +13,8 @@
 * 2024.07.28   정은지         최초 생성
 * 2024.07.28   정은지         봉사활동 승인 기능 추가
 * 2024.07.29   정은지         봉사활동 인증 기능 추가
-*
+ * 2024.07.30   임재성        봉사 & 멘토링 공고 글 조회 기능 추가
+ * 2024.07.30   임재성        봉사 & 멘토링 공고 글 생성/수정/삭제 기능 추가
 * </pre>
 -->
 <mapper namespace="com.sbsj.dreamwing.admin.mapper.AdminMapper">
@@ -30,4 +31,81 @@
         WHERE  VOLUNTEER_ID = #{volunteerId}
                AND USER_ID = #{userId}
     </update>
+
+    <!-- 봉사 공고 생성 -->
+    <insert id="insertVolunteer" parameterType="com.sbsj.dreamwing.admin.dto.AdminVolunteerRequestDTO">
+        INSERT INTO VOLUNTEER (
+            VOLUNTEER_ID,
+            TITLE,
+            CONTENT,
+            TYPE,
+            CATEGORY,
+            VOLUNTEER_START_DATE,
+            VOLUNTEER_END_DATE,
+            ADDRESS,
+            TOTAL_COUNT,
+            STATUS,
+            RECRUIT_START_DATE,
+            RECRUIT_END_DATE,
+            IMAGE_URL,
+            LATITUDE,
+            LONGITUDE
+        )
+        VALUES (
+                   SEQ_VOLUNTEER.NEXTVAL,
+                   #{title},
+                   #{content},
+                   #{type},
+                   #{category},
+                   #{startDate},
+                   #{endDate},
+                   #{address},
+                   #{totalCount},
+                   #{status},
+                   #{recruitStartDate},
+                   #{recruitEndDate},
+                   #{imageUrl},
+                   #{latitude},
+                   #{longitude}
+               )
+    </insert>
+
+    <!-- 봉사 공고 수정 -->
+    <update id="updateVolunteer" parameterType="com.sbsj.dreamwing.admin.dto.AdminVolunteerRequestDTO">
+        UPDATE VOLUNTEER
+        SET
+            TITLE = #{title},
+            CONTENT = #{content},
+            TYPE = #{type},
+            CATEGORY = #{category},
+            VOLUNTEER_START_DATE = #{startDate},
+            VOLUNTEER_END_DATE = #{endDate},
+            ADDRESS = #{address},
+            TOTAL_COUNT = #{totalCount},
+            STATUS = #{status},
+            RECRUIT_START_DATE = #{recruitStartDate},
+            RECRUIT_END_DATE = #{recruitEndDate},
+            IMAGE_URL = #{imageUrl},
+            LATITUDE = #{latitude},
+            LONGITUDE = #{longitude}
+        WHERE VOLUNTEER_ID = #{volunteerId}
+    </update>
+
+    <!-- 봉사 공고 삭제 -->
+    <delete id="deleteVolunteer" parameterType="long">
+        DELETE FROM VOLUNTEER
+        WHERE VOLUNTEER_ID = #{volunteerId}
+    </delete>
+
+    <!-- 봉사 공고 목록 조회 -->
+    <select id="selectVolunteerList" resultType="com.sbsj.dreamwing.admin.dto.AdminVolunteerResponseDTO">
+        SELECT
+            V.VOLUNTEER_ID AS volunteerId,
+            V.TITLE AS title,
+            V.TYPE AS type,
+            (SELECT COUNT(*) FROM USER_VOLUNTEER UV WHERE UV.VOLUNTEER_ID = V.VOLUNTEER_ID) AS currentPerson
+        FROM VOLUNTEER V
+    </select>
+
+
 </mapper>

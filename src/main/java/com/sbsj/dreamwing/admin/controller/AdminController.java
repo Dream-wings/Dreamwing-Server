@@ -1,11 +1,15 @@
 package com.sbsj.dreamwing.admin.controller;
 
+import com.sbsj.dreamwing.admin.dto.AdminVolunteerRequestDTO;
+import com.sbsj.dreamwing.admin.dto.AdminVolunteerResponseDTO;
 import com.sbsj.dreamwing.admin.dto.AwardVolunteerPointsRequestDTO;
 import com.sbsj.dreamwing.admin.dto.UpdateVolunteerStatusRequestDTO;
 import com.sbsj.dreamwing.admin.service.AdminService;
 import com.sbsj.dreamwing.mission.dto.AwardPointsRequestDTO;
 import com.sbsj.dreamwing.mission.service.MissionService;
 import com.sbsj.dreamwing.util.ApiResponse;
+import com.sbsj.dreamwing.volunteer.dto.VolunteerListDTO;
+import com.sbsj.dreamwing.volunteer.service.VolunteerService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -13,6 +17,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 관리자 컨트롤러
@@ -26,6 +32,8 @@ import org.springframework.web.bind.annotation.*;
  * 2024.07.28   정은지        최초 생성
  * 2024.07.28   정은지        봉사활동 승인 기능 추가
  * 2024.07.29   정은지        봉사활동 인증 후 포인트 부여 기능 추가
+ * 2024.07.30   임재성        봉사 & 멘토링 공고 글 조회 기능 추가
+ * 2024.07.30   임재성        봉사 & 멘토링 공고 글 생성/수정/삭제 기능 추가
  * </pre>
  */
 @RestController
@@ -36,12 +44,13 @@ public class AdminController {
 
     private final AdminService service;
     private final MissionService missionService;
+    private final VolunteerService volunteerService;
 
     /**
      * 사용자 봉사활동 신청 승인
      * @param request
      * @return
-     * @throws Exception
+     * @throws Exception    
      */
     @PatchMapping("/volunteer/approve")
     public ResponseEntity<ApiResponse<Void>> approveVolunteerRequest(
@@ -64,4 +73,64 @@ public class AdminController {
                 ResponseEntity.ok(ApiResponse.success(HttpStatus.OK)) :
                 ResponseEntity.badRequest().body(ApiResponse.failure(HttpStatus.BAD_REQUEST, "봉사활동 인증 포인트 부여 실패"));
     }
+
+
+    /**
+     * 봉사 공고 생성
+     * @param request
+     * @return
+     */
+    @PostMapping("/volunteer/create")
+    public ResponseEntity<ApiResponse<Void>> createVolunteer(
+            @RequestBody AdminVolunteerRequestDTO request) {
+        int result = service.createVolunteer(request);
+        if (result > 0) {
+            return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success(HttpStatus.CREATED));
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiResponse.failure(HttpStatus.BAD_REQUEST, "봉사 공고 생성에 실패했습니다."));
+        }
+    }
+
+    /**
+     * 봉사 공고 수정
+     * @param request
+     * @return
+     */
+    @PutMapping("/volunteer/update")
+    public ResponseEntity<ApiResponse<Void>> updateVolunteer(
+            @RequestBody AdminVolunteerRequestDTO request) {
+        int result = service.updateVolunteer(request);
+        if (result > 0) {
+            return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK));
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiResponse.failure(HttpStatus.BAD_REQUEST, "봉사 공고 수정에 실패했습니다."));
+        }
+    }
+
+    /**
+     * 봉사 공고 삭제
+     * @param volunteerId
+     * @return
+     */
+    @DeleteMapping("/volunteer/{volunteerId}")
+    public ResponseEntity<ApiResponse<Void>> deleteVolunteer(
+            @PathVariable long volunteerId) {
+        int result = service.deleteVolunteer(volunteerId);
+        if (result > 0) {
+            return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK));
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiResponse.failure(HttpStatus.BAD_REQUEST, "봉사 공고 삭제에 실패했습니다."));
+        }
+    }
+
+    /**
+     * 봉사 공고 목록 조회
+     * @return
+     */
+    @GetMapping("/volunteer/list")
+    public ResponseEntity<ApiResponse<List<AdminVolunteerResponseDTO>>> getVolunteerList() {
+        List<AdminVolunteerResponseDTO> response = service.getVolunteerList();
+        return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, response));
+    }
+
 }
