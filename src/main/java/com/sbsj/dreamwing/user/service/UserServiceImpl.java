@@ -25,7 +25,8 @@ import java.util.List;
  * 수정일        		수정자       				    수정내용
  * ----------  ----------------    ---------------------------------
  *  2024.07.28     	정은찬        		       최초 생성 및 회원가입 기능
- *  2024.07.29      정은찬                      로그인 기능
+ *  2024.07.29      정은찬                      로그인 기능 추가
+ *  2024.07.31      정은찬                      회원탈퇴 기능 추가
  * </pre>
  */
 @Service
@@ -65,7 +66,8 @@ public class UserServiceImpl implements UserService {
     }
 
     public String login(LoginRequestDTO loginRequestDTO) throws Exception {
-        UserDTO userDTO = userMapper.findUserByLoginId(loginRequestDTO.getLoginId());
+        UserDTO userDTO = userMapper.selectUserByLoginId(loginRequestDTO.getLoginId())
+                .orElseThrow(() -> new RuntimeException("잘못된 아이디입니다"));
 
         if(userDTO == null) {
             throw new Exception("잘못된 아이디입니다.");
@@ -84,6 +86,17 @@ public class UserServiceImpl implements UserService {
                 }
                 return jwtTokenProvider.createToken(userDTO.getUserId(), roles);
             }
+        }
+    }
+
+    public boolean withdraw(long userId) {
+        int result = userMapper.withdraw(userId);
+
+        if(result == 1) {
+            return true;
+        }
+        else {
+            return false;
         }
     }
 }

@@ -46,9 +46,29 @@
         WHERE LOGIN_ID = '${value}'
     </select>
 
-    <select id="findUserByLoginId" resultType="UserDTO">
-        SELECT USER_ID, LOGIN_ID, PASSWORD
-        FROM USER_INFO
-        WHERE LOGIN_ID = #{loginId}
+    <select id="selectUserByLoginId" resultType="UserDTO">
+        SELECT USER_ID,
+               LOGIN_ID,
+               PASSWORD
+        FROM   USER_INFO
+        WHERE  LOGIN_ID = #{loginId}
+    </select>
+
+    <update id="withdraw" parameterType="Long">
+        UPDATE USER_INFO
+        SET NAME = '탈퇴회원',
+            PHONE = '00000000000',
+            TOTAL_POINT = 0,
+            WITHDRAW = 1,
+            PROFILE_IMAGE_URL = 'DEFAULT URL'
+        WHERE USER_ID = #{userId}
+    </update>
+
+    <select id="selectUserByUserId" resultType="UserDTO">
+        SELECT USER_ID,
+               LOGIN_ID,
+               PASSWORD
+        FROM   USER_INFO
+        WHERE  USER_ID = #{userId}
     </select>
 </mapper>
