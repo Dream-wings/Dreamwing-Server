@@ -15,6 +15,7 @@ import org.apache.ibatis.annotations.Mapper;
  * ----------  ----------------    ---------------------------------
  *  2024.07.28     	정은찬        		       최초 생성
  *  2024.07.29      정은찬                      checkLoginIdExistence 메서드 작성
+ *  2025.07.30      정은찬                      findUserByLoginId
  * </pre>
  */
 @Mapper
