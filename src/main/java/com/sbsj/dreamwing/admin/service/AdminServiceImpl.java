@@ -1,5 +1,7 @@
 package com.sbsj.dreamwing.admin.service;
 
+import com.sbsj.dreamwing.admin.dto.AdminVolunteerRequestDTO;
+import com.sbsj.dreamwing.admin.dto.AdminVolunteerResponseDTO;
 import com.sbsj.dreamwing.admin.dto.AwardVolunteerPointsRequestDTO;
 import com.sbsj.dreamwing.admin.dto.UpdateVolunteerStatusRequestDTO;
 import com.sbsj.dreamwing.admin.mapper.AdminMapper;
@@ -9,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * 관리자 서비스 구현체
@@ -22,6 +26,8 @@ import org.springframework.transaction.annotation.Transactional;
  * 2024.07.28  	정은지        최초 생성
  * 2024.07.28   정은지        봉사활동 승인 기능 추가
  * 2024.07.29   정은지        봉사활동 인증 후 포인트 부여 기능 추가
+ * 2024.07.30   임재성        봉사 & 멘토링 공고 글 조회 기능 추가
+ * 2024.07.30   임재성        봉사 & 멘토링 공고 글 생성/수정/삭제 기능 추가
  * </pre>
  */
 @Slf4j
@@ -51,5 +57,28 @@ public class AdminServiceImpl implements AdminService {
             log.error(e.getMessage());
             return false;
         }
+    }
+
+    @Override
+    @Transactional
+    public int createVolunteer(AdminVolunteerRequestDTO request) {
+        return mapper.insertVolunteer(request);
+    }
+
+    @Override
+    @Transactional
+    public int updateVolunteer(AdminVolunteerRequestDTO request) {
+        return mapper.updateVolunteer(request);
+    }
+
+    @Override
+    @Transactional
+    public int deleteVolunteer(long volunteerId) {
+        return mapper.deleteVolunteer(volunteerId);
+    }
+
+    @Override
+    public List<AdminVolunteerResponseDTO> getVolunteerList() {
+        return mapper.selectVolunteerList();
     }
 }
