@@ -32,4 +32,7 @@ public interface VolunteerService {
     VolunteerDetailDTO getVolunteerDetail(long volunteerId) throws Exception;
 
     boolean applyVolunteer(PostApplyVolunteerRequestDTO request);
+
+    boolean cancelVolunteerApplication(PostApplyVolunteerRequestDTO request);
+
 }

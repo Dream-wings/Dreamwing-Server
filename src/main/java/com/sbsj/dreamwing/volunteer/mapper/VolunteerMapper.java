@@ -33,11 +33,9 @@ public interface VolunteerMapper {
 
     int insertVolunteerApplication(PostApplyVolunteerRequestDTO request);
 
-//    boolean checkIfAlreadyApplied(long volunteerId, long userId);
-
-//    int insertVolunteerApplication(long volunteerId, long userId);
-
     int checkIfAlreadyApplied(PostApplyVolunteerRequestDTO request);
+
+    int deleteVolunteerApplication(PostApplyVolunteerRequestDTO request);
 }
 
 

@@ -59,6 +59,15 @@ public class VolunteerServiceImpl implements VolunteerService{
         return result > 0;
     }
 
+    @Override
+    @Transactional
+    public boolean cancelVolunteerApplication(PostApplyVolunteerRequestDTO request) {
+        // 봉사 신청 취소
+        int result = volunteerMapper.deleteVolunteerApplication(request);
+        return result > 0;
+    }
 }
+
+
 
 

@@ -65,5 +65,15 @@ public class VolunteerController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiResponse.failure(HttpStatus.BAD_REQUEST, "신청에 실패했습니다."));
         }
     }
+    @PostMapping("/cancel")
+    public ResponseEntity<ApiResponse<Void>> cancelVolunteer(@RequestBody PostApplyVolunteerRequestDTO request) throws Exception {
+        boolean success = volunteerService.cancelVolunteerApplication(request);
+        if (success) {
+            return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK));
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiResponse.failure(HttpStatus.BAD_REQUEST, "신청 취소에 실패했습니다."));
+        }
+    }
+
 
 }
