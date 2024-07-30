@@ -83,16 +83,16 @@ public class AdminMapperTests {
         dto.setContent("테스트 봉사 공고 내용");
         dto.setType(1);
         dto.setCategory(2);
-        dto.setStartDate(Timestamp.valueOf("2024-08-01 09:00:00"));
-        dto.setEndDate(Timestamp.valueOf("2024-08-01 12:00:00"));
-        dto.setAddress("테스트 주소");
-        dto.setTotalCount(20);
-        dto.setStatus(0);
-        dto.setRecruitStartDate(Timestamp.valueOf("2024-07-01 00:00:00"));
-        dto.setRecruitEndDate(Timestamp.valueOf("2024-07-31 23:59:59"));
-        dto.setImageUrl("https://example.com/image.jpg");
-        dto.setLatitude("37.5665");
-        dto.setLongitude("126.978");
+//        dto.setStartDate(Timestamp.valueOf("2024-08-01 09:00:00"));
+//        dto.setEndDate(Timestamp.valueOf("2024-08-01 12:00:00"));
+//        dto.setAddress("테스트 주소");
+//        dto.setTotalCount(20);
+//        dto.setStatus(0);
+//        dto.setRecruitStartDate(Timestamp.valueOf("2024-07-01 00:00:00"));
+//        dto.setRecruitEndDate(Timestamp.valueOf("2024-07-31 23:59:59"));
+//        dto.setImageUrl("https://example.com/image.jpg");
+//        dto.setLatitude("37.5665");
+//        dto.setLongitude("126.978");
 
         // when
         int success = mapper.insertVolunteer(dto);
@@ -111,16 +111,16 @@ public class AdminMapperTests {
         dto.setContent("수정된 봉사 공고 내용");
         dto.setType(1);
         dto.setCategory(2);
-        dto.setStartDate(Timestamp.valueOf("2024-08-01 09:00:00"));
-        dto.setEndDate(Timestamp.valueOf("2024-08-01 12:00:00"));
-        dto.setAddress("수정된 주소");
-        dto.setTotalCount(30);
-        dto.setStatus(1);
-        dto.setRecruitStartDate(Timestamp.valueOf("2024-07-01 00:00:00"));
-        dto.setRecruitEndDate(Timestamp.valueOf("2024-07-31 23:59:59"));
-        dto.setImageUrl("https://example.com/new_image.jpg");
-        dto.setLatitude("37.567");
-        dto.setLongitude("126.979");
+//        dto.setStartDate(Timestamp.valueOf("2024-08-01 09:00:00"));
+//        dto.setEndDate(Timestamp.valueOf("2024-08-01 12:00:00"));
+//        dto.setAddress("수정된 주소");
+//        dto.setTotalCount(30);
+//        dto.setStatus(1);
+//        dto.setRecruitStartDate(Timestamp.valueOf("2024-07-01 00:00:00"));
+//        dto.setRecruitEndDate(Timestamp.valueOf("2024-07-31 23:59:59"));
+//        dto.setImageUrl("https://example.com/new_image.jpg");
+//        dto.setLatitude("37.567");
+//        dto.setLongitude("126.979");
 
         // when
         int success = mapper.updateVolunteer(dto);

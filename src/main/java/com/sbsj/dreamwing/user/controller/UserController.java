@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
  * ----------  ----------------    ---------------------------------
  *  2024.07.28     	정은찬        		        최초 생성 및 회원가입 API 작성
  *  2024.07.30      정은찬                       로그인 기능 API 추가
- *  2024.07.31      정은찬                       회원탈퇴 기능 API 추가
+ *  2024.07.31      정은찬                       회원탈퇴 기능 API 및 회원 정보 가져오기 API 추가
  * </pre>
  */
 @RestController
@@ -84,6 +84,19 @@ public class UserController {
         else {
             return ResponseEntity.badRequest().body(ApiResponse.failure(HttpStatus.BAD_REQUEST, "회원탈퇴 실패"));
         }
-        
+    }
+
+    @GetMapping("/userInfo")
+    public ResponseEntity<ApiResponse<UserDTO>> getUserInfo() throws Exception {
+        // SecurityContext에서 Authentication 객체를 가져옵니다.
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // UserDetails 객체에서 userId를 가져옵니다.
+        // 여기서는 UserDetails의 `getUsername` 메서드를 사용한다고 가정합니다.
+        long userId = ((UserDTO) authentication.getPrincipal()).getUserId();
+        // userService에서 withdraw 메서드를 호출합니다.
+
+        UserDTO userDTO = userService.getUserInfo(userId);
+
+        return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, userDTO));
     }
 }

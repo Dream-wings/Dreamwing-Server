@@ -2,6 +2,7 @@ package com.sbsj.dreamwing.user.service;
 
 import com.sbsj.dreamwing.user.dto.LoginRequestDTO;
 import com.sbsj.dreamwing.user.dto.SignUpRequestDTO;
+import com.sbsj.dreamwing.user.dto.UserDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -65,5 +66,12 @@ public class UserServiceTests {
     public void withdrawTest() {
         boolean result = userService.withdraw(4);
         Assertions.assertEquals(result, true);
+    }
+
+
+    @Test
+    public void getUserInfoTest() {
+        UserDTO result = userService.getUserInfo(7);
+        Assertions.assertEquals(result.getLoginId(), "loginTest4");
     }
 }
