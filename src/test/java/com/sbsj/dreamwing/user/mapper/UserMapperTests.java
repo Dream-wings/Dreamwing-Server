@@ -59,8 +59,23 @@ public class UserMapperTests {
     }
 
     @Test
-    public void testFindUserByLoginId() {
-        UserDTO userDTO = userMapper.findUserByLoginId("test2");
+    public void testSelectUserByLoginId() {
+        UserDTO userDTO = userMapper.selectUserByLoginId("test2")
+                .orElseThrow(() -> new RuntimeException("잘못된 아이디입니다"));
         Assertions.assertEquals(userDTO.getUserId(), 1);
+    }
+
+    @Test
+    public void testWithdraw() {
+        long userId = 2;
+        int result = userMapper.withdraw(userId);
+        Assertions.assertEquals(result, 1);
+    }
+
+    @Test
+    public void testSelectUserByUserId() {
+        UserDTO userDTO = userMapper.selectUserByUserId(5)
+                .orElseThrow(() -> new RuntimeException("잘못된 아이디입니다"));
+        Assertions.assertEquals(userDTO.getUserId(), 5);
     }
 }

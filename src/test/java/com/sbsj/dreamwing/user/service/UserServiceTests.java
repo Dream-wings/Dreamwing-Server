@@ -31,7 +31,7 @@ public class UserServiceTests {
     public void signUpTest() {
         SignUpRequestDTO signUpRequestDTO  = new SignUpRequestDTO();
 
-        signUpRequestDTO.setLoginId("loginTest");
+        signUpRequestDTO.setLoginId("loginTest5");
         signUpRequestDTO.setPassword("123456");
         signUpRequestDTO.setName("testServiceName");
         signUpRequestDTO.setPhone("testPhone");
@@ -59,7 +59,11 @@ public class UserServiceTests {
         } catch (Exception e) {
 
         }
+    }
 
-
+    @Test
+    public void withdrawTest() {
+        boolean result = userService.withdraw(4);
+        Assertions.assertEquals(result, true);
     }
 }

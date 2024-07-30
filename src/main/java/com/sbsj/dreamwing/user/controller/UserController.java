@@ -1,6 +1,7 @@
 package com.sbsj.dreamwing.user.controller;
 
 import com.sbsj.dreamwing.user.dto.LoginRequestDTO;
+import com.sbsj.dreamwing.user.dto.UserDTO;
 import com.sbsj.dreamwing.user.service.UserService;
 import com.sbsj.dreamwing.user.dto.SignUpRequestDTO;
 import com.sbsj.dreamwing.util.ApiResponse;
@@ -8,10 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 사용자 관련 요청을 처리하는 Controller 클래스
@@ -22,8 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
  * <pre>
  * 수정일        		수정자       				    수정내용
  * ----------  ----------------    ---------------------------------
- *  2024.07.28     	정은찬        		        최초 생성 및 회원가입 API
- *  2024.07.30      정은찬                       로그인 기능 API
+ *  2024.07.28     	정은찬        		        최초 생성 및 회원가입 API 작성
+ *  2024.07.30      정은찬                       로그인 기능 API 추가
+ *  2024.07.31      정은찬                       회원탈퇴 기능 API 추가
  * </pre>
  */
 @RestController
@@ -54,12 +55,35 @@ public class UserController {
 
             // HttpHeaders 설정
             HttpHeaders headers = new HttpHeaders();
-            headers.set("Authorization", token);
+            headers.set("Authorization", "Bearer " + token);
 
             // ResponseEntity 반환
             return ResponseEntity.ok().headers(headers).body(ApiResponse.success(HttpStatus.OK));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(ApiResponse.failure(HttpStatus.BAD_REQUEST, e.getMessage()));
         }
+    }
+
+    /**
+     *
+     * @return
+     */
+    @PostMapping("/withdraw")
+    public ResponseEntity<ApiResponse<Void>> withdraw() {
+        // SecurityContext에서 Authentication 객체를 가져옵니다.
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // UserDetails 객체에서 userId를 가져옵니다.
+        // 여기서는 UserDetails의 `getUsername` 메서드를 사용한다고 가정합니다.
+        long userId = ((UserDTO) authentication.getPrincipal()).getUserId();
+        // userService에서 withdraw 메서드를 호출합니다.
+        
+        boolean result = userService.withdraw(userId);
+        if (result) {
+            return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK));
+        }
+        else {
+            return ResponseEntity.badRequest().body(ApiResponse.failure(HttpStatus.BAD_REQUEST, "회원탈퇴 실패"));
+        }
+        
     }
 }
