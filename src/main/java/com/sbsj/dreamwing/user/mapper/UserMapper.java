@@ -1,7 +1,6 @@
 package com.sbsj.dreamwing.user.mapper;
 
 import com.sbsj.dreamwing.user.domain.UserVO;
-import com.sbsj.dreamwing.user.dto.LoginDTO;
 import com.sbsj.dreamwing.user.dto.UserDTO;
 import org.apache.ibatis.annotations.Mapper;
 

@@ -21,8 +21,9 @@ import java.sql.Timestamp;
  * <pre>
  * 수정일        	수정자        수정내용
  * ----------  --------    ---------------------------
+ * 2024.07.28  	정은찬         최초 생성
  * 2024.07.29   정은찬         testCheckLoginIdExistence 테스트 코드 작성
- * 2024.07.28  	정은찬        최초 생성
+ * 2024.07.30   정은찬         testFindUserByLoginId 테스트 코드 작성
  * </pre>
  */
 @Slf4j

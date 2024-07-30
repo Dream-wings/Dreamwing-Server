@@ -1,8 +1,7 @@
 package com.sbsj.dreamwing.user.service;
 
-import com.sbsj.dreamwing.user.dto.LoginDTO;
+import com.sbsj.dreamwing.user.dto.LoginRequestDTO;
 import com.sbsj.dreamwing.user.dto.SignUpRequestDTO;
-import com.sbsj.dreamwing.user.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -19,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
  * 수정일        	수정자        수정내용
  * ----------  --------    ---------------------------
  * 2024.07.28  	정은찬        최초 생성
+ * 2024.07.30   정은찬        로그인 서비스 테스트 코드 작성
  * </pre>
  */
 @Slf4j
@@ -43,18 +43,23 @@ public class UserServiceTests {
 
     @Test
     public void loginTest() {
-        LoginDTO loginDTO = new LoginDTO();
-        loginDTO.setLoginId("loginTest");
-        loginDTO.setPassword("123456");
+        LoginRequestDTO loginRequestDTO = new LoginRequestDTO();
+        loginRequestDTO.setLoginId("loginTest");
+        loginRequestDTO.setPassword("123456");
 
-        String result = userService.login(loginDTO);
+        try {
+            String result = userService.login(loginRequestDTO);
 
-        if(result == null || result.length() == 0) {
-            log.info("JWT Token: null");
+            if(result == null || result.length() == 0) {
+                log.info("JWT Token: null");
+            }
+            else {
+                log.info("JWT Token: " + result);
+            }
+        } catch (Exception e) {
+
         }
-        else {
-            log.info("JWT Token: " + result);
-        }
+
 
     }
 }

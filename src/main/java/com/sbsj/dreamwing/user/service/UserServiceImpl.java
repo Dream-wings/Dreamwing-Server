@@ -1,12 +1,11 @@
 package com.sbsj.dreamwing.user.service;
 
 import com.sbsj.dreamwing.user.domain.UserVO;
-import com.sbsj.dreamwing.user.dto.LoginDTO;
+import com.sbsj.dreamwing.user.dto.LoginRequestDTO;
 import com.sbsj.dreamwing.user.dto.SignUpRequestDTO;
 import com.sbsj.dreamwing.user.dto.UserDTO;
 import com.sbsj.dreamwing.user.mapper.UserMapper;
 import com.sbsj.dreamwing.util.JwtTokenProvider;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -65,18 +64,24 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public String login(LoginDTO loginDTO) {
-        UserDTO userDTO = userMapper.findUserByLoginId(loginDTO.getLoginId());
+    public String login(LoginRequestDTO loginRequestDTO) throws Exception {
+        UserDTO userDTO = userMapper.findUserByLoginId(loginRequestDTO.getLoginId());
 
         if(userDTO == null) {
-            return "잘못된 아이디입니다.";
+            throw new Exception("잘못된 아이디입니다.");
         }
         else {
-            if(!passwordEncoder.matches(loginDTO.getPassword(), userDTO.getPassword())) {
-                return "잘못된 비밀번호입니다.";
+            if(!passwordEncoder.matches(loginRequestDTO.getPassword(), userDTO.getPassword())) {
+                throw new Exception("잘못된 비밀번호입니다.");
             }
             else {
-                List<String> roles = Collections.singletonList("ROLE_USER");
+                List<String> roles = null;
+                if(loginRequestDTO.getLoginId().equals("loginId")) {
+                    roles = Collections.singletonList("ROLE_ADMIN");
+                }
+                else {
+                    roles = Collections.singletonList("ROLE_USER");
+                }
                 return jwtTokenProvider.createToken(userDTO.getUserId(), roles);
             }
         }

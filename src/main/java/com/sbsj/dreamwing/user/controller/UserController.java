@@ -1,9 +1,11 @@
 package com.sbsj.dreamwing.user.controller;
 
+import com.sbsj.dreamwing.user.dto.LoginRequestDTO;
 import com.sbsj.dreamwing.user.service.UserService;
 import com.sbsj.dreamwing.user.dto.SignUpRequestDTO;
 import com.sbsj.dreamwing.util.ApiResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
  * <pre>
  * 수정일        		수정자       				    수정내용
  * ----------  ----------------    ---------------------------------
- *  2024.07.28     	정은찬        		        최초 생성
+ *  2024.07.28     	정은찬        		        최초 생성 및 회원가입
+ *  2024.07.30      정은찬                       로그인 기능 API
  * </pre>
  */
 @RestController
@@ -41,6 +44,22 @@ public class UserController {
         }
         else {
             return ResponseEntity.badRequest().body(ApiResponse.failure(HttpStatus.BAD_REQUEST, "회원가입 실패"));
+        }
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<ApiResponse<Void>> login(@RequestBody LoginRequestDTO LoginRequestDTO) {
+        try {
+            String token = userService.login(LoginRequestDTO);
+
+            // HttpHeaders 설정
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization", token);
+
+            // ResponseEntity 반환
+            return ResponseEntity.ok().headers(headers).body(ApiResponse.success(HttpStatus.OK));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(ApiResponse.failure(HttpStatus.BAD_REQUEST, e.getMessage()));
         }
     }
 }

@@ -1,6 +1,6 @@
 package com.sbsj.dreamwing.user.service;
 
-import com.sbsj.dreamwing.user.dto.LoginDTO;
+import com.sbsj.dreamwing.user.dto.LoginRequestDTO;
 import com.sbsj.dreamwing.user.dto.SignUpRequestDTO;
 
 /**
@@ -17,5 +17,5 @@ import com.sbsj.dreamwing.user.dto.SignUpRequestDTO;
  */
 public interface UserService {
     public String signUp(SignUpRequestDTO signUpRequestDTO);
-    public String login(LoginDTO loginDTO);
+    public String login(LoginRequestDTO loginRequestDTO) throws Exception;
 }
