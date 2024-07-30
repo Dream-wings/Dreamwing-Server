@@ -51,7 +51,8 @@ public class VolunteerServiceImpl implements VolunteerService{
 
         // 신청이 이미 되어있는 경우
         if (count > 0) {
-            throw new IllegalStateException("이미 신청한 봉사입니다.");
+            // 예외 대신 false 반환 (컨트롤러에서 적절히 처리)
+            return false;
         }
 
         // 봉사 신청
@@ -60,7 +61,6 @@ public class VolunteerServiceImpl implements VolunteerService{
     }
 
     @Override
-    @Transactional
     public boolean cancelVolunteerApplication(PostApplyVolunteerRequestDTO request) {
         // 봉사 신청 취소
         int result = volunteerMapper.deleteVolunteerApplication(request);

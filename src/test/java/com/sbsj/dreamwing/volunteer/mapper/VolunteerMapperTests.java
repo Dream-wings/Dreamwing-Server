@@ -1,5 +1,6 @@
 package com.sbsj.dreamwing.volunteer.mapper;
 
+import com.sbsj.dreamwing.volunteer.dto.PostApplyVolunteerRequestDTO;
 import com.sbsj.dreamwing.volunteer.dto.VolunteerDetailDTO;
 import com.sbsj.dreamwing.volunteer.mapper.VolunteerMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -42,4 +43,48 @@ public class VolunteerMapperTests {
         log.info(String.valueOf(volunteerDetailDTO));
         assertThat(volunteerDetailDTO).isNotNull();
     }
+
+    @Test
+    public void testInsertVolunteerApplication() {
+        PostApplyVolunteerRequestDTO request = new PostApplyVolunteerRequestDTO();
+        request.setVolunteerId(1L);
+        request.setUserId(2L);
+
+        // when
+        int result = mapper.insertVolunteerApplication(request);
+
+        // then
+        assertThat(result).isEqualTo(1); // Assuming 1 means success
+    }
+
+    @Test
+    public void testCheckIfAlreadyApplied() {
+        PostApplyVolunteerRequestDTO request = new PostApplyVolunteerRequestDTO();
+        request.setVolunteerId(3L);
+        request.setUserId(2L);
+
+        // when
+        int count = mapper.checkIfAlreadyApplied(request);
+
+        // then
+        assertThat(count).isGreaterThanOrEqualTo(0); // Expecting 0 or 1
+    }
+
+    @Test
+    public void testDeleteVolunteerApplication() {
+        PostApplyVolunteerRequestDTO request = new PostApplyVolunteerRequestDTO();
+        request.setVolunteerId(1L);
+        request.setUserId(2L);
+
+        // Pre-condition: Insert the record to ensure it exists
+        mapper.insertVolunteerApplication(request);
+
+        // when
+        int result = mapper.deleteVolunteerApplication(request);
+
+        // then
+        assertThat(result).isEqualTo(1); // Assuming 1 means success
+    }
+
+
 }
