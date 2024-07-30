@@ -1,5 +1,6 @@
 package com.sbsj.dreamwing.user.service;
 
+import com.sbsj.dreamwing.user.dto.LoginRequestDTO;
 import com.sbsj.dreamwing.user.dto.SignUpRequestDTO;
 
 /**
@@ -11,9 +12,11 @@ import com.sbsj.dreamwing.user.dto.SignUpRequestDTO;
  * <pre>
  * 수정일        		수정자       				    수정내용
  * ----------  ----------------    ---------------------------------
- *  2024.07.28     	정은찬        		        최초 생성
+ *  2024.07.28     	정은찬        		        최초 생성 및 회원가입 기능
+ *  2024.07.29      정은찬                       로그인 기능
  * </pre>
  */
 public interface UserService {
     public String signUp(SignUpRequestDTO signUpRequestDTO);
+    public String login(LoginRequestDTO loginRequestDTO) throws Exception;
 }

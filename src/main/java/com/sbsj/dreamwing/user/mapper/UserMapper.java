@@ -1,6 +1,7 @@
 package com.sbsj.dreamwing.user.mapper;
 
 import com.sbsj.dreamwing.user.domain.UserVO;
+import com.sbsj.dreamwing.user.dto.UserDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -12,12 +13,14 @@ import org.apache.ibatis.annotations.Mapper;
  * <pre>
  * 수정일        		수정자       				    수정내용
  * ----------  ----------------    ---------------------------------
- *  2024.07.29      정은찬                      checkLoginIdExistence 메서드 작성
  *  2024.07.28     	정은찬        		       최초 생성
+ *  2024.07.29      정은찬                      checkLoginIdExistence 메서드 작성
+ *  2025.07.30      정은찬                      findUserByLoginId
  * </pre>
  */
 @Mapper
 public interface UserMapper {
     int insertUser(UserVO userVO);
     String checkLoginIdExistence(String loginId);
+    UserDTO findUserByLoginId(String loginId);
 }

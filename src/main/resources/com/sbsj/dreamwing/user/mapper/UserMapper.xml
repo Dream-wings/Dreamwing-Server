@@ -10,8 +10,9 @@
 * <pre>
 * 수정일        	수정자        수정내용
 * ==========  =========    =========
+* 2024.07.28   정은찬          최초 생성
 * 2024.07.29   정은찬          checkLoginIdExistence SQL문 작성
-* 2024.07.28   정은찬         최초 생성
+* 2024.07.30   정은찬          findUserByLoginId SQL문 작성
 *
 * </pre>
 -->
@@ -43,5 +44,11 @@
         SELECT LOGIN_ID
         FROM USER_INFO
         WHERE LOGIN_ID = '${value}'
+    </select>
+
+    <select id="findUserByLoginId" resultType="UserDTO">
+        SELECT USER_ID, LOGIN_ID, PASSWORD
+        FROM USER_INFO
+        WHERE LOGIN_ID = #{loginId}
     </select>
 </mapper>
