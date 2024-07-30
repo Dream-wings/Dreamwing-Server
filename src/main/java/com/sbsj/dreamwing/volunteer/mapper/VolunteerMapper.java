@@ -1,9 +1,11 @@
 package com.sbsj.dreamwing.volunteer.mapper;
 
 
+import com.sbsj.dreamwing.volunteer.dto.PostApplyVolunteerRequestDTO;
 import com.sbsj.dreamwing.volunteer.dto.VolunteerDetailDTO;
 import com.sbsj.dreamwing.volunteer.dto.VolunteerListDTO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -28,4 +30,12 @@ public interface VolunteerMapper {
     List<VolunteerListDTO> getVolunteerList();
 
     VolunteerDetailDTO getVolunteerDetail(long volunteerId);
+
+    int insertVolunteerApplication(PostApplyVolunteerRequestDTO request);
+
+    int checkIfAlreadyApplied(PostApplyVolunteerRequestDTO request);
+
+    int deleteVolunteerApplication(PostApplyVolunteerRequestDTO request);
 }
+
+
