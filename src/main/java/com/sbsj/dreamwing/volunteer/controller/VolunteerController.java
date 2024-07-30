@@ -1,17 +1,16 @@
 package com.sbsj.dreamwing.volunteer.controller;
 
 import com.sbsj.dreamwing.mission.domain.QuizVO;
+import com.sbsj.dreamwing.support.dto.PostSupportGiveRequestDTO;
 import com.sbsj.dreamwing.util.ApiResponse;
+import com.sbsj.dreamwing.volunteer.dto.PostApplyVolunteerRequestDTO;
 import com.sbsj.dreamwing.volunteer.dto.VolunteerDetailDTO;
 import com.sbsj.dreamwing.volunteer.dto.VolunteerListDTO;
 import com.sbsj.dreamwing.volunteer.service.VolunteerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 /**
@@ -55,5 +54,26 @@ public class VolunteerController {
 
         return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, volunteerDetailDTO));
     }
+
+
+    @PostMapping("/apply")
+    public ResponseEntity<ApiResponse<Void>> applyVolunteer(@RequestBody PostApplyVolunteerRequestDTO request) throws Exception {
+        boolean success = volunteerService.applyVolunteer(request);
+        if (success) {
+            return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK));
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiResponse.failure(HttpStatus.BAD_REQUEST, "신청에 실패했습니다."));
+        }
+    }
+    @PostMapping("/cancel")
+    public ResponseEntity<ApiResponse<Void>> cancelVolunteer(@RequestBody PostApplyVolunteerRequestDTO request) throws Exception {
+        boolean success = volunteerService.cancelVolunteerApplication(request);
+        if (success) {
+            return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK));
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiResponse.failure(HttpStatus.BAD_REQUEST, "신청 취소에 실패했습니다."));
+        }
+    }
+
 
 }

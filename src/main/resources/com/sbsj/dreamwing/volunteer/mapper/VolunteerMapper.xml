@@ -16,6 +16,7 @@
             FROM   VOLUNTEER <!-- WHERE CATEGORY = #{CATEGORY_ID} -->
 </select>
 
+    <!-- 봉사 상세 조회 -->
     <select id="getVolunteerDetail" parameterType="long" resultType="com.sbsj.dreamwing.volunteer.dto.VolunteerDetailDTO">
         SELECT TITLE,
                CONTENT,
@@ -28,9 +29,34 @@
                STATUS,
                RECRUIT_START_DATE,
                RECRUIT_END_DATE,
-               IMAGE_URL
-        FROM   VOLUNTEER
-        WHERE  VOLUNTEER_ID = #{volunteerId}
+               IMAGE_URL,
+               (SELECT COUNT(*)
+                FROM USER_VOLUNTEER
+                WHERE VOLUNTEER_ID = #{volunteerId}) AS CURRENT_APPLICANT_COUNT
+        FROM VOLUNTEER
+        WHERE VOLUNTEER_ID = #{volunteerId}
     </select>
+
+
+    <!-- 봉사 신청하기 -->
+    <insert id="insertVolunteerApplication" parameterType="com.sbsj.dreamwing.volunteer.dto.PostApplyVolunteerRequestDTO">
+        INSERT INTO USER_VOLUNTEER (VOLUNTEER_ID, USER_ID,  STATUS, VERIFIED)
+        VALUES (#{volunteerId},#{userId},  DEFAULT, DEFAULT)
+    </insert>
+
+    <!-- 이미 신청했는지 체크 -->
+    <select id="checkIfAlreadyApplied" parameterType="com.sbsj.dreamwing.volunteer.dto.PostApplyVolunteerRequestDTO" resultType="int">
+        SELECT COUNT(*)
+        FROM USER_VOLUNTEER
+        WHERE VOLUNTEER_ID = #{volunteerId} AND USER_ID = #{userId}
+    </select>
+
+    <!-- 봉사 신청 취소 -->
+    <delete id="deleteVolunteerApplication" parameterType="com.sbsj.dreamwing.volunteer.dto.PostApplyVolunteerRequestDTO">
+        DELETE FROM USER_VOLUNTEER
+        WHERE VOLUNTEER_ID = #{volunteerId} AND USER_ID = #{userId}
+    </delete>
+
+
 
 </mapper>

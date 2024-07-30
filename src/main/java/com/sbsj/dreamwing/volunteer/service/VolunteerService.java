@@ -1,6 +1,8 @@
 package com.sbsj.dreamwing.volunteer.service;
 
 
+import com.sbsj.dreamwing.support.dto.PostSupportGiveRequestDTO;
+import com.sbsj.dreamwing.volunteer.dto.PostApplyVolunteerRequestDTO;
 import com.sbsj.dreamwing.volunteer.dto.VolunteerDetailDTO;
 import com.sbsj.dreamwing.volunteer.dto.VolunteerListDTO;
 
@@ -17,6 +19,7 @@ import java.util.List;
  * ----------  --------    ---------------------------
  * 2024.07.26  	임재성        최초 생성
  * 2024.07.28   임재성        봉사 모집공고 리스트 & 상세페이지 조회 메서드 추가
+ * 2024.07.30   임재성        봉사 신청 메서드 추가
  * </pre>
  */
 
@@ -27,4 +30,9 @@ import java.util.List;
 public interface VolunteerService {
     List<VolunteerListDTO> getVolunteerList() throws Exception;
     VolunteerDetailDTO getVolunteerDetail(long volunteerId) throws Exception;
+
+    boolean applyVolunteer(PostApplyVolunteerRequestDTO request);
+
+    boolean cancelVolunteerApplication(PostApplyVolunteerRequestDTO request);
+
 }

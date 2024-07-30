@@ -1,11 +1,13 @@
 package com.sbsj.dreamwing.volunteer.service;
 
 
+import com.sbsj.dreamwing.volunteer.dto.PostApplyVolunteerRequestDTO;
 import com.sbsj.dreamwing.volunteer.dto.VolunteerListDTO;
 import com.sbsj.dreamwing.volunteer.mapper.VolunteerMapper;
 import com.sbsj.dreamwing.volunteer.dto.VolunteerDetailDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -41,6 +43,31 @@ public class VolunteerServiceImpl implements VolunteerService{
         return volunteerMapper.getVolunteerDetail(volunteerId);
     }
 
+    @Override
+    @Transactional
+    public boolean applyVolunteer(PostApplyVolunteerRequestDTO request) {
+        // 이미 신청했는지 확인
+        int count = volunteerMapper.checkIfAlreadyApplied(request);
+
+        // 신청이 이미 되어있는 경우
+        if (count > 0) {
+            // 예외 대신 false 반환 (컨트롤러에서 적절히 처리)
+            return false;
+        }
+
+        // 봉사 신청
+        int result = volunteerMapper.insertVolunteerApplication(request);
+        return result > 0;
+    }
+
+    @Override
+    public boolean cancelVolunteerApplication(PostApplyVolunteerRequestDTO request) {
+        // 봉사 신청 취소
+        int result = volunteerMapper.deleteVolunteerApplication(request);
+        return result > 0;
+    }
 }
+
+
 
 
