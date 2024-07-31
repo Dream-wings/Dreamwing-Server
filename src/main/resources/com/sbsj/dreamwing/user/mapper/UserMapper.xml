@@ -46,9 +46,51 @@
         WHERE LOGIN_ID = '${value}'
     </select>
 
-    <select id="findUserByLoginId" resultType="UserDTO">
-        SELECT USER_ID, LOGIN_ID, PASSWORD
-        FROM USER_INFO
-        WHERE LOGIN_ID = #{loginId}
+    <select id="selectUserByLoginId" resultType="UserDTO">
+        SELECT USER_ID,
+               LOGIN_ID,
+               PASSWORD
+        FROM   USER_INFO
+        WHERE  LOGIN_ID = #{loginId}
+    </select>
+
+    <update id="withdraw" parameterType="Long">
+        UPDATE USER_INFO
+        SET NAME = '탈퇴회원',
+            PHONE = '00000000000',
+            TOTAL_POINT = 0,
+            WITHDRAW = 1,
+            PROFILE_IMAGE_URL = 'DEFAULT URL'
+        WHERE USER_ID = #{userId}
+    </update>
+
+    <select id="selectUserByUserId" resultType="UserDTO">
+        SELECT USER_ID,
+               LOGIN_ID,
+               PASSWORD,
+               NAME,
+               PHONE,
+               TOTAL_POINT,
+               PROFILE_IMAGE_URL,
+               CREATED_DATE
+        FROM   USER_INFO
+        WHERE  USER_ID = #{userId}
+    </select>
+
+    <update id="updateUserInfo" parameterType="UserUpdateDTO">
+        UPDATE USER_INFO
+        SET PASSWORD = #{password},
+            NAME = #{name},
+            PHONE = #{phone},
+            PROFILE_IMAGE_URL=#{profileImageUrl}
+        WHERE USER_ID = #{userId}
+    </update>
+
+    <select id="getPointVOList" resultType="PointVO">
+        SELECT ACTIVITY_TITLE,
+               POINT,
+               TO_CHAR(CREATED_DATE AT TIME ZONE 'UTC', 'YYYY-MM-DD HH24:MI:SS') AS CREATED_DATE
+        FROM POINT_HISTORY
+        WHERE USER_ID = #{userId}
     </select>
 </mapper>

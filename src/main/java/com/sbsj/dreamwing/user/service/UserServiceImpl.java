@@ -1,12 +1,15 @@
 package com.sbsj.dreamwing.user.service;
 
+import com.sbsj.dreamwing.user.domain.PointVO;
 import com.sbsj.dreamwing.user.domain.UserVO;
 import com.sbsj.dreamwing.user.dto.LoginRequestDTO;
 import com.sbsj.dreamwing.user.dto.SignUpRequestDTO;
 import com.sbsj.dreamwing.user.dto.UserDTO;
+import com.sbsj.dreamwing.user.dto.UserUpdateDTO;
 import com.sbsj.dreamwing.user.mapper.UserMapper;
 import com.sbsj.dreamwing.util.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +18,7 @@ import java.sql.Timestamp;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 사용자 관련 서비스 구현체
@@ -25,7 +29,10 @@ import java.util.List;
  * 수정일        		수정자       				    수정내용
  * ----------  ----------------    ---------------------------------
  *  2024.07.28     	정은찬        		       최초 생성 및 회원가입 기능
- *  2024.07.29      정은찬                      로그인 기능
+ *  2024.07.29      정은찬                      로그인 기능 추가
+ *  2024.07.31      정은찬                      회원탈퇴 기능 및 회원 정보 가져오기 기능 추가
+ *  2024.07.31      정은찬                      회원 정보 업데이트 기능 및 로그아웃 기능 추가
+ *  2024.07.31      정은찬                      포인트 내역 조회 기능 추가
  * </pre>
  */
 @Service
@@ -35,6 +42,7 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
+    private final RedisTemplate<String, String> redisTemplate;
 
     @Transactional
     public String signUp(SignUpRequestDTO signUpRequestDTO) {
@@ -65,7 +73,8 @@ public class UserServiceImpl implements UserService {
     }
 
     public String login(LoginRequestDTO loginRequestDTO) throws Exception {
-        UserDTO userDTO = userMapper.findUserByLoginId(loginRequestDTO.getLoginId());
+        UserDTO userDTO = userMapper.selectUserByLoginId(loginRequestDTO.getLoginId())
+                .orElseThrow(() -> new RuntimeException("잘못된 아이디입니다"));
 
         if(userDTO == null) {
             throw new Exception("잘못된 아이디입니다.");
@@ -76,14 +85,64 @@ public class UserServiceImpl implements UserService {
             }
             else {
                 List<String> roles = null;
-                if(loginRequestDTO.getLoginId().equals("loginId")) {
+                if(loginRequestDTO.getLoginId().equals("ADMIN")) {
                     roles = Collections.singletonList("ROLE_ADMIN");
                 }
                 else {
                     roles = Collections.singletonList("ROLE_USER");
                 }
-                return jwtTokenProvider.createToken(userDTO.getUserId(), roles);
+
+                String token = jwtTokenProvider.createToken(userDTO.getUserId(), roles);
+
+                //**로그아웃 구분하기 위해 redis에 저장**
+                redisTemplate.opsForValue().set("JWT_TOKEN:" + userDTO.getUserId(), token, jwtTokenProvider.getExpiration(token).getTime() - System.currentTimeMillis(),
+                        TimeUnit.MILLISECONDS);
+
+                return token;
             }
         }
+    }
+
+    public boolean withdraw(long userId) {
+        int result = userMapper.withdraw(userId);
+
+        if(result == 1) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    @Override
+    public UserDTO getUserInfo(long userId) {
+        UserDTO userDTO = userMapper.selectUserByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("잘못된 아이디입니다"));
+
+        return userDTO;
+    }
+
+    public boolean updateUserInfo(UserUpdateDTO userUpdateDTO) {
+        userUpdateDTO.setPassword(passwordEncoder.encode(userUpdateDTO.getPassword()));
+        int result = userMapper.updateUserInfo(userUpdateDTO);
+
+        if(result == 1) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public void logout(long userId) {
+        if (redisTemplate.opsForValue().get("JWT_TOKEN:" + userId) != null) {
+            redisTemplate.delete("JWT_TOKEN:" + userId); //Token 삭제
+        }
+
+    }
+
+    public List<PointVO> getPointList(long userId) {
+        List<PointVO> pointList = userMapper.getPointVOList(userId);
+        return pointList;
     }
 }

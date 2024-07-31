@@ -8,11 +8,12 @@ import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.sql.Timestamp;
 import java.util.Collection;
 
 
 /**
- * 회원정보를 담는 DTO 클래스
+ * 사용자 정보를 담는 DTO 클래스
  * @author 정은찬
  * @since 2024.07.29
  *
@@ -31,6 +32,11 @@ public class UserDTO implements UserDetails {
     private String loginId;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
+    private String name;
+    private String phone;
+    private int totalPoint;
+    private String profileImageUrl;
+    private Timestamp createdDate;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Collection<? extends GrantedAuthority> authorities;
