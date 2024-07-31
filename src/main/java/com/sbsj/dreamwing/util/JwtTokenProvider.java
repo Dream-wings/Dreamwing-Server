@@ -14,6 +14,8 @@ import org.springframework.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
+
+import java.time.Duration;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
@@ -96,4 +98,10 @@ public class JwtTokenProvider {
 
         return false;
     }
+
+    public Date getExpiration(String token) {
+        Claims claims = Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody();
+        return claims.getExpiration();
+    }
+
 }
