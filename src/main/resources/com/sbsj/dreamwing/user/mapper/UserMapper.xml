@@ -76,4 +76,13 @@
         FROM   USER_INFO
         WHERE  USER_ID = #{userId}
     </select>
+
+    <update id="updateUserInfo" parameterType="UserUpdateDTO">
+        UPDATE USER_INFO
+        SET PASSWORD = #{password},
+            NAME = #{name},
+            PHONE = #{phone},
+            PROFILE_IMAGE_URL=#{profileImageUrl}
+        WHERE USER_ID = #{userId}
+    </update>
 </mapper>

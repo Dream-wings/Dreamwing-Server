@@ -3,6 +3,7 @@ package com.sbsj.dreamwing.user.mapper;
 import com.sbsj.dreamwing.user.domain.UserVO;
 
 import com.sbsj.dreamwing.user.dto.UserDTO;
+import com.sbsj.dreamwing.user.dto.UserUpdateDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -77,5 +78,19 @@ public class UserMapperTests {
         UserDTO userDTO = userMapper.selectUserByUserId(7)
                 .orElseThrow(() -> new RuntimeException("잘못된 아이디입니다"));
         log.info(userDTO.toString());
+    }
+
+    @Test
+    public void testUpdateUserInfo() {
+        UserUpdateDTO userUpdateDTO = UserUpdateDTO.builder()
+                .userId(2)
+                .password("test1222")
+                .name("updateTest")
+                .phone("11111111111")
+                .profileImageUrl("updateImage")
+                .build();
+
+        int result = userMapper.updateUserInfo(userUpdateDTO);
+        Assertions.assertEquals(result, 1);
     }
 }

@@ -1,8 +1,10 @@
 package com.sbsj.dreamwing.user.service;
 
+import com.sbsj.dreamwing.user.domain.UserVO;
 import com.sbsj.dreamwing.user.dto.LoginRequestDTO;
 import com.sbsj.dreamwing.user.dto.SignUpRequestDTO;
 import com.sbsj.dreamwing.user.dto.UserDTO;
+import com.sbsj.dreamwing.user.dto.UserUpdateDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -73,5 +75,19 @@ public class UserServiceTests {
     public void getUserInfoTest() {
         UserDTO result = userService.getUserInfo(7);
         Assertions.assertEquals(result.getLoginId(), "loginTest4");
+    }
+
+    @Test
+    public void updateUserInfoTest() {
+        UserUpdateDTO userUpdateDTO = UserUpdateDTO.builder()
+                .userId(2)
+                .password("test1222")
+                .name("updateTest")
+                .phone("11111111111")
+                .profileImageUrl("updateImage")
+                .build();
+
+        Boolean result = userService.updateUserInfo(userUpdateDTO);
+        Assertions.assertEquals(result, true);
     }
 }
