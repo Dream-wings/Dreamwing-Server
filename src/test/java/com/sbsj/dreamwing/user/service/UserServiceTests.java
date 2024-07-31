@@ -1,7 +1,7 @@
 package com.sbsj.dreamwing.user.service;
 
-import com.sbsj.dreamwing.user.domain.PointVO;
-import com.sbsj.dreamwing.user.domain.UserVO;
+import com.sbsj.dreamwing.user.domain.UserPointVO;
+import com.sbsj.dreamwing.user.domain.UserSupportVO;
 import com.sbsj.dreamwing.user.dto.LoginRequestDTO;
 import com.sbsj.dreamwing.user.dto.SignUpRequestDTO;
 import com.sbsj.dreamwing.user.dto.UserDTO;
@@ -96,7 +96,13 @@ public class UserServiceTests {
 
     @Test
     public void getPointListTest() {
-        List<PointVO> pointList = userService.getPointList(1);
-        log.info(pointList.toString());
+        List<UserPointVO> userPointList = userService.getUserPointList(8);
+        log.info(userPointList.toString());
+    }
+
+    @Test
+    public void getSupportListTest() {
+        List<UserSupportVO> userSupportList = userService.getUserSupportList(1);
+        log.info(userSupportList.toString());
     }
 }

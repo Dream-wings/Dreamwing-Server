@@ -2,10 +2,8 @@ package com.sbsj.dreamwing.user.domain;
 
 import lombok.Data;
 
-import java.sql.Timestamp;
-
 /**
- * 포인트 내역 정보를 담는 VO
+ * 후원 내역 정보를 담는 VO
  * @author 정은찬
  * @since 2024.07.31
  *
@@ -16,8 +14,8 @@ import java.sql.Timestamp;
  * </pre>
  */
 @Data
-public class PointVO {
-    private String ActivityTitle;
+public class UserSupportVO {
+    String title;
     int point;
     String createdDate;
 }
