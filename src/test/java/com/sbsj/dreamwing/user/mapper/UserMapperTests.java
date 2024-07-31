@@ -1,5 +1,6 @@
 package com.sbsj.dreamwing.user.mapper;
 
+import com.sbsj.dreamwing.user.domain.PointVO;
 import com.sbsj.dreamwing.user.domain.UserVO;
 
 import com.sbsj.dreamwing.user.dto.UserDTO;
@@ -12,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Date;
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * 유저 매퍼 테스트 클래스
@@ -34,7 +36,7 @@ public class UserMapperTests {
     private UserMapper userMapper;
 
     @Test
-    public void testInsert() {
+    public void insertTest() {
         UserVO userVO = UserVO.builder()
                 .loginId("test2")
                 .password("test12345")
@@ -54,34 +56,34 @@ public class UserMapperTests {
     }
 
     @Test
-    public void testCheckLoginIdExistence() {
+    public void checkLoginIdExistenceTest() {
         String loginId = userMapper.checkLoginIdExistence("test2");
         Assertions.assertEquals(loginId, "test2");
     }
 
     @Test
-    public void testSelectUserByLoginId() {
+    public void selectUserByLoginIdTest() {
         UserDTO userDTO = userMapper.selectUserByLoginId("test2")
                 .orElseThrow(() -> new RuntimeException("잘못된 아이디입니다"));
         Assertions.assertEquals(userDTO.getUserId(), 1);
     }
 
     @Test
-    public void testWithdraw() {
+    public void withdrawTest() {
         long userId = 2;
         int result = userMapper.withdraw(userId);
         Assertions.assertEquals(result, 1);
     }
 
     @Test
-    public void testSelectUserByUserId() {
+    public void selectUserByUserIdTest() {
         UserDTO userDTO = userMapper.selectUserByUserId(7)
                 .orElseThrow(() -> new RuntimeException("잘못된 아이디입니다"));
         log.info(userDTO.toString());
     }
 
     @Test
-    public void testUpdateUserInfo() {
+    public void updateUserInfoTest() {
         UserUpdateDTO userUpdateDTO = UserUpdateDTO.builder()
                 .userId(2)
                 .password("test1222")
@@ -92,5 +94,11 @@ public class UserMapperTests {
 
         int result = userMapper.updateUserInfo(userUpdateDTO);
         Assertions.assertEquals(result, 1);
+    }
+
+    @Test
+    public void getPointVOListTest() {
+        List<PointVO> pointVOList = userMapper.getPointVOList(1);
+        log.info(pointVOList.toString());
     }
 }

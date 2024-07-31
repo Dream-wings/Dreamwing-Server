@@ -1,5 +1,6 @@
 package com.sbsj.dreamwing.user.controller;
 
+import com.sbsj.dreamwing.user.domain.PointVO;
 import com.sbsj.dreamwing.user.dto.LoginRequestDTO;
 import com.sbsj.dreamwing.user.dto.UserDTO;
 import com.sbsj.dreamwing.user.dto.UserUpdateDTO;
@@ -14,6 +15,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * 사용자 관련 요청을 처리하는 Controller 클래스
  * @apiNote 회원가입, 로그인 등의 기능을 제공
@@ -27,6 +30,7 @@ import org.springframework.web.bind.annotation.*;
  *  2024.07.30      정은찬                       로그인 기능 API 추가
  *  2024.07.31      정은찬                       회원탈퇴 기능 API 및 회원 정보 가져오기 API 추가
  *  2024.07.31      정은찬                       회원 정보 업데이트 API 및 로그아웃 API 추가
+ *  2024.07.31      정은찬                       포인트 내역 조회 API 추가
  * </pre>
  */
 @RestController
@@ -75,9 +79,7 @@ public class UserController {
         // SecurityContext에서 Authentication 객체를 가져옵니다.
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         // UserDetails 객체에서 userId를 가져옵니다.
-        // 여기서는 UserDetails의 `getUsername` 메서드를 사용한다고 가정합니다.
         long userId = ((UserDTO) authentication.getPrincipal()).getUserId();
-        // userService에서 withdraw 메서드를 호출합니다.
         
         boolean result = userService.withdraw(userId);
         if (result) {
@@ -93,9 +95,7 @@ public class UserController {
         // SecurityContext에서 Authentication 객체를 가져옵니다.
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         // UserDetails 객체에서 userId를 가져옵니다.
-        // 여기서는 UserDetails의 `getUsername` 메서드를 사용한다고 가정합니다.
         long userId = ((UserDTO) authentication.getPrincipal()).getUserId();
-        // userService에서 withdraw 메서드를 호출합니다.
 
         UserDTO userDTO = userService.getUserInfo(userId);
 
@@ -138,5 +138,18 @@ public class UserController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(ApiResponse.failure(HttpStatus.BAD_REQUEST, "로그아웃 실패"));
         }
+    }
+
+    @GetMapping("/getPointList")
+    public ResponseEntity<ApiResponse<List<PointVO>>> getPointList() {
+        // SecurityContext에서 Authentication 객체를 가져옵니다.
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // UserDetails 객체에서 userId를 가져옵니다.
+        // 여기서는 UserDetails의 `getUsername` 메서드를 사용한다고 가정합니다.
+        long userId = ((UserDTO) authentication.getPrincipal()).getUserId();
+
+        List<PointVO> pointList = userService.getPointList(userId);
+
+        return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, pointList));
     }
 }
