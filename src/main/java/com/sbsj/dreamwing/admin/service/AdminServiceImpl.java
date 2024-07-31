@@ -7,6 +7,7 @@ import com.sbsj.dreamwing.admin.dto.UpdateVolunteerStatusRequestDTO;
 import com.sbsj.dreamwing.admin.mapper.AdminMapper;
 import com.sbsj.dreamwing.mission.dto.AwardPointsRequestDTO;
 import com.sbsj.dreamwing.mission.mapper.MissionMapper;
+import com.sbsj.dreamwing.util.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,7 @@ public class AdminServiceImpl implements AdminService {
 
     private final AdminMapper mapper;
     private final MissionMapper missionMapper;
+    private final S3Uploader s3Uploader;
 
     @Override
     public boolean approveVolunteerRequest(UpdateVolunteerStatusRequestDTO request) {
@@ -59,20 +61,45 @@ public class AdminServiceImpl implements AdminService {
         }
     }
 
+//    @Override
+//    @Transactional
+//    public int createVolunteer(AdminVolunteerRequestDTO request) {
+//        return mapper.insertVolunteer(request);
+//    }
+@Transactional
+public int createVolunteer(AdminVolunteerRequestDTO request) {
+    // 로그 추가
+    log.info("createVolunteer 호출됨");
+    log.info("요청 데이터: {}", request);
+
+    // 이미지 파일이 있는 경우 업로드 처리
+    if (request.getImageFile() != null && !request.getImageFile().isEmpty()) {
+        log.info("이미지 파일이 존재합니다. 파일 이름: {}", request.getImageFile().getOriginalFilename());
+        String imageUrl = s3Uploader.uploadFile(request.getImageFile());
+        request.setImageUrl(imageUrl);
+        log.info("이미지 업로드 완료. 업로드된 이미지 URL: {}", imageUrl);
+    } else {
+        log.info("이미지 파일이 존재하지 않거나 비어있습니다.");
+    }
+
+    // 데이터베이스에 봉사 공고 삽입
+    int result = mapper.insertVolunteer(request);
+    log.info("봉사 공고 데이터베이스에 삽입됨. 결과: {}", result);
+
+    return result;
+}
+
     @Override
-    @Transactional
-    public int createVolunteer(AdminVolunteerRequestDTO request) {
-        return mapper.insertVolunteer(request);
+    public AdminVolunteerRequestDTO getVolunteerDetails(long volunteerId) {
+        return mapper.selectVolunteerById(volunteerId);
     }
 
     @Override
-    @Transactional
     public int updateVolunteer(AdminVolunteerRequestDTO request) {
         return mapper.updateVolunteer(request);
     }
 
     @Override
-    @Transactional
     public int deleteVolunteer(long volunteerId) {
         return mapper.deleteVolunteer(volunteerId);
     }

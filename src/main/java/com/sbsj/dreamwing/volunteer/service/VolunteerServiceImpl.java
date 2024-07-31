@@ -33,10 +33,17 @@ public class VolunteerServiceImpl implements VolunteerService{
     @Autowired
     private VolunteerMapper volunteerMapper;
 
-    @Override
-    public List<VolunteerListDTO> getVolunteerList() throws Exception {
-        return volunteerMapper.getVolunteerList();
+//    @Override
+//    public List<VolunteerListDTO> getVolunteerList() throws Exception {
+//        return volunteerMapper.getVolunteerList();
+//    }
+
+    public List<VolunteerListDTO> getVolunteerList(int page, int size) {
+        int offset = page * size;
+        // 페이징 쿼리를 위한 MyBatis나 JPA 사용
+        return volunteerMapper.getVolunteerList(offset, size);
     }
+
 
     @Override
     public VolunteerDetailDTO getVolunteerDetail(long volunteerId) throws Exception{

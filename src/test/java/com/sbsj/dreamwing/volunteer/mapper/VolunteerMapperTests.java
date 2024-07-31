@@ -23,8 +23,10 @@ public class VolunteerMapperTests {
     @Test
     public void testGetVolunteerList() {
 
+        int offset = 0;
+        int size =2;
         // when
-        List<VolunteerListDTO> volunteerDTO = mapper.getVolunteerList();
+        List<VolunteerListDTO> volunteerDTO = mapper.getVolunteerList(offset,size);
 
         // then
         log.info(String.valueOf(volunteerDTO));

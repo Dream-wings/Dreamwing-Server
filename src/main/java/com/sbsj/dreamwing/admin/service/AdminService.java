@@ -31,7 +31,10 @@ public interface AdminService {
 
 
     int createVolunteer(AdminVolunteerRequestDTO request);
-    int updateVolunteer(AdminVolunteerRequestDTO request);
+
+    AdminVolunteerRequestDTO getVolunteerDetails(long volunteerId);
+
+        int updateVolunteer(AdminVolunteerRequestDTO request);
     int deleteVolunteer(long volunteerId);
     List<AdminVolunteerResponseDTO> getVolunteerList();
 }

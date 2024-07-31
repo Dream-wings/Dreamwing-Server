@@ -27,7 +27,7 @@ import java.util.List;
 @Mapper
 public interface VolunteerMapper {
 
-    List<VolunteerListDTO> getVolunteerList();
+//    List<VolunteerListDTO> getVolunteerList();
 
     VolunteerDetailDTO getVolunteerDetail(long volunteerId);
 
@@ -36,6 +36,8 @@ public interface VolunteerMapper {
     int checkIfAlreadyApplied(PostApplyVolunteerRequestDTO request);
 
     int deleteVolunteerApplication(PostApplyVolunteerRequestDTO request);
+
+    List<VolunteerListDTO> getVolunteerList(int offset, int size);
 }
 
 

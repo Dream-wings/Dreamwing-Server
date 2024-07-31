@@ -3,6 +3,8 @@ package com.sbsj.dreamwing.admin.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
@@ -33,4 +35,6 @@ public class AdminVolunteerRequestDTO {
     private String imageUrl;        // 이미지 URL
     private String latitude;        // 위도
     private String longitude;       // 경도
+    private MultipartFile imageFile; // 이미지 파일
+
 }

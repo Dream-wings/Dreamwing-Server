@@ -37,14 +37,23 @@ public class VolunteerController {
     private VolunteerService volunteerService;
 
 
-    @GetMapping("/list")
-    public ResponseEntity<ApiResponse<List<VolunteerListDTO>>> getVolunteerList() throws Exception {
-        // long 타입은 기본 타입이므로 null 체크가 필요 없음
-        // 따라서 null 체크를 제거했습니다.
-        List<VolunteerListDTO> response = volunteerService.getVolunteerList();
+//    @GetMapping("/list")
+//    public ResponseEntity<ApiResponse<List<VolunteerListDTO>>> getVolunteerList() throws Exception {
+//        // long 타입은 기본 타입이므로 null 체크가 필요 없음
+//        // 따라서 null 체크를 제거했습니다.
+//        List<VolunteerListDTO> response = volunteerService.getVolunteerList();
+//
+//        return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, response));
+//    }
 
+    @GetMapping("/list")
+    public ResponseEntity<ApiResponse<List<VolunteerListDTO>>> getVolunteerList(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "2") int size) throws Exception {
+        List<VolunteerListDTO> response = volunteerService.getVolunteerList(page, size);
         return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, response));
     }
+
 
 
     @GetMapping("/detail")

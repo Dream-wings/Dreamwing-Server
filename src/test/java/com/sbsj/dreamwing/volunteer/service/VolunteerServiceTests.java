@@ -25,7 +25,9 @@ public class VolunteerServiceTests {
     @Test
     @DisplayName("모집공고 조회 테스트")
     public void testGetVolunteerList() throws Exception {
-        List<VolunteerListDTO> volunteerDTO = service.getVolunteerList();
+        int page = 0;
+        int size = 10;
+        List<VolunteerListDTO> volunteerDTO = service.getVolunteerList(page,size);
         log.info(String.valueOf(volunteerDTO));
     }
 
