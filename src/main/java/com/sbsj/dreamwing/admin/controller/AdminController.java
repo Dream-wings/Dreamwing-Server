@@ -8,6 +8,8 @@ import com.sbsj.dreamwing.admin.service.AdminService;
 import com.sbsj.dreamwing.mission.dto.AwardPointsRequestDTO;
 import com.sbsj.dreamwing.mission.service.MissionService;
 import com.sbsj.dreamwing.util.ApiResponse;
+import com.sbsj.dreamwing.util.S3Uploader;
+import com.sbsj.dreamwing.volunteer.dto.VolunteerDetailDTO;
 import com.sbsj.dreamwing.volunteer.dto.VolunteerListDTO;
 import com.sbsj.dreamwing.volunteer.service.VolunteerService;
 import lombok.AllArgsConstructor;
@@ -46,6 +48,10 @@ public class AdminController {
     private final MissionService missionService;
     private final VolunteerService volunteerService;
 
+    //사진업로드 위한 s3
+    private final S3Uploader s3Uploader;
+
+
     /**
      * 사용자 봉사활동 신청 승인
      * @param request
@@ -82,7 +88,12 @@ public class AdminController {
      */
     @PostMapping("/volunteer/create")
     public ResponseEntity<ApiResponse<Void>> createVolunteer(
-            @RequestBody AdminVolunteerRequestDTO request) {
+            @ModelAttribute AdminVolunteerRequestDTO request) {
+        if (request.getImageFile() != null && !request.getImageFile().isEmpty()) {
+            String imageUrl = s3Uploader.uploadFile(request.getImageFile());
+            request.setImageUrl(imageUrl);
+        }
+
         int result = service.createVolunteer(request);
         if (result > 0) {
             return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success(HttpStatus.CREATED));
@@ -90,6 +101,16 @@ public class AdminController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiResponse.failure(HttpStatus.BAD_REQUEST, "봉사 공고 생성에 실패했습니다."));
         }
     }
+    // 봉사 공고 상세 조회
+    // 봉사 공고 상세 조회
+//    @GetMapping("/detail")
+//    public ResponseEntity<ApiResponse<AdminVolunteerRequestDTO>> getVolunteerDetail(@RequestParam long volunteerId) throws Exception{
+//        // 서비스 호출
+//        VolunteerDetailDTO volunteerDetailDTO = volunteerService.getVolunteerDetail(volunteerId);
+//        // 상세 조회 결과에 대한 응답 반환
+//        return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, volunteerDetailDTO));
+//
+//    }
 
     /**
      * 봉사 공고 수정

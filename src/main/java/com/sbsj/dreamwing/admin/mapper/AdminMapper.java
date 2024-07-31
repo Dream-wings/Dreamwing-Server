@@ -32,4 +32,6 @@ public interface AdminMapper {
     int updateVolunteer(AdminVolunteerRequestDTO request);
     int deleteVolunteer(long volunteerId);
     List<AdminVolunteerResponseDTO> selectVolunteerList();
+
+    AdminVolunteerRequestDTO selectVolunteerById(long volunteerId);
 }

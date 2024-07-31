@@ -28,7 +28,8 @@ import java.util.List;
 
 
 public interface VolunteerService {
-    List<VolunteerListDTO> getVolunteerList() throws Exception;
+//    List<VolunteerListDTO> getVolunteerList() throws Exception;
+    List<VolunteerListDTO> getVolunteerList(int page, int size);
     VolunteerDetailDTO getVolunteerDetail(long volunteerId) throws Exception;
 
     boolean applyVolunteer(PostApplyVolunteerRequestDTO request);

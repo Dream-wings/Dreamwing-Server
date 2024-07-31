@@ -4,17 +4,32 @@
 <mapper namespace="com.sbsj.dreamwing.volunteer.mapper.VolunteerMapper">
 
 
+<!--    <select id="getVolunteerList" resultType="com.sbsj.dreamwing.volunteer.dto.VolunteerListDTO">-->
+<!--            SELECT TITLE,-->
+<!--            TYPE,-->
+<!--            CATEGORY,-->
+<!--            VOLUNTEER_START_DATE,-->
+<!--            VOLUNTEER_END_DATE,-->
+<!--            ADDRESS,-->
+<!--            STATUS,-->
+<!--            IMAGE_URL-->
+<!--            FROM   VOLUNTEER &lt;!&ndash; WHERE CATEGORY = #{CATEGORY_ID} &ndash;&gt;-->
+<!--</select>-->
+
     <select id="getVolunteerList" resultType="com.sbsj.dreamwing.volunteer.dto.VolunteerListDTO">
-            SELECT TITLE,
-            TYPE,
-            CATEGORY,
-            VOLUNTEER_START_DATE,
-            VOLUNTEER_END_DATE,
-            ADDRESS,
-            STATUS,
-            IMAGE_URL
-            FROM   VOLUNTEER <!-- WHERE CATEGORY = #{CATEGORY_ID} -->
-</select>
+        SELECT TITLE,
+               TYPE,
+               CATEGORY,
+               VOLUNTEER_START_DATE,
+               VOLUNTEER_END_DATE,
+               ADDRESS,
+               STATUS,
+               IMAGE_URL
+        FROM VOLUNTEER
+        ORDER BY VOLUNTEER_START_DATE DESC
+        OFFSET #{offset} ROWS FETCH NEXT #{size} ROWS ONLY
+    </select>
+
 
     <!-- 봉사 상세 조회 -->
     <select id="getVolunteerDetail" parameterType="long" resultType="com.sbsj.dreamwing.volunteer.dto.VolunteerDetailDTO">
