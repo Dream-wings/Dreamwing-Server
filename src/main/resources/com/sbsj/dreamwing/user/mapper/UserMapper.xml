@@ -67,7 +67,12 @@
     <select id="selectUserByUserId" resultType="UserDTO">
         SELECT USER_ID,
                LOGIN_ID,
-               PASSWORD
+               PASSWORD,
+               NAME,
+               PHONE,
+               TOTAL_POINT,
+               PROFILE_IMAGE_URL,
+               CREATED_DATE
         FROM   USER_INFO
         WHERE  USER_ID = #{userId}
     </select>

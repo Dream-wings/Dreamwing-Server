@@ -26,7 +26,7 @@ import java.util.List;
  * ----------  ----------------    ---------------------------------
  *  2024.07.28     	정은찬        		       최초 생성 및 회원가입 기능
  *  2024.07.29      정은찬                      로그인 기능 추가
- *  2024.07.31      정은찬                      회원탈퇴 기능 추가
+ *  2024.07.31      정은찬                      회원탈퇴 기능 및 회원 정보 가져오기 기능 추가
  * </pre>
  */
 @Service
@@ -98,5 +98,13 @@ public class UserServiceImpl implements UserService {
         else {
             return false;
         }
+    }
+
+    @Override
+    public UserDTO getUserInfo(long userId) {
+        UserDTO userDTO = userMapper.selectUserByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("잘못된 아이디입니다"));
+
+        return userDTO;
     }
 }

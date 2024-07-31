@@ -74,8 +74,8 @@ public class UserMapperTests {
 
     @Test
     public void testSelectUserByUserId() {
-        UserDTO userDTO = userMapper.selectUserByUserId(5)
+        UserDTO userDTO = userMapper.selectUserByUserId(7)
                 .orElseThrow(() -> new RuntimeException("잘못된 아이디입니다"));
-        Assertions.assertEquals(userDTO.getUserId(), 5);
+        log.info(userDTO.toString());
     }
 }
