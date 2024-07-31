@@ -82,15 +82,15 @@ public class UserServiceTests {
 
     @Test
     public void updateUserInfoTest() {
+        long userId = 7;
         UserUpdateDTO userUpdateDTO = UserUpdateDTO.builder()
-                .userId(2)
                 .password("test1222")
                 .name("updateTest")
                 .phone("11111111111")
                 .profileImageUrl("updateImage")
                 .build();
 
-        Boolean result = userService.updateUserInfo(userUpdateDTO);
+        Boolean result = userService.updateUserInfo(userId, userUpdateDTO);
         Assertions.assertEquals(result, true);
     }
 

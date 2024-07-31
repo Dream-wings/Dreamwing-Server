@@ -18,7 +18,7 @@ import lombok.Builder;
 @Data
 @Builder
 public class UserVO {
-    int userId;
+    long userId;
     String loginId;
     String password;
     String name;

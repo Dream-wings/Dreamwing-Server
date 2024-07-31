@@ -8,13 +8,17 @@ import com.sbsj.dreamwing.user.dto.UserUpdateDTO;
 import com.sbsj.dreamwing.user.service.UserService;
 import com.sbsj.dreamwing.user.dto.SignUpRequestDTO;
 import com.sbsj.dreamwing.util.ApiResponse;
+import com.sbsj.dreamwing.util.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -40,8 +44,9 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
-    @PostMapping("/signUp")
-    public ResponseEntity<ApiResponse<Void>> signUp(@RequestBody SignUpRequestDTO signUpRequestDTO) throws Exception {
+    @PostMapping(value = "/signUp", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ApiResponse<Void>> signUp(@ModelAttribute SignUpRequestDTO signUpRequestDTO) throws Exception {
+
         String result = userService.signUp(signUpRequestDTO);
 
         if (result.equals("사용자 등록 성공")) {
@@ -103,17 +108,14 @@ public class UserController {
         return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, userDTO));
     }
 
-    @PostMapping("/update")
-    public ResponseEntity<ApiResponse<Void>> update(@RequestBody UserUpdateDTO userUpdateDTO) throws Exception {
+    @PostMapping(value = "/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ApiResponse<Void>> update(@ModelAttribute UserUpdateDTO userUpdateDTO) throws Exception {
         // SecurityContext에서 Authentication 객체를 가져옵니다.
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         // UserDetails 객체에서 userId를 가져옵니다.
-        // 여기서는 UserDetails의 `getUsername` 메서드를 사용한다고 가정합니다.
         long userId = ((UserDTO) authentication.getPrincipal()).getUserId();
 
-        userUpdateDTO.setUserId(userId);
-
-        Boolean result = userService.updateUserInfo(userUpdateDTO);
+        Boolean result = userService.updateUserInfo(userId, userUpdateDTO);
 
         if (result) {
             return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK));

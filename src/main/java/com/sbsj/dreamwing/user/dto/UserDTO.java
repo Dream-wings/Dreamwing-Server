@@ -35,6 +35,7 @@ public class UserDTO implements UserDetails {
     private String name;
     private String phone;
     private int totalPoint;
+    private int withdraw;
     private String profileImageUrl;
     private Timestamp createdDate;
 

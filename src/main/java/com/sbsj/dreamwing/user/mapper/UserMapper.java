@@ -33,7 +33,7 @@ public interface UserMapper {
     Optional<UserDTO> selectUserByLoginId(String loginId);
     Optional<UserDTO> selectUserByUserId(long userId);
     int withdraw(long userId);
-    int updateUserInfo(UserUpdateDTO userUpdateDTO);
+    int updateUserInfo(UserVO userVO);
     List<UserPointVO> getUserPointVOList(long userId);
     List<UserSupportVO> getUserSupportVOList(long userId);
 

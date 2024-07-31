@@ -85,7 +85,7 @@ public class UserMapperTests {
 
     @Test
     public void updateUserInfoTest() {
-        UserUpdateDTO userUpdateDTO = UserUpdateDTO.builder()
+        UserVO userVO = UserVO.builder()
                 .userId(2)
                 .password("test1222")
                 .name("updateTest")
@@ -93,7 +93,7 @@ public class UserMapperTests {
                 .profileImageUrl("updateImage")
                 .build();
 
-        int result = userMapper.updateUserInfo(userUpdateDTO);
+        int result = userMapper.updateUserInfo(userVO);
         Assertions.assertEquals(result, 1);
     }
 
