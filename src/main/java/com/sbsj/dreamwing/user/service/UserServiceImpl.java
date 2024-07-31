@@ -4,6 +4,7 @@ import com.sbsj.dreamwing.user.domain.UserVO;
 import com.sbsj.dreamwing.user.dto.LoginRequestDTO;
 import com.sbsj.dreamwing.user.dto.SignUpRequestDTO;
 import com.sbsj.dreamwing.user.dto.UserDTO;
+import com.sbsj.dreamwing.user.dto.UserUpdateDTO;
 import com.sbsj.dreamwing.user.mapper.UserMapper;
 import com.sbsj.dreamwing.util.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,7 @@ import java.util.List;
  *  2024.07.28     	정은찬        		       최초 생성 및 회원가입 기능
  *  2024.07.29      정은찬                      로그인 기능 추가
  *  2024.07.31      정은찬                      회원탈퇴 기능 및 회원 정보 가져오기 기능 추가
+ *  2024.07.31      정은찬                      회원 정보 업데이트 기능 추가
  * </pre>
  */
 @Service
@@ -78,7 +80,7 @@ public class UserServiceImpl implements UserService {
             }
             else {
                 List<String> roles = null;
-                if(loginRequestDTO.getLoginId().equals("loginId")) {
+                if(loginRequestDTO.getLoginId().equals("ADMIN")) {
                     roles = Collections.singletonList("ROLE_ADMIN");
                 }
                 else {
@@ -106,5 +108,17 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new RuntimeException("잘못된 아이디입니다"));
 
         return userDTO;
+    }
+
+    public boolean updateUserInfo(UserUpdateDTO userUpdateDTO) {
+        userUpdateDTO.setPassword(passwordEncoder.encode(userUpdateDTO.getPassword()));
+        int result = userMapper.updateUserInfo(userUpdateDTO);
+
+        if(result == 1) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }
