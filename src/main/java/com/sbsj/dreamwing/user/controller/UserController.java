@@ -1,6 +1,7 @@
 package com.sbsj.dreamwing.user.controller;
 
-import com.sbsj.dreamwing.user.domain.PointVO;
+import com.sbsj.dreamwing.user.domain.UserPointVO;
+import com.sbsj.dreamwing.user.domain.UserSupportVO;
 import com.sbsj.dreamwing.user.dto.LoginRequestDTO;
 import com.sbsj.dreamwing.user.dto.UserDTO;
 import com.sbsj.dreamwing.user.dto.UserUpdateDTO;
@@ -30,7 +31,7 @@ import java.util.List;
  *  2024.07.30      정은찬                       로그인 기능 API 추가
  *  2024.07.31      정은찬                       회원탈퇴 기능 API 및 회원 정보 가져오기 API 추가
  *  2024.07.31      정은찬                       회원 정보 업데이트 API 및 로그아웃 API 추가
- *  2024.07.31      정은찬                       포인트 내역 조회 API 추가
+ *  2024.07.31      정은찬                       포인트 내역 조회 API 및 후원 내역 조회 API 추가
  * </pre>
  */
 @RestController
@@ -141,15 +142,28 @@ public class UserController {
     }
 
     @GetMapping("/getPointList")
-    public ResponseEntity<ApiResponse<List<PointVO>>> getPointList() {
+    public ResponseEntity<ApiResponse<List<UserPointVO>>> getUserPointList() {
         // SecurityContext에서 Authentication 객체를 가져옵니다.
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         // UserDetails 객체에서 userId를 가져옵니다.
         // 여기서는 UserDetails의 `getUsername` 메서드를 사용한다고 가정합니다.
         long userId = ((UserDTO) authentication.getPrincipal()).getUserId();
 
-        List<PointVO> pointList = userService.getPointList(userId);
+        List<UserPointVO> pointList = userService.getUserPointList(userId);
 
         return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, pointList));
+    }
+
+    @GetMapping("/getSupportList")
+    public ResponseEntity<ApiResponse<List<UserSupportVO>>> getUserSupportList() {
+        // SecurityContext에서 Authentication 객체를 가져옵니다.
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // UserDetails 객체에서 userId를 가져옵니다.
+        // 여기서는 UserDetails의 `getUsername` 메서드를 사용한다고 가정합니다.
+        long userId = ((UserDTO) authentication.getPrincipal()).getUserId();
+
+        List<UserSupportVO> supportList = userService.getUserSupportList(userId);
+
+        return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, supportList));
     }
 }
