@@ -1,5 +1,6 @@
 package com.sbsj.dreamwing.user.service;
 
+import com.sbsj.dreamwing.user.domain.PointVO;
 import com.sbsj.dreamwing.user.domain.UserVO;
 import com.sbsj.dreamwing.user.dto.LoginRequestDTO;
 import com.sbsj.dreamwing.user.dto.SignUpRequestDTO;
@@ -10,6 +11,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.List;
 
 /**
  * 유저 서비스 테스트 클래스
@@ -34,7 +37,7 @@ public class UserServiceTests {
     public void signUpTest() {
         SignUpRequestDTO signUpRequestDTO  = new SignUpRequestDTO();
 
-        signUpRequestDTO.setLoginId("loginTest5");
+        signUpRequestDTO.setLoginId("loginTest6");
         signUpRequestDTO.setPassword("123456");
         signUpRequestDTO.setName("testServiceName");
         signUpRequestDTO.setPhone("testPhone");
@@ -89,5 +92,11 @@ public class UserServiceTests {
 
         Boolean result = userService.updateUserInfo(userUpdateDTO);
         Assertions.assertEquals(result, true);
+    }
+
+    @Test
+    public void getPointListTest() {
+        List<PointVO> pointList = userService.getPointList(1);
+        log.info(pointList.toString());
     }
 }

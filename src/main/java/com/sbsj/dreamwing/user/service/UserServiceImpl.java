@@ -1,5 +1,6 @@
 package com.sbsj.dreamwing.user.service;
 
+import com.sbsj.dreamwing.user.domain.PointVO;
 import com.sbsj.dreamwing.user.domain.UserVO;
 import com.sbsj.dreamwing.user.dto.LoginRequestDTO;
 import com.sbsj.dreamwing.user.dto.SignUpRequestDTO;
@@ -31,6 +32,7 @@ import java.util.concurrent.TimeUnit;
  *  2024.07.29      정은찬                      로그인 기능 추가
  *  2024.07.31      정은찬                      회원탈퇴 기능 및 회원 정보 가져오기 기능 추가
  *  2024.07.31      정은찬                      회원 정보 업데이트 기능 및 로그아웃 기능 추가
+ *  2024.07.31      정은찬                      포인트 내역 조회 기능 추가
  * </pre>
  */
 @Service
@@ -137,5 +139,10 @@ public class UserServiceImpl implements UserService {
             redisTemplate.delete("JWT_TOKEN:" + userId); //Token 삭제
         }
 
+    }
+
+    public List<PointVO> getPointList(long userId) {
+        List<PointVO> pointList = userMapper.getPointVOList(userId);
+        return pointList;
     }
 }
