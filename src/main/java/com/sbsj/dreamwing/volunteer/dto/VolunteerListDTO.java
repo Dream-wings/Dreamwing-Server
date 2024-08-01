@@ -17,7 +17,7 @@ import java.util.Date;
  */
 @Data
 public class VolunteerListDTO {
-
+    private long volunteerId;
     private String title;                         //봉사 or 멘토링 제목
     private int type;                             //봉사 or 멘토링
     private int category;                      //봉사 or 멘토링 종류

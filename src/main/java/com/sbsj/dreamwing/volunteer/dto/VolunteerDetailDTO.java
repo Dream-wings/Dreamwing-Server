@@ -33,4 +33,6 @@ public class VolunteerDetailDTO {
     private Date recruitStartDate;
     private Date recruitEndDate;
     private String imageUrl;
+    private String latitude;
+    private String longitude;
 }
