@@ -2,11 +2,8 @@ package com.sbsj.dreamwing.user.controller;
 
 import com.sbsj.dreamwing.user.domain.UserPointVO;
 import com.sbsj.dreamwing.user.domain.UserSupportVO;
-import com.sbsj.dreamwing.user.dto.LoginRequestDTO;
-import com.sbsj.dreamwing.user.dto.UserDTO;
-import com.sbsj.dreamwing.user.dto.UserUpdateDTO;
+import com.sbsj.dreamwing.user.dto.*;
 import com.sbsj.dreamwing.user.service.UserService;
-import com.sbsj.dreamwing.user.dto.SignUpRequestDTO;
 import com.sbsj.dreamwing.util.ApiResponse;
 import com.sbsj.dreamwing.util.S3Uploader;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +32,8 @@ import java.util.List;
  *  2024.07.31      정은찬                       회원탈퇴 기능 API 및 회원 정보 가져오기 API 추가
  *  2024.07.31      정은찬                       회원 정보 업데이트 API 및 로그아웃 API 추가
  *  2024.07.31      정은찬                       포인트 내역 조회 API 및 후원 내역 조회 API 추가
+ *  2024.08.02      정은찬                       로그인 아이디 존재 여부 확인 API 추가
+ *  
  * </pre>
  */
 @RestController
@@ -167,4 +166,14 @@ public class UserController {
 
         return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, supportList));
     }
+
+    @GetMapping("/checkExistId")
+    public ResponseEntity<ApiResponse<Boolean>> checkExistId(String loginId) {
+        LoginIdDTO loginIdDTO = new LoginIdDTO();
+        loginIdDTO.setLoginId(loginId);
+        boolean result = userService.checkExistLoginId(loginIdDTO);
+
+        return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, result));
+    }
+
 }
