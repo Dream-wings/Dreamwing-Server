@@ -3,10 +3,7 @@ package com.sbsj.dreamwing.user.service;
 import com.sbsj.dreamwing.user.domain.UserPointVO;
 import com.sbsj.dreamwing.user.domain.UserSupportVO;
 import com.sbsj.dreamwing.user.domain.UserVO;
-import com.sbsj.dreamwing.user.dto.LoginRequestDTO;
-import com.sbsj.dreamwing.user.dto.SignUpRequestDTO;
-import com.sbsj.dreamwing.user.dto.UserDTO;
-import com.sbsj.dreamwing.user.dto.UserUpdateDTO;
+import com.sbsj.dreamwing.user.dto.*;
 import com.sbsj.dreamwing.user.mapper.UserMapper;
 import com.sbsj.dreamwing.util.JwtTokenProvider;
 import com.sbsj.dreamwing.util.S3Uploader;
@@ -37,6 +34,7 @@ import java.util.concurrent.TimeUnit;
  *  2024.07.31      정은찬                      회원 정보 업데이트 기능 및 로그아웃 기능 추가
  *  2024.07.31      정은찬                      포인트 내역 조회 기능 및 후원 내역 조회 기능 추가
  *  2024.07.31      정은찬                      회원가입 및 회원 정보 업데이트 프로필 이미지 S3 업로드 기능 추가
+ *  2024.08.02      정은찬                      로그인 아이디 존재 여부 확인 기능 추가
  * </pre>
  */
 @Service
@@ -180,5 +178,16 @@ public class UserServiceImpl implements UserService {
     public List<UserSupportVO> getUserSupportList(long userId) {
         List<UserSupportVO> userSupportList = userMapper.getUserSupportVOList(userId);
         return userSupportList;
+    }
+
+    public Boolean checkExistLoginId(LoginIdDTO loginIdDTO) {
+        String result = userMapper.checkLoginIdExistence(loginIdDTO.getLoginId());
+
+        if (result == null || result.isEmpty()) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }

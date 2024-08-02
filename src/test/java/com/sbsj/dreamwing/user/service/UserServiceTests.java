@@ -2,10 +2,7 @@ package com.sbsj.dreamwing.user.service;
 
 import com.sbsj.dreamwing.user.domain.UserPointVO;
 import com.sbsj.dreamwing.user.domain.UserSupportVO;
-import com.sbsj.dreamwing.user.dto.LoginRequestDTO;
-import com.sbsj.dreamwing.user.dto.SignUpRequestDTO;
-import com.sbsj.dreamwing.user.dto.UserDTO;
-import com.sbsj.dreamwing.user.dto.UserUpdateDTO;
+import com.sbsj.dreamwing.user.dto.*;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -104,5 +101,14 @@ public class UserServiceTests {
     public void getSupportListTest() {
         List<UserSupportVO> userSupportList = userService.getUserSupportList(1);
         log.info(userSupportList.toString());
+    }
+
+    @Test
+    public void checkExistLoginIdTest() {
+        LoginIdDTO loginIdDTO = new LoginIdDTO();
+        loginIdDTO.setLoginId("loginTest2");
+        boolean result = userService.checkExistLoginId(loginIdDTO);
+
+        Assertions.assertEquals(result, false);
     }
 }
