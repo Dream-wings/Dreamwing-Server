@@ -1,6 +1,7 @@
 package com.sbsj.dreamwing.volunteer.service;
 
 
+import com.sbsj.dreamwing.volunteer.dto.CertificationVolunteerRequestDTO;
 import com.sbsj.dreamwing.volunteer.dto.PostApplyVolunteerRequestDTO;
 import com.sbsj.dreamwing.volunteer.dto.VolunteerDetailDTO;
 import lombok.extern.slf4j.Slf4j;
@@ -13,8 +14,21 @@ import com.sbsj.dreamwing.volunteer.dto.VolunteerListDTO;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * 봉사 매퍼 테스트 클래스
+ * @author
+ * @since
+ * @version 1.0
+ *
+ * <pre>
+ * 수정일        	수정자        수정내용
+ * ----------  --------    ---------------------------
+ * 2024.08.03   정은지       봉사활동 인증 서비스 테스트 추가
+ * </pre>
+ */
 @Slf4j
 @SpringBootTest
 public class VolunteerServiceTests {
@@ -80,14 +94,18 @@ public class VolunteerServiceTests {
         request.setUserId(2L); // 적절한 사용자 ID
 
         // when: 봉사 취소 시도
-        boolean cancelSuccess = service.cancelVolunteerApplication(request);
+        boolean cancelSuccess = service.cancelApplication(request);
 
         // then: 봉사 취소가 성공해야 함
         assertTrue(cancelSuccess, "봉사 취소 성공");
 
     }
 
+    @Test
+    @DisplayName("봉사활동 인증 서비스 테스트")
+    public void testCertificationVolunteer() throws Exception {
 
+    }
 }
 
 

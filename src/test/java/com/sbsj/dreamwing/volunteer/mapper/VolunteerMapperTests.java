@@ -1,9 +1,11 @@
 package com.sbsj.dreamwing.volunteer.mapper;
 
+import com.sbsj.dreamwing.volunteer.dto.CertificationVolunteerRequestDTO;
 import com.sbsj.dreamwing.volunteer.dto.PostApplyVolunteerRequestDTO;
 import com.sbsj.dreamwing.volunteer.dto.VolunteerDetailDTO;
 import com.sbsj.dreamwing.volunteer.mapper.VolunteerMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,6 +15,18 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * 봉사 매퍼 테스트 클래스
+ * @author
+ * @since
+ * @version 1.0
+ *
+ * <pre>
+ * 수정일        	수정자        수정내용
+ * ----------  --------    ---------------------------
+ * 2024.08.03   정은지       봉사활동 인증 매퍼 테스트 추가
+ * </pre>
+ */
 @Slf4j
 @SpringBootTest
 public class VolunteerMapperTests {
@@ -88,5 +102,22 @@ public class VolunteerMapperTests {
         assertThat(result).isEqualTo(1); // Assuming 1 means success
     }
 
+    @Test
+    @DisplayName("봉사활동 이미지 업데이트 테스트")
+    public void testUpdateImageUserVolunteer() {
+
+        // given
+        CertificationVolunteerRequestDTO dto = CertificationVolunteerRequestDTO.builder()
+                .userId(1)
+                .volunteerId(1)
+                .imageUrl("http://example.url")
+                .build();
+
+        // when
+        int success = mapper.updateImageUserVolunteer(dto);
+
+        // then
+        assertThat(success).isEqualTo(1);
+    }
 
 }
