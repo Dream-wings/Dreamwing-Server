@@ -63,6 +63,30 @@ public class VolunteerController {
 
         return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, volunteerDetailDTO));
     }
+    // New endpoint to check if a user has applied
+    @GetMapping("/check-application")
+    public ResponseEntity<ApiResponse<Boolean>> checkApplicationStatus(@RequestParam long volunteerId, @RequestParam long userId) {
+        boolean hasApplied = volunteerService.hasUserApplied(volunteerId, userId);
+        return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, hasApplied));
+    }
+
+    @PostMapping("/check-application")
+    public ResponseEntity<ApiResponse<Boolean>> checkIfAlreadyApplied(@RequestBody PostApplyVolunteerRequestDTO request) {
+        boolean hasApplied = volunteerService.hasUserApplied(request.getVolunteerId(), request.getUserId());
+        return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, hasApplied));
+    }
+//    @PostMapping("/cancel-application")
+//    public ResponseEntity<ApiResponse<Void>> cancelApplication(@RequestBody PostApplyVolunteerRequestDTO request) {
+//        try {
+//            volunteerService.cancelApplication(request);
+//            return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, null));
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                    .body(ApiResponse.failure(HttpStatus.INTERNAL_SERVER_ERROR, "Cancellation failed"));
+//        }
+//    }
+
+
 
 
     @PostMapping("/apply")
@@ -74,13 +98,14 @@ public class VolunteerController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiResponse.failure(HttpStatus.BAD_REQUEST, "신청에 실패했습니다."));
         }
     }
-    @PostMapping("/cancel")
+    @PostMapping("/cancel-application")
     public ResponseEntity<ApiResponse<Void>> cancelVolunteer(@RequestBody PostApplyVolunteerRequestDTO request) throws Exception {
-        boolean success = volunteerService.cancelVolunteerApplication(request);
+        boolean success = volunteerService.cancelApplication(request);
         if (success) {
             return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK));
         } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiResponse.failure(HttpStatus.BAD_REQUEST, "신청 취소에 실패했습니다."));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(ApiResponse.failure(HttpStatus.BAD_REQUEST, "신청 취소에 실패했습니다."));
         }
     }
 

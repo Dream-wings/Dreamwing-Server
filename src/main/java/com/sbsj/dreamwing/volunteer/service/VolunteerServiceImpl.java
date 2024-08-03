@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
 import java.util.List;
 
 
@@ -67,12 +68,31 @@ public class VolunteerServiceImpl implements VolunteerService{
         return result > 0;
     }
 
+//    @Override
+//    public boolean cancelVolunteerApplication(PostApplyVolunteerRequestDTO request) {
+//        // 봉사 신청 취소
+//        int result = volunteerMapper.deleteVolunteerApplication(request);
+//        return result > 0;
+//    }
+
+    // New method to check if a user has applied
     @Override
-    public boolean cancelVolunteerApplication(PostApplyVolunteerRequestDTO request) {
-        // 봉사 신청 취소
-        int result = volunteerMapper.deleteVolunteerApplication(request);
-        return result > 0;
+    public boolean hasUserApplied(long volunteerId, long userId) {
+        return volunteerMapper.existsByVolunteerIdAndUserId(volunteerId, userId);
     }
+
+    @Override
+    @Transactional
+    public boolean cancelApplication(PostApplyVolunteerRequestDTO request) {
+        int exists = volunteerMapper.checkIfApplicationExists(request);
+        if (exists == 1) {
+            int result = volunteerMapper.deleteApplication(request);
+            return result > 0; // return true if at least one row was affected
+        } else {
+            return false; // application does not exist
+        }
+    }
+
 }
 
 
