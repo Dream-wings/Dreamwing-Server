@@ -123,10 +123,9 @@ public class VolunteerController {
      */
     @PatchMapping(value = "/certification", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<ApiResponse<Void>> certificationVolunteer(@RequestPart CertificationVolunteerRequestDTO request,
-                                                                    @RequestPart(value = "imageUrl", required = false) MultipartFile imageFile) throws Exception {
+                                                                    @RequestPart(value = "imageFile", required = false) MultipartFile imageFile) throws Exception {
         return volunteerService.certificationVolunteer(request, imageFile) ?
                 ResponseEntity.ok(ApiResponse.success(HttpStatus.OK)) :
                 ResponseEntity.badRequest().body(ApiResponse.failure(HttpStatus.BAD_REQUEST, "봉사활동 인증 실패"));
     }
-
 }
