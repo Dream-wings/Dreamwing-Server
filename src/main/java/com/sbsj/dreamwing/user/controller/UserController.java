@@ -1,19 +1,20 @@
 package com.sbsj.dreamwing.user.controller;
 
-import com.sbsj.dreamwing.user.domain.PointVO;
-import com.sbsj.dreamwing.user.dto.LoginRequestDTO;
-import com.sbsj.dreamwing.user.dto.UserDTO;
-import com.sbsj.dreamwing.user.dto.UserUpdateDTO;
+import com.sbsj.dreamwing.user.domain.UserPointVO;
+import com.sbsj.dreamwing.user.domain.UserSupportVO;
+import com.sbsj.dreamwing.user.dto.*;
 import com.sbsj.dreamwing.user.service.UserService;
-import com.sbsj.dreamwing.user.dto.SignUpRequestDTO;
 import com.sbsj.dreamwing.util.ApiResponse;
+import com.sbsj.dreamwing.util.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -30,7 +31,9 @@ import java.util.List;
  *  2024.07.30      정은찬                       로그인 기능 API 추가
  *  2024.07.31      정은찬                       회원탈퇴 기능 API 및 회원 정보 가져오기 API 추가
  *  2024.07.31      정은찬                       회원 정보 업데이트 API 및 로그아웃 API 추가
- *  2024.07.31      정은찬                       포인트 내역 조회 API 추가
+ *  2024.07.31      정은찬                       포인트 내역 조회 API 및 후원 내역 조회 API 추가
+ *  2024.08.02      정은찬                       로그인 아이디 존재 여부 확인 API 추가
+ *  
  * </pre>
  */
 @RestController
@@ -39,8 +42,9 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
-    @PostMapping("/signUp")
-    public ResponseEntity<ApiResponse<Void>> signUp(@RequestBody SignUpRequestDTO signUpRequestDTO) throws Exception {
+    @PostMapping(value = "/signUp", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ApiResponse<Void>> signUp(@ModelAttribute SignUpRequestDTO signUpRequestDTO) throws Exception {
+
         String result = userService.signUp(signUpRequestDTO);
 
         if (result.equals("사용자 등록 성공")) {
@@ -102,17 +106,14 @@ public class UserController {
         return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, userDTO));
     }
 
-    @PostMapping("/update")
-    public ResponseEntity<ApiResponse<Void>> update(@RequestBody UserUpdateDTO userUpdateDTO) throws Exception {
+    @PostMapping(value = "/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ApiResponse<Void>> update(@ModelAttribute UserUpdateDTO userUpdateDTO) throws Exception {
         // SecurityContext에서 Authentication 객체를 가져옵니다.
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         // UserDetails 객체에서 userId를 가져옵니다.
-        // 여기서는 UserDetails의 `getUsername` 메서드를 사용한다고 가정합니다.
         long userId = ((UserDTO) authentication.getPrincipal()).getUserId();
 
-        userUpdateDTO.setUserId(userId);
-
-        Boolean result = userService.updateUserInfo(userUpdateDTO);
+        Boolean result = userService.updateUserInfo(userId, userUpdateDTO);
 
         if (result) {
             return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK));
@@ -141,15 +142,38 @@ public class UserController {
     }
 
     @GetMapping("/getPointList")
-    public ResponseEntity<ApiResponse<List<PointVO>>> getPointList() {
+    public ResponseEntity<ApiResponse<List<UserPointVO>>> getUserPointList() {
         // SecurityContext에서 Authentication 객체를 가져옵니다.
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         // UserDetails 객체에서 userId를 가져옵니다.
         // 여기서는 UserDetails의 `getUsername` 메서드를 사용한다고 가정합니다.
         long userId = ((UserDTO) authentication.getPrincipal()).getUserId();
 
-        List<PointVO> pointList = userService.getPointList(userId);
+        List<UserPointVO> pointList = userService.getUserPointList(userId);
 
         return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, pointList));
     }
+
+    @GetMapping("/getSupportList")
+    public ResponseEntity<ApiResponse<List<UserSupportVO>>> getUserSupportList() {
+        // SecurityContext에서 Authentication 객체를 가져옵니다.
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // UserDetails 객체에서 userId를 가져옵니다.
+        // 여기서는 UserDetails의 `getUsername` 메서드를 사용한다고 가정합니다.
+        long userId = ((UserDTO) authentication.getPrincipal()).getUserId();
+
+        List<UserSupportVO> supportList = userService.getUserSupportList(userId);
+
+        return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, supportList));
+    }
+
+    @GetMapping("/checkExistId")
+    public ResponseEntity<ApiResponse<Boolean>> checkExistId(String loginId) {
+        LoginIdDTO loginIdDTO = new LoginIdDTO();
+        loginIdDTO.setLoginId(loginId);
+        boolean result = userService.checkExistLoginId(loginIdDTO);
+
+        return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, result));
+    }
+
 }

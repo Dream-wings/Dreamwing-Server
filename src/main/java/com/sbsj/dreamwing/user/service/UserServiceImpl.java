@@ -1,18 +1,18 @@
 package com.sbsj.dreamwing.user.service;
 
-import com.sbsj.dreamwing.user.domain.PointVO;
+import com.sbsj.dreamwing.user.domain.UserPointVO;
+import com.sbsj.dreamwing.user.domain.UserSupportVO;
 import com.sbsj.dreamwing.user.domain.UserVO;
-import com.sbsj.dreamwing.user.dto.LoginRequestDTO;
-import com.sbsj.dreamwing.user.dto.SignUpRequestDTO;
-import com.sbsj.dreamwing.user.dto.UserDTO;
-import com.sbsj.dreamwing.user.dto.UserUpdateDTO;
+import com.sbsj.dreamwing.user.dto.*;
 import com.sbsj.dreamwing.user.mapper.UserMapper;
 import com.sbsj.dreamwing.util.JwtTokenProvider;
+import com.sbsj.dreamwing.util.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Timestamp;
 import java.util.Collections;
@@ -32,7 +32,9 @@ import java.util.concurrent.TimeUnit;
  *  2024.07.29      정은찬                      로그인 기능 추가
  *  2024.07.31      정은찬                      회원탈퇴 기능 및 회원 정보 가져오기 기능 추가
  *  2024.07.31      정은찬                      회원 정보 업데이트 기능 및 로그아웃 기능 추가
- *  2024.07.31      정은찬                      포인트 내역 조회 기능 추가
+ *  2024.07.31      정은찬                      포인트 내역 조회 기능 및 후원 내역 조회 기능 추가
+ *  2024.07.31      정은찬                      회원가입 및 회원 정보 업데이트 프로필 이미지 S3 업로드 기능 추가
+ *  2024.08.02      정은찬                      로그인 아이디 존재 여부 확인 기능 추가
  * </pre>
  */
 @Service
@@ -43,6 +45,7 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
     private final RedisTemplate<String, String> redisTemplate;
+    private final S3Uploader s3Uploader;
 
     @Transactional
     public String signUp(SignUpRequestDTO signUpRequestDTO) {
@@ -50,6 +53,17 @@ public class UserServiceImpl implements UserService {
         if(userMapper.checkLoginIdExistence(signUpRequestDTO.getLoginId()) != null) {
             return "중복 아이디 존재";
         }
+
+        // 이미지 파일 처리
+        String imageUrl = "https://dreamwing.s3.ap-northeast-2.amazonaws.com/image/default.jpg";
+
+        MultipartFile imageFile = signUpRequestDTO.getImageFile();
+        if (imageFile != null && !imageFile.isEmpty()) {
+            imageUrl = s3Uploader.uploadFile(signUpRequestDTO.getImageFile());
+        }
+
+        signUpRequestDTO.setProfileImageUrl(imageUrl);
+
         // 현재 시간을 TIMESTAMP로 설정
         Timestamp currentTimestamp = new Timestamp(new Date().getTime());
 
@@ -76,7 +90,7 @@ public class UserServiceImpl implements UserService {
         UserDTO userDTO = userMapper.selectUserByLoginId(loginRequestDTO.getLoginId())
                 .orElseThrow(() -> new RuntimeException("잘못된 아이디입니다"));
 
-        if(userDTO == null) {
+        if(userDTO == null || userDTO.getWithdraw() == 1) {
             throw new Exception("잘못된 아이디입니다.");
         }
         else {
@@ -122,9 +136,24 @@ public class UserServiceImpl implements UserService {
         return userDTO;
     }
 
-    public boolean updateUserInfo(UserUpdateDTO userUpdateDTO) {
+    public boolean updateUserInfo(long userId, UserUpdateDTO userUpdateDTO) {
         userUpdateDTO.setPassword(passwordEncoder.encode(userUpdateDTO.getPassword()));
-        int result = userMapper.updateUserInfo(userUpdateDTO);
+
+        MultipartFile imageFile = userUpdateDTO.getImageFile();
+        if (imageFile != null && !imageFile.isEmpty()) {
+            String imageUrl = s3Uploader.uploadFile(userUpdateDTO.getImageFile());
+            userUpdateDTO.setProfileImageUrl(imageUrl);
+        }
+
+        UserVO userVO = UserVO.builder()
+                .userId(userId)
+                .name(userUpdateDTO.getName())
+                .password(userUpdateDTO.getPassword())
+                .phone(userUpdateDTO.getPhone())
+                .profileImageUrl(userUpdateDTO.getProfileImageUrl())
+                .build();
+
+        int result = userMapper.updateUserInfo(userVO);
 
         if(result == 1) {
             return true;
@@ -141,8 +170,24 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    public List<PointVO> getPointList(long userId) {
-        List<PointVO> pointList = userMapper.getPointVOList(userId);
-        return pointList;
+    public List<UserPointVO> getUserPointList(long userId) {
+        List<UserPointVO> userPointList = userMapper.getUserPointVOList(userId);
+        return userPointList;
+    }
+
+    public List<UserSupportVO> getUserSupportList(long userId) {
+        List<UserSupportVO> userSupportList = userMapper.getUserSupportVOList(userId);
+        return userSupportList;
+    }
+
+    public Boolean checkExistLoginId(LoginIdDTO loginIdDTO) {
+        String result = userMapper.checkLoginIdExistence(loginIdDTO.getLoginId());
+
+        if (result == null || result.isEmpty()) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }

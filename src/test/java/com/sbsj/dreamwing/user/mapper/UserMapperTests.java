@@ -1,6 +1,7 @@
 package com.sbsj.dreamwing.user.mapper;
 
-import com.sbsj.dreamwing.user.domain.PointVO;
+import com.sbsj.dreamwing.user.domain.UserPointVO;
+import com.sbsj.dreamwing.user.domain.UserSupportVO;
 import com.sbsj.dreamwing.user.domain.UserVO;
 
 import com.sbsj.dreamwing.user.dto.UserDTO;
@@ -84,7 +85,7 @@ public class UserMapperTests {
 
     @Test
     public void updateUserInfoTest() {
-        UserUpdateDTO userUpdateDTO = UserUpdateDTO.builder()
+        UserVO userVO = UserVO.builder()
                 .userId(2)
                 .password("test1222")
                 .name("updateTest")
@@ -92,13 +93,19 @@ public class UserMapperTests {
                 .profileImageUrl("updateImage")
                 .build();
 
-        int result = userMapper.updateUserInfo(userUpdateDTO);
+        int result = userMapper.updateUserInfo(userVO);
         Assertions.assertEquals(result, 1);
     }
 
     @Test
-    public void getPointVOListTest() {
-        List<PointVO> pointVOList = userMapper.getPointVOList(1);
-        log.info(pointVOList.toString());
+    public void getUserPointVOListTest() {
+        List<UserPointVO> userPointVOList = userMapper.getUserPointVOList(1);
+        log.info(userPointVOList.toString());
+    }
+
+    @Test
+    public void getUserSupportVOListTest() {
+        List<UserSupportVO> userSupportVOList = userMapper.getUserSupportVOList(1);
+        log.info(userSupportVOList.toString());
     }
 }

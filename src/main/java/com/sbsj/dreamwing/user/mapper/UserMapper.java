@@ -1,6 +1,7 @@
 package com.sbsj.dreamwing.user.mapper;
 
-import com.sbsj.dreamwing.user.domain.PointVO;
+import com.sbsj.dreamwing.user.domain.UserPointVO;
+import com.sbsj.dreamwing.user.domain.UserSupportVO;
 import com.sbsj.dreamwing.user.domain.UserVO;
 import com.sbsj.dreamwing.user.dto.UserDTO;
 import com.sbsj.dreamwing.user.dto.UserUpdateDTO;
@@ -22,7 +23,7 @@ import java.util.Optional;
  *  2024.07.29      정은찬                      로그인 아이디 존재 여부 확인
  *  2024.07.30      정은찬                      loginId를 통해 회원 정보 가져오기
  *  2024.07.31      정은찬                      userId를 통해 회원 정보 가져오기
- *  2024.07.31      정은찬                      회원 정보 업데이트하기 및 포인트 내역 가져오기
+ *  2024.07.31      정은찬                      회원 정보 업데이트하기 및 포인트 내역, 후원 내역 가져오기
  * </pre>
  */
 @Mapper
@@ -32,6 +33,8 @@ public interface UserMapper {
     Optional<UserDTO> selectUserByLoginId(String loginId);
     Optional<UserDTO> selectUserByUserId(long userId);
     int withdraw(long userId);
-    int updateUserInfo(UserUpdateDTO userUpdateDTO);
-    List<PointVO> getPointVOList(long userId);
+    int updateUserInfo(UserVO userVO);
+    List<UserPointVO> getUserPointVOList(long userId);
+    List<UserSupportVO> getUserSupportVOList(long userId);
+
 }

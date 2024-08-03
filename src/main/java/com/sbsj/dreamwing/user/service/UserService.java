@@ -1,11 +1,9 @@
 package com.sbsj.dreamwing.user.service;
 
-import com.sbsj.dreamwing.user.domain.PointVO;
-import com.sbsj.dreamwing.user.domain.UserVO;
-import com.sbsj.dreamwing.user.dto.LoginRequestDTO;
-import com.sbsj.dreamwing.user.dto.SignUpRequestDTO;
-import com.sbsj.dreamwing.user.dto.UserDTO;
-import com.sbsj.dreamwing.user.dto.UserUpdateDTO;
+import com.sbsj.dreamwing.user.domain.UserPointVO;
+import com.sbsj.dreamwing.user.domain.UserSupportVO;
+import com.sbsj.dreamwing.user.dto.*;
+
 import java.util.List;
 
 /**
@@ -21,7 +19,9 @@ import java.util.List;
  *  2024.07.29      정은찬                       로그인 기능
  *  2024.07.31      정은찬                      회원탈퇴 기능 및 회원 정보 가져오기 기능 추가
  *  2024.07.31      정은찬                      회원 정보 업데이트 기능 및 로그아웃 기능 추가
- *  2024.07.31      정은찬                      포인트 내역 조회 기능 추가
+ *  2024.07.31      정은찬                      포인트 내역 조회 기능 및 후원 내역 조회 기능 추가
+ *  2024.07.31      정은찬                      회원가입 및 회원 정보 업데이트 프로필 이미지 S3 업로드 기능 추가
+ *  2024.08.02      정은찬                      로그인 아이디 존재 여부 확인 기능 추가
  * </pre>
  */
 public interface UserService {
@@ -29,7 +29,9 @@ public interface UserService {
     public String login(LoginRequestDTO loginRequestDTO) throws Exception;
     public boolean withdraw(long userId);
     public UserDTO getUserInfo(long userId);
-    public boolean updateUserInfo(UserUpdateDTO userUpdateDTO);
+    public boolean updateUserInfo(long userId, UserUpdateDTO userUpdateDTO);
     public void logout(long userId);
-    public List<PointVO> getPointList(long userId);
+    public List<UserPointVO> getUserPointList(long userId);
+    public List<UserSupportVO> getUserSupportList(long userId);
+    public Boolean checkExistLoginId(LoginIdDTO loginIdDTO);
 }

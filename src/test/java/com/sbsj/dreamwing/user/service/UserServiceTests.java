@@ -1,11 +1,8 @@
 package com.sbsj.dreamwing.user.service;
 
-import com.sbsj.dreamwing.user.domain.PointVO;
-import com.sbsj.dreamwing.user.domain.UserVO;
-import com.sbsj.dreamwing.user.dto.LoginRequestDTO;
-import com.sbsj.dreamwing.user.dto.SignUpRequestDTO;
-import com.sbsj.dreamwing.user.dto.UserDTO;
-import com.sbsj.dreamwing.user.dto.UserUpdateDTO;
+import com.sbsj.dreamwing.user.domain.UserPointVO;
+import com.sbsj.dreamwing.user.domain.UserSupportVO;
+import com.sbsj.dreamwing.user.dto.*;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -82,21 +79,36 @@ public class UserServiceTests {
 
     @Test
     public void updateUserInfoTest() {
+        long userId = 7;
         UserUpdateDTO userUpdateDTO = UserUpdateDTO.builder()
-                .userId(2)
                 .password("test1222")
                 .name("updateTest")
                 .phone("11111111111")
                 .profileImageUrl("updateImage")
                 .build();
 
-        Boolean result = userService.updateUserInfo(userUpdateDTO);
+        Boolean result = userService.updateUserInfo(userId, userUpdateDTO);
         Assertions.assertEquals(result, true);
     }
 
     @Test
     public void getPointListTest() {
-        List<PointVO> pointList = userService.getPointList(1);
-        log.info(pointList.toString());
+        List<UserPointVO> userPointList = userService.getUserPointList(8);
+        log.info(userPointList.toString());
+    }
+
+    @Test
+    public void getSupportListTest() {
+        List<UserSupportVO> userSupportList = userService.getUserSupportList(1);
+        log.info(userSupportList.toString());
+    }
+
+    @Test
+    public void checkExistLoginIdTest() {
+        LoginIdDTO loginIdDTO = new LoginIdDTO();
+        loginIdDTO.setLoginId("loginTest2");
+        boolean result = userService.checkExistLoginId(loginIdDTO);
+
+        Assertions.assertEquals(result, false);
     }
 }
