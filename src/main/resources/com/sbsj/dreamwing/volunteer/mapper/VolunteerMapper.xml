@@ -4,32 +4,26 @@
 <mapper namespace="com.sbsj.dreamwing.volunteer.mapper.VolunteerMapper">
 
 
-<!--    <select id="getVolunteerList" resultType="com.sbsj.dreamwing.volunteer.dto.VolunteerListDTO">-->
-<!--            SELECT TITLE,-->
-<!--            TYPE,-->
-<!--            CATEGORY,-->
-<!--            VOLUNTEER_START_DATE,-->
-<!--            VOLUNTEER_END_DATE,-->
-<!--            ADDRESS,-->
-<!--            STATUS,-->
-<!--            IMAGE_URL-->
-<!--            FROM   VOLUNTEER &lt;!&ndash; WHERE CATEGORY = #{CATEGORY_ID} &ndash;&gt;-->
-<!--</select>-->
 
-    <select id="getVolunteerList" parameterType="int" resultType="com.sbsj.dreamwing.volunteer.dto.VolunteerListDTO">
+    <select id="getVolunteerListWithFilters" parameterType="map" resultType="com.sbsj.dreamwing.volunteer.dto.VolunteerListDTO">
         SELECT VOLUNTEER_ID,
-               TITLE,
-               TYPE,
-               CATEGORY,
-               VOLUNTEER_START_DATE,
-               VOLUNTEER_END_DATE,
-               ADDRESS,
-               STATUS,
-               IMAGE_URL
+        TITLE,
+        TYPE,
+        CATEGORY,
+        VOLUNTEER_START_DATE,
+        VOLUNTEER_END_DATE,
+        ADDRESS,
+        STATUS,
+        IMAGE_URL
         FROM VOLUNTEER
+        WHERE STATUS = #{status}
+        <if test="type != null">
+            AND TYPE = #{type}
+        </if>
         ORDER BY VOLUNTEER_START_DATE DESC
         OFFSET #{offset} ROWS FETCH NEXT #{size} ROWS ONLY
     </select>
+
 
 
     <!-- 봉사 상세 조회 -->
@@ -106,5 +100,11 @@
         SET IMAGE_URL = #{imageUrl}
         where VOLUNTEER_ID = #{volunteerId} and user_id = #{userId}
     </update>
+
+    <select id="getApplicationStatus" parameterType="map" resultType="int">
+        SELECT STATUS
+        FROM USER_VOLUNTEER
+        WHERE VOLUNTEER_ID = #{volunteerId} AND USER_ID = #{userId}
+    </select>
 
 </mapper>

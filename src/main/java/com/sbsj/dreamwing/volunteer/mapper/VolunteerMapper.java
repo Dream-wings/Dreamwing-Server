@@ -39,12 +39,17 @@ public interface VolunteerMapper {
 
     int deleteVolunteerApplication(PostApplyVolunteerRequestDTO request);
 
-    List<VolunteerListDTO> getVolunteerList(int offset, int size);
+
+    List<VolunteerListDTO> getVolunteerListWithFilters(@Param("offset") int offset, @Param("size") int size, @Param("status") int status, @Param("type") Integer type);
+
     boolean  existsByVolunteerIdAndUserId(@Param("volunteerId") long volunteerId, @Param("userId") long userId);
     int deleteApplication(PostApplyVolunteerRequestDTO request);
     int checkIfApplicationExists(PostApplyVolunteerRequestDTO request);
 
     int updateImageUserVolunteer(CertificationVolunteerRequestDTO request);
+
+    int getApplicationStatus(@Param("volunteerId") long volunteerId, @Param("userId") long userId);
+
 }
 
 
