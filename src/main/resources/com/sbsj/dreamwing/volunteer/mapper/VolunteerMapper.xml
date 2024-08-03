@@ -100,5 +100,11 @@
         WHERE VOLUNTEER_ID = #{volunteerId} AND USER_ID = #{userId}
     </select>
 
+    <!-- 봉사활동 인증 -->
+    <update id="updateImageUserVolunteer" parameterType="CertificationVolunteerRequestDTO">
+        UPDATE USER_VOLUNTEER
+        SET IMAGE_URL = #{imageUrl}
+        where VOLUNTEER_ID = #{volunteerId} and user_id = #{userId}
+    </update>
 
 </mapper>
