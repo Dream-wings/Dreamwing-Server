@@ -5,6 +5,7 @@ import com.sbsj.dreamwing.volunteer.dto.PostApplyVolunteerRequestDTO;
 import com.sbsj.dreamwing.volunteer.dto.VolunteerDetailDTO;
 import com.sbsj.dreamwing.volunteer.dto.VolunteerListDTO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -37,6 +38,14 @@ public interface VolunteerMapper {
     int deleteVolunteerApplication(PostApplyVolunteerRequestDTO request);
 
     List<VolunteerListDTO> getVolunteerList(int offset, int size);
+    boolean  existsByVolunteerIdAndUserId(@Param("volunteerId") long volunteerId, @Param("userId") long userId);
+    int deleteApplication(PostApplyVolunteerRequestDTO request);
+    int checkIfApplicationExists(PostApplyVolunteerRequestDTO request);
+
+
+
+
+
 }
 
 

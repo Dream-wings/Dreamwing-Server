@@ -34,6 +34,8 @@ public interface VolunteerService {
 
     boolean applyVolunteer(PostApplyVolunteerRequestDTO request);
 
-    boolean cancelVolunteerApplication(PostApplyVolunteerRequestDTO request);
+    //boolean cancelVolunteerApplication(PostApplyVolunteerRequestDTO request);
+    boolean hasUserApplied(long volunteerId, long userId);
+    boolean cancelApplication(PostApplyVolunteerRequestDTO request);
 
 }
