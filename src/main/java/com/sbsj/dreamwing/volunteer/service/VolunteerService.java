@@ -42,4 +42,8 @@ public interface VolunteerService {
     boolean cancelApplication(PostApplyVolunteerRequestDTO request);
 
     boolean certificationVolunteer(CertificationVolunteerRequestDTO request, MultipartFile imageFile) throws Exception;
+
+    int getApplicationStatus(long volunteerId, long userId);
+
+
 }

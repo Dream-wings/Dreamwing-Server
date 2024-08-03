@@ -118,6 +118,11 @@ public class VolunteerServiceImpl implements VolunteerService{
 
         return volunteerMapper.updateImageUserVolunteer(request) == 1;
     }
+
+    @Override
+    public int getApplicationStatus(long volunteerId, long userId) {
+        return volunteerMapper.getApplicationStatus(volunteerId, userId);
+    }
 }
 
 

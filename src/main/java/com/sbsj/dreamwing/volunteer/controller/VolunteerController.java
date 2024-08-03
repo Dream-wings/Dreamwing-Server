@@ -129,4 +129,11 @@ public class VolunteerController {
                 ResponseEntity.badRequest().body(ApiResponse.failure(HttpStatus.BAD_REQUEST, "봉사활동 인증 실패"));
     }
 
+    // New endpoint to get the status of a volunteer application
+    @GetMapping("/check-status")
+    public ResponseEntity<ApiResponse<Integer>> getApplicationStatus(@RequestParam long volunteerId, @RequestParam long userId) {
+        int status = volunteerService.getApplicationStatus(volunteerId, userId);
+        return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, status));
+    }
+
 }

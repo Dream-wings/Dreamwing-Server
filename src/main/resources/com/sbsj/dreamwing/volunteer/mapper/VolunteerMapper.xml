@@ -107,4 +107,10 @@
         where VOLUNTEER_ID = #{volunteerId} and user_id = #{userId}
     </update>
 
+    <select id="getApplicationStatus" parameterType="map" resultType="int">
+        SELECT STATUS
+        FROM USER_VOLUNTEER
+        WHERE VOLUNTEER_ID = #{volunteerId} AND USER_ID = #{userId}
+    </select>
+
 </mapper>

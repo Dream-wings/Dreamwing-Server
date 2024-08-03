@@ -45,6 +45,9 @@ public interface VolunteerMapper {
     int checkIfApplicationExists(PostApplyVolunteerRequestDTO request);
 
     int updateImageUserVolunteer(CertificationVolunteerRequestDTO request);
+
+    int getApplicationStatus(@Param("volunteerId") long volunteerId, @Param("userId") long userId);
+
 }
 
 
