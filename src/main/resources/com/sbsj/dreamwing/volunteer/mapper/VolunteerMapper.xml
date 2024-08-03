@@ -64,19 +64,47 @@
         VALUES (#{volunteerId},#{userId},  DEFAULT, DEFAULT)
     </insert>
 
-    <!-- 이미 신청했는지 체크 -->
+<!--    &lt;!&ndash; 이미 신청했는지 체크 &ndash;&gt;-->
+<!--    &lt;!&ndash; Check if application exists &ndash;&gt;-->
+<!--    <select id="checkIfApplicationExists" parameterType="com.sbsj.dreamwing.volunteer.dto.PostApplyVolunteerRequestDTO" resultType="boolean">-->
+<!--        SELECT COUNT(*)-->
+<!--        FROM USER_VOLUNTEER-->
+<!--        WHERE VOLUNTEER_ID = #{volunteerId} AND USER_ID = #{userId}-->
+<!--    </select>-->
+
+
+    <!-- Delete application -->
+    <delete id="deleteApplication" parameterType="com.sbsj.dreamwing.volunteer.dto.PostApplyVolunteerRequestDTO">
+        DELETE FROM USER_VOLUNTEER
+        WHERE VOLUNTEER_ID = #{volunteerId} AND USER_ID = #{userId}
+    </delete>
+
+
+    <!-- Check if User Applied -->
+    <select id="existsByVolunteerIdAndUserId" resultType="boolean">
+        SELECT COUNT(*)
+        FROM USER_VOLUNTEER
+        WHERE VOLUNTEER_ID = #{volunteerId} AND USER_ID = #{userId}
+    </select>
+    <!-- Check if application exists -->
     <select id="checkIfAlreadyApplied" parameterType="com.sbsj.dreamwing.volunteer.dto.PostApplyVolunteerRequestDTO" resultType="int">
         SELECT COUNT(*)
         FROM USER_VOLUNTEER
         WHERE VOLUNTEER_ID = #{volunteerId} AND USER_ID = #{userId}
     </select>
 
-    <!-- 봉사 신청 취소 -->
-    <delete id="deleteVolunteerApplication" parameterType="com.sbsj.dreamwing.volunteer.dto.PostApplyVolunteerRequestDTO">
-        DELETE FROM USER_VOLUNTEER
+    <!-- Check if application exists -->
+    <select id="checkIfApplicationExists" parameterType="com.sbsj.dreamwing.volunteer.dto.PostApplyVolunteerRequestDTO" resultType="int">
+        SELECT COUNT(*)
+        FROM USER_VOLUNTEER
         WHERE VOLUNTEER_ID = #{volunteerId} AND USER_ID = #{userId}
-    </delete>
+    </select>
 
-
+    <!-- 봉사활동 인증 -->
+    <update id="updateImageUserVolunteer" parameterType="CertificationVolunteerRequestDTO">
+        UPDATE USER_VOLUNTEER
+        SET IMAGE_URL = #{imageUrl}
+        where VOLUNTEER_ID = #{volunteerId} and user_id = #{userId}
+    </update>
 
 </mapper>

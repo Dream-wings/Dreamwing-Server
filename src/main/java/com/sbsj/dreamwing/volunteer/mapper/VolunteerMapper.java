@@ -1,10 +1,12 @@
 package com.sbsj.dreamwing.volunteer.mapper;
 
 
+import com.sbsj.dreamwing.volunteer.dto.CertificationVolunteerRequestDTO;
 import com.sbsj.dreamwing.volunteer.dto.PostApplyVolunteerRequestDTO;
 import com.sbsj.dreamwing.volunteer.dto.VolunteerDetailDTO;
 import com.sbsj.dreamwing.volunteer.dto.VolunteerListDTO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -20,6 +22,7 @@ import java.util.List;
  * ----------  --------    ---------------------------
  * 2024.07.26  	임재성        최초 생성
  * 2024.07.28   임재성        봉사 모집공고 리스트 & 상세페이지 조회 메서드 추가
+ * 2024.08.03   정은지        봉사활동 인증 메서드 추가
  * </pre>
  */
 
@@ -37,6 +40,11 @@ public interface VolunteerMapper {
     int deleteVolunteerApplication(PostApplyVolunteerRequestDTO request);
 
     List<VolunteerListDTO> getVolunteerList(int offset, int size);
+    boolean  existsByVolunteerIdAndUserId(@Param("volunteerId") long volunteerId, @Param("userId") long userId);
+    int deleteApplication(PostApplyVolunteerRequestDTO request);
+    int checkIfApplicationExists(PostApplyVolunteerRequestDTO request);
+
+    int updateImageUserVolunteer(CertificationVolunteerRequestDTO request);
 }
 
 
