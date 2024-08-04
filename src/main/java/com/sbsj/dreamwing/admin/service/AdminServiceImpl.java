@@ -27,6 +27,7 @@ import java.util.List;
  * 2024.07.30   임재성        봉사 & 멘토링 공고 글 조회 기능 추가
  * 2024.07.30   임재성        봉사 & 멘토링 공고 글 생성/수정/삭제 기능 추가
  * 2024.08.04   정은지        봉사활동 신청 대기 목록, 상세 조회 추가
+ * 2024.08.05   정은지        봉사활동 인증 대기 목록, 상세 조회 추가
  * </pre>
  */
 @Slf4j
@@ -120,6 +121,7 @@ public int createVolunteer(AdminVolunteerRequestDTO request) {
     }
 
     /**
+     * 봉사활동 신청 대기 목록 조회
      * @author 정은지
      * @param page
      * @param size
@@ -127,12 +129,13 @@ public int createVolunteer(AdminVolunteerRequestDTO request) {
      * @throws Exception
      */
     @Override
-    public List<VolunteerRequestPendingListResponseDTO> getVolunteerRequestPendingList(int page, int size) throws Exception {
+    public List<VolunteerRequestListResponseDTO> getVolunteerRequestPendingList(int page, int size) throws Exception {
         int offset = page * size;
         return mapper.selectVolunteerRequestPendingList(offset, size);
     }
 
     /**
+     * 봉사활동 신청 대기 상세 조회
      * @author 정은지
      * @param volunteerId
      * @param userId
@@ -140,7 +143,35 @@ public int createVolunteer(AdminVolunteerRequestDTO request) {
      * @throws Exception
      */
     @Override
-    public VolunteerRequestPendingDetailResponseDTO getVolunteerRequestPendingDetail(long volunteerId, long userId) throws Exception {
+    public VolunteerRequestDetailResponseDTO getVolunteerRequestPendingDetail(long volunteerId, long userId) throws Exception {
         return mapper.selectVolunteerRequestPendingDetail(volunteerId, userId);
+    }
+
+    /**
+     * 봉사활동 인증 대기 목록 조회
+     * @author 정은지
+     * @param page
+     * @param size
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public List<VolunteerRequestListResponseDTO> getVolunteerCertificationList(int page, int size) throws Exception {
+        int offset = page * size;
+        return mapper.selectVolunteerCertificationList(offset, size);
+    }
+
+
+    /**
+     * 봉사활동 인증 대기 상세 조회
+     * @author 정은지
+     * @param volunteerId
+     * @param userId
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public VolunteerCertificationDetailResponseDTO getVolunteerCertificationDetail(long volunteerId, long userId) throws Exception {
+        return mapper.selectVolunteerCertificationDetail(volunteerId, userId);
     }
 }
