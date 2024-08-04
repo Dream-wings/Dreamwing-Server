@@ -133,6 +133,7 @@
     <!-- 봉사활동 신청 대기 목록 조회 -->
     <select id="selectVolunteerRequestPendingList">
         SELECT V.VOLUNTEER_ID,
+               UV.USER_ID,
                V.TYPE,
                V.TITLE,
                UI.LOGIN_ID

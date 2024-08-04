@@ -24,6 +24,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class VolunteerRequestPendingListResponseDTO {
     private long volunteerId;
+    private long userId;
     private int type;
     private String title;
     private String loginId;
