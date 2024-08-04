@@ -3,7 +3,7 @@ package com.sbsj.dreamwing.user.domain;
 import lombok.Data;
 
 /**
- * 후원 내역 정보를 담는 VO
+ * 사용자 후원 내역 정보를 담는 VO
  * @author 정은찬
  * @since 2024.07.31
  *

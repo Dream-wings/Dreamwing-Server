@@ -33,6 +33,7 @@ import java.util.List;
  *  2024.07.31      정은찬                       회원 정보 업데이트 API 및 로그아웃 API 추가
  *  2024.07.31      정은찬                       포인트 내역 조회 API 및 후원 내역 조회 API 추가
  *  2024.08.02      정은찬                       로그인 아이디 존재 여부 확인 API 추가
+ *  2024.08.04      정은찬                       마이페이지 사용자 정보 API 추가
  *  
  * </pre>
  */
@@ -146,7 +147,6 @@ public class UserController {
         // SecurityContext에서 Authentication 객체를 가져옵니다.
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         // UserDetails 객체에서 userId를 가져옵니다.
-        // 여기서는 UserDetails의 `getUsername` 메서드를 사용한다고 가정합니다.
         long userId = ((UserDTO) authentication.getPrincipal()).getUserId();
 
         List<UserPointVO> pointList = userService.getUserPointList(userId);
@@ -159,7 +159,6 @@ public class UserController {
         // SecurityContext에서 Authentication 객체를 가져옵니다.
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         // UserDetails 객체에서 userId를 가져옵니다.
-        // 여기서는 UserDetails의 `getUsername` 메서드를 사용한다고 가정합니다.
         long userId = ((UserDTO) authentication.getPrincipal()).getUserId();
 
         List<UserSupportVO> supportList = userService.getUserSupportList(userId);
@@ -174,6 +173,17 @@ public class UserController {
         boolean result = userService.checkExistLoginId(loginIdDTO);
 
         return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, result));
+    }
+    @GetMapping("/getMyPageInfo")
+    public ResponseEntity<ApiResponse<MyPageDTO>> getMyPageInfo() {
+        // SecurityContext에서 Authentication 객체를 가져옵니다.
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // UserDetails 객체에서 userId를 가져옵니다.
+        long userId = ((UserDTO) authentication.getPrincipal()).getUserId();
+
+        MyPageDTO myPageDTO = userService.getMyPageInfo(userId);
+
+        return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, myPageDTO));
     }
 
 }

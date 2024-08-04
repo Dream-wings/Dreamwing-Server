@@ -1,8 +1,10 @@
 package com.sbsj.dreamwing.user.service;
 
+import com.sbsj.dreamwing.support.mapper.SupportMapper;
 import com.sbsj.dreamwing.user.domain.UserPointVO;
 import com.sbsj.dreamwing.user.domain.UserSupportVO;
 import com.sbsj.dreamwing.user.domain.UserVO;
+import com.sbsj.dreamwing.user.domain.MyVolunteerVO;
 import com.sbsj.dreamwing.user.dto.*;
 import com.sbsj.dreamwing.user.mapper.UserMapper;
 import com.sbsj.dreamwing.util.JwtTokenProvider;
@@ -28,13 +30,14 @@ import java.util.concurrent.TimeUnit;
  * <pre>
  * 수정일        		수정자       				    수정내용
  * ----------  ----------------    ---------------------------------
- *  2024.07.28     	정은찬        		       최초 생성 및 회원가입 기능
- *  2024.07.29      정은찬                      로그인 기능 추가
+ *  2024.07.28     	정은찬        		        최초 생성 및 회원가입 기능
+ *  2024.07.29      정은찬                       로그인 기능
  *  2024.07.31      정은찬                      회원탈퇴 기능 및 회원 정보 가져오기 기능 추가
  *  2024.07.31      정은찬                      회원 정보 업데이트 기능 및 로그아웃 기능 추가
  *  2024.07.31      정은찬                      포인트 내역 조회 기능 및 후원 내역 조회 기능 추가
  *  2024.07.31      정은찬                      회원가입 및 회원 정보 업데이트 프로필 이미지 S3 업로드 기능 추가
  *  2024.08.02      정은찬                      로그인 아이디 존재 여부 확인 기능 추가
+ *  2024.08.03      정은찬                      마이페이지 사용자 정보 조회 기능 추가
  * </pre>
  */
 @Service
@@ -46,6 +49,8 @@ public class UserServiceImpl implements UserService {
     private final JwtTokenProvider jwtTokenProvider;
     private final RedisTemplate<String, String> redisTemplate;
     private final S3Uploader s3Uploader;
+
+    private final SupportMapper supportMapper;
 
     @Transactional
     public String signUp(SignUpRequestDTO signUpRequestDTO) {
@@ -189,5 +194,26 @@ public class UserServiceImpl implements UserService {
         else {
             return false;
         }
+    }
+
+    public MyPageDTO getMyPageInfo(long userId) {
+        UserDTO userDTO = userMapper.selectUserByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("잘못된 아이디입니다"));
+
+        int totalSupportPoint = userMapper.selectTotalSupportPoint(userId);
+
+        List<UserSupportVO> supportDeatails = userMapper.getUserSupportVOList(userId);
+        List<MyVolunteerVO> volunteerDeatails = userMapper.getUserVolunteerVOList(userId) ;
+        List<UserPointVO> pointDetails = userMapper.getUserPointVOList(userId);
+
+        MyPageDTO myPageDTO = MyPageDTO.builder()
+                .name(userDTO.getName())
+                .phone(userDTO.getPhone())
+                .profileImageUrl(userDTO.getProfileImageUrl())
+                .totalPoint(userDTO.getTotalPoint())
+                .totalSupportPoint(totalSupportPoint)
+                .build();
+
+        return myPageDTO;
     }
 }
