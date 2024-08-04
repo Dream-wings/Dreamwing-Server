@@ -27,7 +27,7 @@ import java.util.Optional;
  *  2024.07.31      정은찬                      userId를 통해 회원 정보 가져오기 추가
  *  2024.07.31      정은찬                      사용자 정보 업데이트하기 및 포인트 내역, 후원 내역 가져오기 추가
  *  2024.08.03      정은찬                      사용자 총 후원 포인트 가져오기 및 사용자 봉사 내역 가져오기 추가
- *  2024.08.04      정은찬                      페이징 처리를 위해 포인트 내역 가져오기 수정
+ *  2024.08.04      정은찬                      페이징 처리를 위해 포인트 내역, 후원 내역 가져오기 수정
  * </pre>
  */
 @Mapper
@@ -42,7 +42,7 @@ public interface UserMapper {
 //    List<MyPointVO> getUserPointVOList(long userId, Pageable pageable);
 
     List<MyPointVO> getUserPointVOList(long userId, int offset, int size);
-    List<MySupportVO> getUserSupportVOList(long userId);
+    List<MySupportVO> getUserSupportVOList(long userId, int offset, int size);
     int selectTotalSupportPoint(long userId);
     List<MyVolunteerVO> getUserVolunteerVOList(long userId);
 

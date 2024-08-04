@@ -25,7 +25,7 @@ import java.util.List;
  *  2024.07.31      정은찬                      회원가입 및 회원 정보 업데이트 프로필 이미지 S3 업로드 기능 추가
  *  2024.08.02      정은찬                      로그인 아이디 존재 여부 확인 기능 추가
  *  2024.08.03      정은찬                      마이페이지 사용자 정보 조회 기능 추가
- *  2024.08.04      정은찬                      페이징 처리를 위해 포인트 내역 조회 기능 수정
+ *  2024.08.04      정은찬                      페이징 처리를 위해 포인트 내역, 후원 내역 조회 기능 수정
  * </pre>
  */
 public interface UserService {
@@ -38,7 +38,7 @@ public interface UserService {
 
     public List<MyPointVO> getUserPointList(long userId, int page, int size);
 
-    public List<MySupportVO> getUserSupportList(long userId);
+    public List<MySupportVO> getUserSupportList(long userId, int page, int size);
     public Boolean checkExistLoginId(LoginIdDTO loginIdDTO);
     public MyPageDTO getMyPageInfo(long userId);
 }
