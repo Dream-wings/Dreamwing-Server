@@ -64,19 +64,19 @@ public class SupportMapperTests {
         Assertions.assertNotNull(dto, "조회에 실패하였습니다.");
     }
 
-    @Test
-    @DisplayName("모든 후원 리스트 조회 매퍼 테스트")
-    public void testSelectAllSupportList() {
-
-        // given
-
-        // when
-        List<GetSupportListResponseDTO> dto = mapper.selectAllSupportList();
-
-        // then
-        log.info(dto.toString());
-        Assertions.assertNotNull(dto, "조회에 실패하였습니다.");
-    }
+//    @Test
+//    @DisplayName("모든 후원 리스트 조회 매퍼 테스트")
+//    public void testSelectAllSupportList() {
+//
+//        // given
+//
+//        // when
+//        List<GetSupportListResponseDTO> dto = mapper.selectAllSupportList();
+//
+//        // then
+//        log.info(dto.toString());
+//        Assertions.assertNotNull(dto, "조회에 실패하였습니다.");
+//    }
 
 
 

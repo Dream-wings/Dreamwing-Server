@@ -1,9 +1,6 @@
 package com.sbsj.dreamwing.admin.mapper;
 
-import com.sbsj.dreamwing.admin.dto.AdminVolunteerRequestDTO;
-import com.sbsj.dreamwing.admin.dto.AdminVolunteerResponseDTO;
-import com.sbsj.dreamwing.admin.dto.UpdateVolunteerStatusRequestDTO;
-import com.sbsj.dreamwing.admin.dto.VolunteerRequestPendingListResponseDTO;
+import com.sbsj.dreamwing.admin.dto.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -23,7 +20,7 @@ import java.util.List;
  * 2024.07.29   정은지        봉사활동 인증 기능 추가
  * 2024.07.30   임재성        봉사 & 멘토링 공고 글 조회 기능 추가
  * 2024.07.30   임재성        봉사 & 멘토링 공고 글 생성/수정/삭제 기능 추가
- * 2024.08.04   정은지        봉사활동 신청 대기 리스트 목록 조회 추가
+ * 2024.08.04   정은지        봉사활동 신청 대기 리스트 조회, 상세 조회 추가
  * </pre>
  */
 @Mapper
@@ -43,4 +40,7 @@ public interface AdminMapper {
     AdminVolunteerRequestDTO selectVolunteerById(long volunteerId);
 
     List<VolunteerRequestPendingListResponseDTO> selectVolunteerRequestPendingList(@Param("offset") int offset, @Param("size") int size);
+
+    VolunteerRequestPendingDetailResponseDTO selectVolunteerRequestPendingDetail(
+            @Param("volunteerId") long volunteerId, @Param("userId") long userId);
 }

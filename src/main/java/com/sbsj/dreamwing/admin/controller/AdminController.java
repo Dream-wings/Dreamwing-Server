@@ -34,7 +34,7 @@ import java.util.List;
  * 2024.07.29   정은지        봉사활동 인증 후 포인트 부여 기능 추가
  * 2024.07.30   임재성        봉사 & 멘토링 공고 글 조회 기능 추가
  * 2024.07.30   임재성        봉사 & 멘토링 공고 글 생성/수정/삭제 기능 추가
- * 2024.08.04   정은지        봉사활동 신청 대기 리스트 목록 조회 추가
+ * 2024.08.04   정은지        봉사활동 신청 대기 목록, 상세 조회 추가
  * </pre>
  */
 @RestController
@@ -156,8 +156,9 @@ public class AdminController {
     }
 
     /**
-     * 봉사활동 신청 대기 리스트 목록 조회
      * @author 정은지
+     * @param page
+     * @param size
      * @return
      * @throws Exception
      */
@@ -167,6 +168,21 @@ public class AdminController {
                                                    @RequestParam(defaultValue = "10") int size) throws Exception {
         List<VolunteerRequestPendingListResponseDTO> response =
                 service.getVolunteerRequestPendingList(page, size);
+        return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, response));
+    }
+
+    /**
+     * @author 정은지
+     * @param volunteerId
+     * @param userId
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/volunteer/request")
+    public ResponseEntity<ApiResponse<VolunteerRequestPendingDetailResponseDTO>>
+                    getVolunteerRequestPendingDetail(@RequestParam long volunteerId, @RequestParam long userId) throws Exception {
+        VolunteerRequestPendingDetailResponseDTO response =
+                service.getVolunteerRequestPendingDetail(volunteerId, userId);
         return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, response));
     }
 }

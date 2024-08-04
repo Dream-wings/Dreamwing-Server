@@ -35,7 +35,7 @@ import java.util.List;
  *  2024.07.31      정은찬                       포인트 내역 조회 API 및 후원 내역 조회 API 추가
  *  2024.08.02      정은찬                       로그인 아이디 존재 여부 확인 API 추가
  *  2024.08.04      정은찬                       마이페이지 사용자 정보 API 추가
- *  2024.08.04      정은찬                       페이징 처리를 위해 포인트 내역 조회 API 수정
+ *  2024.08.04      정은찬                       페이징 처리를 위해 포인트 내역 조회 API, 후원 내역 조회 API 수정
  *
  * </pre>
  */
@@ -147,16 +147,13 @@ public class UserController {
     @GetMapping("/getPointList")
     public ResponseEntity<ApiResponse<List<MyPointVO>>> getUserPointList(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
+            @RequestParam(defaultValue = "15") int size) {
 
         // SecurityContext에서 인증 객체를 가져옵니다.
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         // 인증 객체에서 사용자 ID를 가져옵니다.
         long userId = ((UserDTO) authentication.getPrincipal()).getUserId();
-
-        // 페이징 정보를 설정합니다.
-        Pageable pageable = PageRequest.of(page, size);
 
         // 페이징된 포인트 리스트를 가져옵니다.
         List<MyPointVO> pointList = userService.getUserPointList(userId, page, size);
@@ -167,13 +164,15 @@ public class UserController {
 
 
     @GetMapping("/getSupportList")
-    public ResponseEntity<ApiResponse<List<MySupportVO>>> getUserSupportList() {
+    public ResponseEntity<ApiResponse<List<MySupportVO>>> getUserSupportList(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "15") int size) {
         // SecurityContext에서 Authentication 객체를 가져옵니다.
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         // UserDetails 객체에서 userId를 가져옵니다.
         long userId = ((UserDTO) authentication.getPrincipal()).getUserId();
 
-        List<MySupportVO> supportList = userService.getUserSupportList(userId);
+        List<MySupportVO> supportList = userService.getUserSupportList(userId, page, size);
 
         return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, supportList));
     }
