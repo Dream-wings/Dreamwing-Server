@@ -1,5 +1,6 @@
 package com.sbsj.dreamwing.support.mapper;
 
+import com.sbsj.dreamwing.support.dto.GetDetailSupportResponseDTO;
 import com.sbsj.dreamwing.support.dto.GetSupportListResponseDTO;
 import com.sbsj.dreamwing.support.dto.GetTotalSupportResponseDTO;
 import org.apache.ibatis.annotations.Mapper;
@@ -48,4 +49,6 @@ List<GetSupportListResponseDTO> selectSupportListWithFilters(
         @Param("status") int status,
         @Param("category") int category
 );
+    GetDetailSupportResponseDTO selectSupportDetail(@Param("supportId") long supportId);
+
 }

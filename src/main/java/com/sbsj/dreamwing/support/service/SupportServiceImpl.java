@@ -1,5 +1,6 @@
 package com.sbsj.dreamwing.support.service;
 
+import com.sbsj.dreamwing.support.dto.GetDetailSupportResponseDTO;
 import com.sbsj.dreamwing.support.dto.GetSupportListResponseDTO;
 import com.sbsj.dreamwing.support.dto.GetTotalSupportResponseDTO;
 import com.sbsj.dreamwing.support.dto.PostSupportGiveRequestDTO;
@@ -63,17 +64,22 @@ public List<GetSupportListResponseDTO> getSupportListWithFilters(int page, int s
     public boolean SupportGivePoints(PostSupportGiveRequestDTO request) throws Exception {
         // 사용자의 보유 포인트를 가져와서 확인 (보유 포인트 확인 로직 필요)
         int userPoints = mapper.getUserPoints(request.getUserId());
-        if (userPoints < request.getPoint()) {
+        if (userPoints < request.getAmount()) {
             return false; // 포인트가 부족하면 false 반환
         }
 
         // 사용자의 포인트 차감
-        mapper.updateUserPoints(request.getUserId(), request.getPoint());
+        mapper.updateUserPoints(request.getUserId(), request.getAmount());
 
         // 기부 내역 업데이트
-        mapper.updateSupportPoints(request.getSupportId(), request.getPoint());
+        mapper.updateSupportPoints(request.getSupportId(), request.getAmount());
 
         return true;
+    }
+
+    @Override
+    public GetDetailSupportResponseDTO getSupportDetail(long supportId) throws Exception {
+        return mapper.selectSupportDetail(supportId);
     }
 
 
