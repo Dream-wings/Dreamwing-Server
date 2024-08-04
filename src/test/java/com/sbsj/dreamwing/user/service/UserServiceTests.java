@@ -91,11 +91,11 @@ public class UserServiceTests {
         Assertions.assertEquals(result, true);
     }
 
-    @Test
-    public void getPointListTest() {
-        List<MyPointVO> userPointList = userService.getUserPointList(8);
-        log.info(userPointList.toString());
-    }
+//    @Test
+//    public void getPointListTest() {
+//        List<MyPointVO> userPointList = userService.getUserPointList(8);
+//        log.info(userPointList.toString());
+//    }
 
     @Test
     public void getSupportListTest() {

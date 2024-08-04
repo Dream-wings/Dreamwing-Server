@@ -90,9 +90,11 @@
     <select id="getUserPointVOList" resultType="MyPointVO">
         SELECT ACTIVITY_TITLE,
                POINT,
-               TO_CHAR(CREATED_DATE AT TIME ZONE 'UTC', 'YYYY-MM-DD HH24:MI:SS') AS CREATED_DATE
+               TO_CHAR(CREATED_DATE AT TIME ZONE 'UTC', 'YYYY.MM.DD') AS CREATED_DATE
         FROM POINT_HISTORY
         WHERE USER_ID = #{userId}
+        ORDER BY CREATED_DATE DESC
+        OFFSET #{offset} ROWS FETCH NEXT #{size} ROWS ONLY
     </select>
 
     <select id="getUserSupportVOList" resultType="MySupportVO">
