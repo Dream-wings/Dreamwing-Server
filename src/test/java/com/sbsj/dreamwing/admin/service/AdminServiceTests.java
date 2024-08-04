@@ -238,4 +238,19 @@ public class AdminServiceTests {
         // then
         Assertions.assertNotNull(dto);
     }
+
+    @Test
+    @DisplayName("봉사활동 신청 대기 상세 조회 서비스 테스트")
+    public void testGetVolunteerRequestPendingDetail() {
+        // given
+        int volunteerId = 1;
+        int userId = 1;
+
+        // when
+        VolunteerRequestPendingDetailResponseDTO dto
+                = mapper.selectVolunteerRequestPendingDetail(volunteerId, userId);
+
+        // then
+        assertThat(dto.getUserId()).isEqualTo(userId);
+    }
 }
