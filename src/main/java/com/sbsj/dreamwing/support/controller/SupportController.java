@@ -3,6 +3,7 @@ package com.sbsj.dreamwing.support.controller;
 import com.sbsj.dreamwing.mission.domain.QuizVO;
 import com.sbsj.dreamwing.mission.dto.AwardPointsRequestDTO;
 import com.sbsj.dreamwing.mission.service.MissionService;
+import com.sbsj.dreamwing.support.dto.GetDetailSupportResponseDTO;
 import com.sbsj.dreamwing.support.dto.GetSupportListResponseDTO;
 import com.sbsj.dreamwing.support.dto.GetTotalSupportResponseDTO;
 import com.sbsj.dreamwing.support.dto.PostSupportGiveRequestDTO;
@@ -91,14 +92,31 @@ public class SupportController {
      * @return
      * @throws Exception
      */
-    @PostMapping("/give")
-    public ResponseEntity<ApiResponse<Void>> SupportGivePoints(@RequestBody PostSupportGiveRequestDTO request) throws Exception {
+    @PostMapping("/donate")
+    public ResponseEntity<ApiResponse<Void>> supportGivePoints(
+            @RequestParam("supportId") long supportId,
+            @RequestParam("userId") long userId,
+            @RequestParam("amount") int amount) throws Exception {
+
+        PostSupportGiveRequestDTO request = new PostSupportGiveRequestDTO(supportId, userId, amount);
+
         boolean success = service.SupportGivePoints(request);
+
         if (success) {
             return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK));
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiResponse.failure(HttpStatus.BAD_REQUEST, "포인트가 부족합니다."));
         }
+    }
+
+
+    /**
+     * 후원 상세 정보 조회
+     */
+    @GetMapping("/detail")
+    public ResponseEntity<ApiResponse<GetDetailSupportResponseDTO>> getSupportDetail(@RequestParam long supportId) throws Exception {
+        GetDetailSupportResponseDTO response = service.getSupportDetail(supportId);
+        return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, response));
     }
 
 

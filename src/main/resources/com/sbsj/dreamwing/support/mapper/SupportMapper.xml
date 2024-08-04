@@ -78,4 +78,17 @@
         WHERE  SUPPORT_ID = #{supportId}
     </update>
 
+    <select id="selectSupportDetail" resultType="GetDetailSupportResponseDTO">
+        SELECT SUPPORT_ID,
+               GOAL_POINT,
+               CURRENT_POINT,
+               TITLE,
+               CONTENT,
+               START_DATE,
+               END_DATE,
+               IMAGE_URL
+        FROM SUPPORT
+        WHERE SUPPORT_ID = #{supportId}
+    </select>
+
 </mapper>
