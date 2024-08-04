@@ -1,10 +1,8 @@
 package com.sbsj.dreamwing.admin.controller;
 
-import com.sbsj.dreamwing.admin.dto.AdminVolunteerRequestDTO;
-import com.sbsj.dreamwing.admin.dto.AdminVolunteerResponseDTO;
-import com.sbsj.dreamwing.admin.dto.AwardVolunteerPointsRequestDTO;
-import com.sbsj.dreamwing.admin.dto.UpdateVolunteerStatusRequestDTO;
+import com.sbsj.dreamwing.admin.dto.*;
 import com.sbsj.dreamwing.admin.service.AdminService;
+import com.sbsj.dreamwing.mission.domain.QuizVO;
 import com.sbsj.dreamwing.mission.dto.AwardPointsRequestDTO;
 import com.sbsj.dreamwing.mission.service.MissionService;
 import com.sbsj.dreamwing.util.ApiResponse;
@@ -36,6 +34,7 @@ import java.util.List;
  * 2024.07.29   정은지        봉사활동 인증 후 포인트 부여 기능 추가
  * 2024.07.30   임재성        봉사 & 멘토링 공고 글 조회 기능 추가
  * 2024.07.30   임재성        봉사 & 멘토링 공고 글 생성/수정/삭제 기능 추가
+ * 2024.08.04   정은지        봉사활동 신청 대기 리스트 목록 조회 추가
  * </pre>
  */
 @RestController
@@ -54,6 +53,7 @@ public class AdminController {
 
     /**
      * 사용자 봉사활동 신청 승인
+     * @author 정은지
      * @param request
      * @return
      * @throws Exception    
@@ -68,6 +68,7 @@ public class AdminController {
 
     /**
      * 봉사활동 포인트 부여
+     * @author 정은지
      * @param request
      * @return
      * @throws Exception
@@ -154,4 +155,18 @@ public class AdminController {
         return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, response));
     }
 
+    /**
+     * 봉사활동 신청 대기 리스트 목록 조회
+     * @author 정은지
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/volunteer/request/list")
+    public ResponseEntity<ApiResponse<List<VolunteerRequestPendingListResponseDTO>>>
+                    getVolunteerRequestPendingList(@RequestParam(defaultValue = "0") int page,
+                                                   @RequestParam(defaultValue = "10") int size) throws Exception {
+        List<VolunteerRequestPendingListResponseDTO> response =
+                service.getVolunteerRequestPendingList(page, size);
+        return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, response));
+    }
 }

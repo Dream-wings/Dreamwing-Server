@@ -1,9 +1,6 @@
 package com.sbsj.dreamwing.admin.service;
 
-import com.sbsj.dreamwing.admin.dto.AdminVolunteerRequestDTO;
-import com.sbsj.dreamwing.admin.dto.AdminVolunteerResponseDTO;
-import com.sbsj.dreamwing.admin.dto.AwardVolunteerPointsRequestDTO;
-import com.sbsj.dreamwing.admin.dto.UpdateVolunteerStatusRequestDTO;
+import com.sbsj.dreamwing.admin.dto.*;
 import com.sbsj.dreamwing.admin.mapper.AdminMapper;
 import com.sbsj.dreamwing.mission.domain.QuizVO;
 import com.sbsj.dreamwing.util.S3Uploader;
@@ -48,6 +45,7 @@ import org.springframework.mock.web.MockMultipartFile;
  * 2024.07.28  	정은지        최초 생성
  * 2024.07.28   정은지        봉사활동 신청 승인 테스트 추가
  * 2024.07.29   정은지        봉사활동 인증 테스트 추가
+ * 2024.08.04   정은지        봉사활동 신청 대기 리스트 조회 테스트 추가
  * </pre>
  */
 
@@ -224,5 +222,20 @@ public class AdminServiceTests {
         // then
         Assertions.assertNotNull(list);
         Assertions.assertFalse(list.isEmpty());
+    }
+
+    @Test
+    @DisplayName("봉사활동 신청 대기 리스트 조회 서비스 테스트")
+    public void testGetVolunteerRequestPendingList() {
+        // given
+        int page = 1;
+        int size = 10;
+
+        // when
+        List<VolunteerRequestPendingListResponseDTO> dto
+                = mapper.selectVolunteerRequestPendingList(page, size);
+
+        // then
+        Assertions.assertNotNull(dto);
     }
 }
