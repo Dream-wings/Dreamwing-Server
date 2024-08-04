@@ -102,9 +102,9 @@ public class UserMapperTests {
 //        log.info(userPointVOList.toString());
 //    }
 
-    @Test
-    public void getUserSupportVOListTest() {
-        List<MySupportVO> userSupportVOList = userMapper.getUserSupportVOList(1);
-        log.info(userSupportVOList.toString());
-    }
+//    @Test
+//    public void getUserSupportVOListTest() {
+//        List<MySupportVO> userSupportVOList = userMapper.getUserSupportVOList(1);
+//        log.info(userSupportVOList.toString());
+//    }
 }

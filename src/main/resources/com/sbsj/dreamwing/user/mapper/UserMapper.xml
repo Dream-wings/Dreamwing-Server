@@ -100,9 +100,11 @@
     <select id="getUserSupportVOList" resultType="MySupportVO">
         SELECT S.TITLE,
                S_HIST.POINT,
-               TO_CHAR(S_HIST.CREATED_DATE AT TIME ZONE 'UTC', 'YYYY-MM-DD HH24:MI:SS') AS CREATED_DATE
+               TO_CHAR(S_HIST.CREATED_DATE AT TIME ZONE 'UTC', 'YYYY-MM-DD') AS CREATED_DATE
         FROM SUPPORT S, SUPPORT_HISTORY S_HIST
         WHERE S.SUPPORT_ID = S_HIST.SUPPORT_ID AND S_HIST.USER_ID = #{userId}
+        ORDER BY CREATED_DATE DESC
+        OFFSET #{offset} ROWS FETCH NEXT #{size} ROWS ONLY
     </select>
 
     <select id="selectTotalSupportPoint">
