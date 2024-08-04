@@ -102,4 +102,19 @@
         FROM SUPPORT S, SUPPORT_HISTORY S_HIST
         WHERE S.SUPPORT_ID = S_HIST.SUPPORT_ID AND S_HIST.USER_ID = #{userId}
     </select>
+
+    <select id="selectTotalSupportPoint">
+        SELECT SUM(POINT)        AS TOTAL_SUPPORT_POINT
+        FROM   SUPPORT_HISTORY
+        WHERE USER_ID = #{userId}
+    </select>
+
+    <select id="getUserVolunteerVOList" resultType="MyVolunteerVO">
+        SELECT V.TITLE, V.VOLUNTEER_END_DATE, U_V.VERIFIED
+        FROM VOLUNTEER V, USER_VOLUNTEER U_V
+        WHERE V.volunteer_id = U_V.volunteer_id
+              AND U_V.user_id = #{userId}
+              AND U_V.status = 1
+
+    </select>
 </mapper>
