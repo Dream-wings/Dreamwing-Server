@@ -1,7 +1,7 @@
 package com.sbsj.dreamwing.user.service;
 
-import com.sbsj.dreamwing.user.domain.UserPointVO;
-import com.sbsj.dreamwing.user.domain.UserSupportVO;
+import com.sbsj.dreamwing.user.domain.MyPointVO;
+import com.sbsj.dreamwing.user.domain.MySupportVO;
 import com.sbsj.dreamwing.user.dto.*;
 
 import java.util.List;
@@ -23,6 +23,7 @@ import java.util.List;
  *  2024.07.31      정은찬                      회원가입 및 회원 정보 업데이트 프로필 이미지 S3 업로드 기능 추가
  *  2024.08.02      정은찬                      로그인 아이디 존재 여부 확인 기능 추가
  *  2024.08.03      정은찬                      마이페이지 사용자 정보 조회 기능 추가
+ *  2024.08.04      정은찬                      페이징 처리를 위해 포인트 내역 조회 기능 수정
  * </pre>
  */
 public interface UserService {
@@ -32,8 +33,10 @@ public interface UserService {
     public UserInfoDTO getUserInfo(long userId);
     public boolean updateUserInfo(long userId, UserUpdateDTO userUpdateDTO);
     public void logout(long userId);
-    public List<UserPointVO> getUserPointList(long userId);
-    public List<UserSupportVO> getUserSupportList(long userId);
+
+    public List<MyPointVO> getUserPointList(long userId, int page, int size);
+
+    public List<MySupportVO> getUserSupportList(long userId);
     public Boolean checkExistLoginId(LoginIdDTO loginIdDTO);
     public MyPageDTO getMyPageInfo(long userId);
 }

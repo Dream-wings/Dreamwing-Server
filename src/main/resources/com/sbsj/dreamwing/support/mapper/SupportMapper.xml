@@ -36,16 +36,19 @@
         FETCH FIRST 5 ROWS ONLY
     </select>
 
-    <select id="selectAllSupportList" resultType="GetSupportListResponseDTO">
+    <select id="selectSupportListWithFilters" resultType="GetSupportListResponseDTO">
         SELECT SUPPORT_ID,
                GOAL_POINT,
                CURRENT_POINT,
                TITLE,
                END_DATE,
                IMAGE_URL,
-               SYSDATE+9/24 - END_DATE AS DDAY
+               SYSDATE + 9/24 - END_DATE AS DDAY
         FROM SUPPORT
+        WHERE STATUS = #{status}
+          AND CATEGORY = #{category}
         ORDER BY DDAY
+        OFFSET #{offset} ROWS FETCH NEXT #{size} ROWS ONLY
     </select>
 
     <!-- 사용자 포인트 가져오기 -->

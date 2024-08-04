@@ -1,7 +1,7 @@
 package com.sbsj.dreamwing.user.service;
 
-import com.sbsj.dreamwing.user.domain.UserPointVO;
-import com.sbsj.dreamwing.user.domain.UserSupportVO;
+import com.sbsj.dreamwing.user.domain.MyPointVO;
+import com.sbsj.dreamwing.user.domain.MySupportVO;
 import com.sbsj.dreamwing.user.dto.*;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
@@ -91,15 +91,15 @@ public class UserServiceTests {
         Assertions.assertEquals(result, true);
     }
 
-    @Test
-    public void getPointListTest() {
-        List<UserPointVO> userPointList = userService.getUserPointList(8);
-        log.info(userPointList.toString());
-    }
+//    @Test
+//    public void getPointListTest() {
+//        List<MyPointVO> userPointList = userService.getUserPointList(8);
+//        log.info(userPointList.toString());
+//    }
 
     @Test
     public void getSupportListTest() {
-        List<UserSupportVO> userSupportList = userService.getUserSupportList(1);
+        List<MySupportVO> userSupportList = userService.getUserSupportList(1);
         log.info(userSupportList.toString());
     }
 

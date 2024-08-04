@@ -25,7 +25,7 @@ import java.util.List;
 public interface SupportMapper {
     public GetTotalSupportResponseDTO selectTotalSupport();
     public List<GetSupportListResponseDTO> selectSupportList();
-    public List<GetSupportListResponseDTO> selectAllSupportList();
+    //public List<GetSupportListResponseDTO> selectAllSupportList();
     // 사용자 포인트 가져오기
     int getUserPoints(@Param("userId") long userId);
 
@@ -38,4 +38,14 @@ public interface SupportMapper {
     // 후원 항목 포인트 업데이트
     int updateSupportPoints(@Param("supportId") long supportId, @Param("pointsToAdd") int pointsToAdd);
 
+//    List<GetSupportListResponseDTO> selectSupportListWithPagination(
+//            @Param("offset") int offset,
+//            @Param("size") int size
+//    );
+List<GetSupportListResponseDTO> selectSupportListWithFilters(
+        @Param("offset") int offset,
+        @Param("size") int size,
+        @Param("status") int status,
+        @Param("category") int category
+);
 }

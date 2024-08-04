@@ -24,7 +24,10 @@ import java.util.List;
 public interface SupportService {
     GetTotalSupportResponseDTO getTotalSupport() throws Exception;
     List<GetSupportListResponseDTO> getSupportList() throws Exception;
-    List<GetSupportListResponseDTO> getAllSupportList() throws Exception;
-    boolean SupportGivePoints(PostSupportGiveRequestDTO request) throws Exception;
+    //List<GetSupportListResponseDTO> getAllSupportList() throws Exception;
+    //List<GetSupportListResponseDTO> getSupportListWithPagination(int page, int size);
+    List<GetSupportListResponseDTO> getSupportListWithFilters(int page, int size, int status, int category);
+
+        boolean SupportGivePoints(PostSupportGiveRequestDTO request) throws Exception;
 
 }

@@ -1,8 +1,8 @@
 package com.sbsj.dreamwing.user.service;
 
 import com.sbsj.dreamwing.support.mapper.SupportMapper;
-import com.sbsj.dreamwing.user.domain.UserPointVO;
-import com.sbsj.dreamwing.user.domain.UserSupportVO;
+import com.sbsj.dreamwing.user.domain.MyPointVO;
+import com.sbsj.dreamwing.user.domain.MySupportVO;
 import com.sbsj.dreamwing.user.domain.UserVO;
 import com.sbsj.dreamwing.user.domain.MyVolunteerVO;
 import com.sbsj.dreamwing.user.dto.*;
@@ -10,7 +10,9 @@ import com.sbsj.dreamwing.user.mapper.UserMapper;
 import com.sbsj.dreamwing.util.JwtTokenProvider;
 import com.sbsj.dreamwing.util.S3Uploader;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -39,6 +41,7 @@ import java.util.concurrent.TimeUnit;
  *  2024.07.31      정은찬                      회원가입 및 회원 정보 업데이트 프로필 이미지 S3 업로드 기능 추가
  *  2024.08.02      정은찬                      로그인 아이디 존재 여부 확인 기능 추가
  *  2024.08.03      정은찬                      마이페이지 사용자 정보 조회 기능 추가
+ *  2024.08.04      정은찬                      페이징 처리를 위해 포인트 내역 조회 기능 수정
  * </pre>
  */
 @Service
@@ -182,13 +185,17 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    public List<UserPointVO> getUserPointList(long userId) {
-        List<UserPointVO> userPointList = userMapper.getUserPointVOList(userId);
+    public List<MyPointVO> getUserPointList(long userId, int page, int size) {
+        int offset= page * size;
+
+        List<MyPointVO> userPointList = userMapper.getUserPointVOList(userId, offset, size);
         return userPointList;
     }
 
-    public List<UserSupportVO> getUserSupportList(long userId) {
-        List<UserSupportVO> userSupportList = userMapper.getUserSupportVOList(userId);
+
+
+    public List<MySupportVO> getUserSupportList(long userId) {
+        List<MySupportVO> userSupportList = userMapper.getUserSupportVOList(userId);
         return userSupportList;
     }
 
@@ -208,10 +215,6 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new RuntimeException("잘못된 아이디입니다"));
 
         int totalSupportPoint = userMapper.selectTotalSupportPoint(userId);
-
-        List<UserSupportVO> supportDeatails = userMapper.getUserSupportVOList(userId);
-        List<MyVolunteerVO> volunteerDeatails = userMapper.getUserVolunteerVOList(userId) ;
-        List<UserPointVO> pointDetails = userMapper.getUserPointVOList(userId);
 
         MyPageDTO myPageDTO = MyPageDTO.builder()
                 .name(userDTO.getName())
