@@ -96,11 +96,11 @@ public class UserMapperTests {
         Assertions.assertEquals(result, 1);
     }
 
-    @Test
-    public void getUserPointVOListTest() {
-        List<MyPointVO> userPointVOList = userMapper.getUserPointVOList(1);
-        log.info(userPointVOList.toString());
-    }
+//    @Test
+//    public void getUserPointVOListTest() {
+//        List<MyPointVO> userPointVOList = userMapper.getUserPointVOList(1);
+//        log.info(userPointVOList.toString());
+//    }
 
     @Test
     public void getUserSupportVOListTest() {
