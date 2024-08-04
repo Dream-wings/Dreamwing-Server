@@ -96,15 +96,15 @@ public class UserController {
     }
 
     @GetMapping("/userInfo")
-    public ResponseEntity<ApiResponse<UserDTO>> getUserInfo() throws Exception {
+    public ResponseEntity<ApiResponse<UserInfoDTO>> getUserInfo() throws Exception {
         // SecurityContext에서 Authentication 객체를 가져옵니다.
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         // UserDetails 객체에서 userId를 가져옵니다.
         long userId = ((UserDTO) authentication.getPrincipal()).getUserId();
 
-        UserDTO userDTO = userService.getUserInfo(userId);
+        UserInfoDTO userInfoDTO = userService.getUserInfo(userId);
 
-        return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, userDTO));
+        return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, userInfoDTO));
     }
 
     @PostMapping(value = "/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

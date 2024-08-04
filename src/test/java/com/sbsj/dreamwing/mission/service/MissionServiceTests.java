@@ -56,18 +56,18 @@ public class MissionServiceTests {
 
     @Test
     @DisplayName("포인트 부여 서비스 테스트")
-    public void testAwardDailyQuizPoints() throws Exception {
+    public void testAwardDailyMissionPoints() throws Exception {
         // given
-        AwardPointsRequestDTO dto = new AwardPointsRequestDTO();
-        dto.setUserId(1L);
-        dto.setActivityType(3);
-        dto.setActivityTitle("테스트");
-        dto.setPoint(300);
+        AwardPointsRequestDTO dto = AwardPointsRequestDTO.builder()
+                        .userId(1L)
+                        .activityType(3)
+                        .activityTitle("테스트")
+                        .point(30).build();
 
         // when
-        boolean success = service.awardDailyQuizPoints(dto);
+        int result = service.awardDailyMissionPoints(dto);
 
         // then
-        assertTrue(success, "포인트 부여 실패");
+        assertThat(result).isEqualTo(1);
     }
 }

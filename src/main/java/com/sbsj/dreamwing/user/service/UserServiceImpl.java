@@ -10,6 +10,7 @@ import com.sbsj.dreamwing.user.mapper.UserMapper;
 import com.sbsj.dreamwing.util.JwtTokenProvider;
 import com.sbsj.dreamwing.util.S3Uploader;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.User;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -134,11 +135,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO getUserInfo(long userId) {
+    public UserInfoDTO getUserInfo(long userId) {
         UserDTO userDTO = userMapper.selectUserByUserId(userId)
                 .orElseThrow(() -> new RuntimeException("잘못된 아이디입니다"));
 
-        return userDTO;
+        UserInfoDTO userInfoDTO = UserInfoDTO.builder()
+                .name(userDTO.getName())
+                .phone(userDTO.getPhone())
+                .profileImageUrl(userDTO.getProfileImageUrl())
+                .build();
+
+        return userInfoDTO;
     }
 
     public boolean updateUserInfo(long userId, UserUpdateDTO userUpdateDTO) {

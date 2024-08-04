@@ -36,14 +36,14 @@ public class VolunteerServiceTests {
     @Autowired
     private VolunteerService service;
 
-    @Test
-    @DisplayName("모집공고 조회 테스트")
-    public void testGetVolunteerList() throws Exception {
-        int page = 0;
-        int size = 10;
-        List<VolunteerListDTO> volunteerDTO = service.getVolunteerList(page,size);
-        log.info(String.valueOf(volunteerDTO));
-    }
+//    @Test
+//    @DisplayName("모집공고 조회 테스트")
+//    public void testGetVolunteerList() throws Exception {
+//        int page = 0;
+//        int size = 10;
+//        List<VolunteerListDTO> volunteerDTO = service.getVolunteerList(page,size);
+//        log.info(String.valueOf(volunteerDTO));
+//    }
 
     @Test
     @DisplayName("모집공고 상세페이지 조회 테스트")

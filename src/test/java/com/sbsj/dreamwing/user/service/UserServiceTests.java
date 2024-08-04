@@ -73,8 +73,8 @@ public class UserServiceTests {
 
     @Test
     public void getUserInfoTest() {
-        UserDTO result = userService.getUserInfo(7);
-        Assertions.assertEquals(result.getLoginId(), "loginTest4");
+        UserInfoDTO result = userService.getUserInfo(7);
+        Assertions.assertEquals(result.getName(), "loginTest4");
     }
 
     @Test

@@ -58,12 +58,11 @@ public class MissionMapperTests {
     public void testCallAwardPointsProcedure() {
 
         // given
-        AwardPointsRequestDTO dto = new AwardPointsRequestDTO();
-        dto.setUserId(1L);
-        dto.setActivityType(4);
-        dto.setActivityTitle("데일리 퀴즈");
-        dto.setPoint(30);
-
+        AwardPointsRequestDTO dto = AwardPointsRequestDTO.builder()
+                .userId(1L)
+                .activityType(3)
+                .activityTitle("테스트")
+                .point(30).build();
         // when
         mapper.callAwardPointsProcedure(dto);
 

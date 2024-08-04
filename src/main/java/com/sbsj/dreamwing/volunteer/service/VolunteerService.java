@@ -31,8 +31,9 @@ import java.util.List;
 
 
 public interface VolunteerService {
-//    List<VolunteerListDTO> getVolunteerList() throws Exception;
-    List<VolunteerListDTO> getVolunteerList(int page, int size);
+
+    List<VolunteerListDTO> getVolunteerListWithFilters(int page, int size, int status, Integer type);
+
     VolunteerDetailDTO getVolunteerDetail(long volunteerId) throws Exception;
 
     boolean applyVolunteer(PostApplyVolunteerRequestDTO request);
@@ -42,4 +43,9 @@ public interface VolunteerService {
     boolean cancelApplication(PostApplyVolunteerRequestDTO request);
 
     boolean certificationVolunteer(CertificationVolunteerRequestDTO request, MultipartFile imageFile) throws Exception;
+
+    int getApplicationStatus(long volunteerId, long userId);
+
+
+
 }

@@ -2,10 +2,12 @@ package com.sbsj.dreamwing.mission.service;
 
 import com.sbsj.dreamwing.mission.domain.QuizVO;
 import com.sbsj.dreamwing.mission.dto.AwardPointsRequestDTO;
+import com.sbsj.dreamwing.mission.dto.CheckDailyMissionRequestDTO;
 import com.sbsj.dreamwing.mission.mapper.MissionMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Random;
 
@@ -34,14 +36,28 @@ public class MissionServiceImpl implements MissionService{
         return mapper.selectQuiz();
     }
 
+    @Transactional
     @Override
-    public boolean awardDailyQuizPoints(AwardPointsRequestDTO dto) throws Exception {
+    public int awardDailyMissionPoints(AwardPointsRequestDTO dto) throws Exception {
         try {
-            mapper.callAwardPointsProcedure(dto);
-            return true;
+
+            CheckDailyMissionRequestDTO requestDTO = CheckDailyMissionRequestDTO.builder()
+                    .userId(dto.getUserId())
+                    .activityType(dto.getActivityType())
+                    .activityTitle(dto.getActivityTitle())
+                    .build();
+            log.info("CheckDailyMissionRequestDTO: " + requestDTO.getUserId() + " " + requestDTO.getActivityType() + " " + requestDTO.getActivityTitle());
+
+
+            if (mapper.selectDailyMissionHistory(requestDTO) == 0) {
+                mapper.callAwardPointsProcedure(dto);
+                return 1;
+            } else {
+                return 0;
+            }
         } catch (Exception e) {
             log.error(e.getMessage());
-            return false;
+            return -1;
         }
     }
 }

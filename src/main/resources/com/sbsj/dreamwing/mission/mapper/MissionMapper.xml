@@ -13,6 +13,7 @@
 * 2024.07.26   정은지         최초 생성
 * 2024.07.27   정은지         퀴즈 정답 시 포인트 부여 기능 추가
 * 2024.07.28   정은지         selectQuizByDate 쿼리 수정
+* 2024.08.04   정은지         데일리 미션 포인트 부여 중복 확인 기능 추가
 *
 * </pre>
 -->
@@ -38,4 +39,14 @@
                 #{point, jdbcType=NUMERIC}
               )}
     </insert>
+
+    <select id="selectDailyMissionHistory" parameterType="CheckDailyMissionRequestDTO">
+        SELECT COUNT(*)
+        FROM   POINT_HISTORY
+        WHERE  USER_ID = #{userId}
+          AND ACTIVITY_TYPE = #{activityType}
+          AND ACTIVITY_TITLE = #{activityTitle}
+          AND TO_CHAR(CREATED_DATE, 'YYYY-MM-DD') =
+              TO_CHAR(SYSDATE + 9 / 24, 'YYYY-MM-DD')
+    </select>
 </mapper>

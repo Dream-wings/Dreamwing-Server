@@ -29,7 +29,7 @@ public interface UserService {
     public String signUp(SignUpRequestDTO signUpRequestDTO);
     public String login(LoginRequestDTO loginRequestDTO) throws Exception;
     public boolean withdraw(long userId);
-    public UserDTO getUserInfo(long userId);
+    public UserInfoDTO getUserInfo(long userId);
     public boolean updateUserInfo(long userId, UserUpdateDTO userUpdateDTO);
     public void logout(long userId);
     public List<UserPointVO> getUserPointList(long userId);
