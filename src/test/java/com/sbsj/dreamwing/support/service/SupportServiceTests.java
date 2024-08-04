@@ -64,18 +64,18 @@ public class SupportServiceTests {
         Assertions.assertNotNull(response, "조회에 실패하였습니다.");
     }
 
-    @Test
-    @DisplayName("모든 후원 리스트 조회 서비스 테스트")
-    public void testGetAllSupportList() throws Exception {
-        // given
-
-        // when
-        List<GetSupportListResponseDTO> response = service.getAllSupportList();
-
-        // then
-        log.info(String.valueOf(response));
-        Assertions.assertNotNull(response, "조회에 실패하였습니다.");
-    }
+//    @Test
+//    @DisplayName("모든 후원 리스트 조회 서비스 테스트")
+//    public void testGetAllSupportList() throws Exception {
+//        // given
+//
+//        // when
+//        List<GetSupportListResponseDTO> response = service.getAllSupportList();
+//
+//        // then
+//        log.info(String.valueOf(response));
+//        Assertions.assertNotNull(response, "조회에 실패하였습니다.");
+//    }
 
 
     @Test

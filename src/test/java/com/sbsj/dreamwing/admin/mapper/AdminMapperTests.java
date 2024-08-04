@@ -1,9 +1,6 @@
 package com.sbsj.dreamwing.admin.mapper;
 
-import com.sbsj.dreamwing.admin.dto.AdminVolunteerRequestDTO;
-import com.sbsj.dreamwing.admin.dto.AdminVolunteerResponseDTO;
-import com.sbsj.dreamwing.admin.dto.UpdateVolunteerStatusRequestDTO;
-import com.sbsj.dreamwing.admin.dto.VolunteerRequestPendingListResponseDTO;
+import com.sbsj.dreamwing.admin.dto.*;
 import com.sbsj.dreamwing.mission.domain.QuizVO;
 import com.sbsj.dreamwing.mission.dto.AwardPointsRequestDTO;
 import lombok.AllArgsConstructor;
@@ -35,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * 2024.07.28  	정은지        최초 생성
  * 2024.07.28   정은지        봉사활동 신청 승인 테스트 추가
  * 2024.07.29   정은지        봉사활동 인증 테스트 추가
- * 2024.08.04   정은지        봉사활동 신청 대기 리스트 목록 조회 테스트 추가
+ * 2024.08.04   정은지        봉사활동 신청 대기 목록, 상세 조회 테스트 추가
  * </pre>
  */
 
@@ -167,5 +164,20 @@ public class AdminMapperTests {
 
         // then
         Assertions.assertNotNull(dto);
+    }
+
+    @Test
+    @DisplayName("봉사활동 신청 대기 상세 조회 매퍼 테스트")
+    public void testSelectVolunteerRequestPendingDetail() {
+        // given
+        long volunteerId = 1L;
+        long userId = 1L;
+
+        // when
+        VolunteerRequestPendingDetailResponseDTO dto
+                = mapper.selectVolunteerRequestPendingDetail(volunteerId, userId);
+
+        // then
+        assertThat(dto.getUserId()).isEqualTo(userId);
     }
 }
