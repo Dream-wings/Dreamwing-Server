@@ -23,6 +23,8 @@ import org.apache.ibatis.annotations.Mapper;
 public interface MissionMapper {
 
     QuizVO selectQuiz();
+
     void callAwardPointsProcedure(AwardPointsRequestDTO dto);
+
     int selectDailyMissionHistory(CheckDailyMissionRequestDTO dto);
 }
