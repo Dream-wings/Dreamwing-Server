@@ -42,10 +42,21 @@ public class SupportServiceImpl implements SupportService {
         return mapper.selectSupportList();
     }
 
-    @Override
-    public List<GetSupportListResponseDTO> getAllSupportList() throws Exception {
-        return mapper.selectAllSupportList();
-    }
+//    @Override
+//    public List<GetSupportListResponseDTO> getAllSupportList() throws Exception {
+//        return mapper.selectAllSupportList();
+//    }
+
+//    @Override
+//    public List<GetSupportListResponseDTO> getSupportListWithPagination(int page, int size) {
+//        int offset = page * size;
+//    return mapper.selectSupportListWithPagination(offset, size);
+//}
+@Override
+public List<GetSupportListResponseDTO> getSupportListWithFilters(int page, int size, int status, int category) {
+    int offset = page * size;
+    return mapper.selectSupportListWithFilters(offset, size, status, category);
+}
 
     @Transactional
     @Override
