@@ -1,8 +1,8 @@
 package com.sbsj.dreamwing.user.service;
 
 import com.sbsj.dreamwing.support.mapper.SupportMapper;
-import com.sbsj.dreamwing.user.domain.UserPointVO;
-import com.sbsj.dreamwing.user.domain.UserSupportVO;
+import com.sbsj.dreamwing.user.domain.MyPointVO;
+import com.sbsj.dreamwing.user.domain.MySupportVO;
 import com.sbsj.dreamwing.user.domain.UserVO;
 import com.sbsj.dreamwing.user.domain.MyVolunteerVO;
 import com.sbsj.dreamwing.user.dto.*;
@@ -181,13 +181,13 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    public List<UserPointVO> getUserPointList(long userId) {
-        List<UserPointVO> userPointList = userMapper.getUserPointVOList(userId);
+    public List<MyPointVO> getUserPointList(long userId) {
+        List<MyPointVO> userPointList = userMapper.getUserPointVOList(userId);
         return userPointList;
     }
 
-    public List<UserSupportVO> getUserSupportList(long userId) {
-        List<UserSupportVO> userSupportList = userMapper.getUserSupportVOList(userId);
+    public List<MySupportVO> getUserSupportList(long userId) {
+        List<MySupportVO> userSupportList = userMapper.getUserSupportVOList(userId);
         return userSupportList;
     }
 
@@ -208,9 +208,9 @@ public class UserServiceImpl implements UserService {
 
         int totalSupportPoint = userMapper.selectTotalSupportPoint(userId);
 
-        List<UserSupportVO> supportDeatails = userMapper.getUserSupportVOList(userId);
+        List<MySupportVO> supportDeatails = userMapper.getUserSupportVOList(userId);
         List<MyVolunteerVO> volunteerDeatails = userMapper.getUserVolunteerVOList(userId) ;
-        List<UserPointVO> pointDetails = userMapper.getUserPointVOList(userId);
+        List<MyPointVO> pointDetails = userMapper.getUserPointVOList(userId);
 
         MyPageDTO myPageDTO = MyPageDTO.builder()
                 .name(userDTO.getName())

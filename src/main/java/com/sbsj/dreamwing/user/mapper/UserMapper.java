@@ -1,7 +1,7 @@
 package com.sbsj.dreamwing.user.mapper;
 
-import com.sbsj.dreamwing.user.domain.UserPointVO;
-import com.sbsj.dreamwing.user.domain.UserSupportVO;
+import com.sbsj.dreamwing.user.domain.MyPointVO;
+import com.sbsj.dreamwing.user.domain.MySupportVO;
 import com.sbsj.dreamwing.user.domain.UserVO;
 import com.sbsj.dreamwing.user.domain.MyVolunteerVO;
 import com.sbsj.dreamwing.user.dto.UserDTO;
@@ -35,8 +35,8 @@ public interface UserMapper {
     Optional<UserDTO> selectUserByUserId(long userId);
     int withdraw(long userId);
     int updateUserInfo(UserVO userVO);
-    List<UserPointVO> getUserPointVOList(long userId);
-    List<UserSupportVO> getUserSupportVOList(long userId);
+    List<MyPointVO> getUserPointVOList(long userId);
+    List<MySupportVO> getUserSupportVOList(long userId);
     int selectTotalSupportPoint(long userId);
     List<MyVolunteerVO> getUserVolunteerVOList(long userId);
 

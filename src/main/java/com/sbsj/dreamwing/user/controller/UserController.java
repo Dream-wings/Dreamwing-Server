@@ -1,11 +1,10 @@
 package com.sbsj.dreamwing.user.controller;
 
-import com.sbsj.dreamwing.user.domain.UserPointVO;
-import com.sbsj.dreamwing.user.domain.UserSupportVO;
+import com.sbsj.dreamwing.user.domain.MyPointVO;
+import com.sbsj.dreamwing.user.domain.MySupportVO;
 import com.sbsj.dreamwing.user.dto.*;
 import com.sbsj.dreamwing.user.service.UserService;
 import com.sbsj.dreamwing.util.ApiResponse;
-import com.sbsj.dreamwing.util.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -14,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -143,25 +141,25 @@ public class UserController {
     }
 
     @GetMapping("/getPointList")
-    public ResponseEntity<ApiResponse<List<UserPointVO>>> getUserPointList() {
+    public ResponseEntity<ApiResponse<List<MyPointVO>>> getUserPointList() {
         // SecurityContext에서 Authentication 객체를 가져옵니다.
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         // UserDetails 객체에서 userId를 가져옵니다.
         long userId = ((UserDTO) authentication.getPrincipal()).getUserId();
 
-        List<UserPointVO> pointList = userService.getUserPointList(userId);
+        List<MyPointVO> pointList = userService.getUserPointList(userId);
 
         return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, pointList));
     }
 
     @GetMapping("/getSupportList")
-    public ResponseEntity<ApiResponse<List<UserSupportVO>>> getUserSupportList() {
+    public ResponseEntity<ApiResponse<List<MySupportVO>>> getUserSupportList() {
         // SecurityContext에서 Authentication 객체를 가져옵니다.
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         // UserDetails 객체에서 userId를 가져옵니다.
         long userId = ((UserDTO) authentication.getPrincipal()).getUserId();
 
-        List<UserSupportVO> supportList = userService.getUserSupportList(userId);
+        List<MySupportVO> supportList = userService.getUserSupportList(userId);
 
         return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, supportList));
     }

@@ -1,11 +1,10 @@
 package com.sbsj.dreamwing.user.mapper;
 
-import com.sbsj.dreamwing.user.domain.UserPointVO;
-import com.sbsj.dreamwing.user.domain.UserSupportVO;
+import com.sbsj.dreamwing.user.domain.MyPointVO;
+import com.sbsj.dreamwing.user.domain.MySupportVO;
 import com.sbsj.dreamwing.user.domain.UserVO;
 
 import com.sbsj.dreamwing.user.dto.UserDTO;
-import com.sbsj.dreamwing.user.dto.UserUpdateDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -99,13 +98,13 @@ public class UserMapperTests {
 
     @Test
     public void getUserPointVOListTest() {
-        List<UserPointVO> userPointVOList = userMapper.getUserPointVOList(1);
+        List<MyPointVO> userPointVOList = userMapper.getUserPointVOList(1);
         log.info(userPointVOList.toString());
     }
 
     @Test
     public void getUserSupportVOListTest() {
-        List<UserSupportVO> userSupportVOList = userMapper.getUserSupportVOList(1);
+        List<MySupportVO> userSupportVOList = userMapper.getUserSupportVOList(1);
         log.info(userSupportVOList.toString());
     }
 }

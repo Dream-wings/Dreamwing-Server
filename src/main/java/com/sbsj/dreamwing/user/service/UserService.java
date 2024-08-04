@@ -1,7 +1,7 @@
 package com.sbsj.dreamwing.user.service;
 
-import com.sbsj.dreamwing.user.domain.UserPointVO;
-import com.sbsj.dreamwing.user.domain.UserSupportVO;
+import com.sbsj.dreamwing.user.domain.MyPointVO;
+import com.sbsj.dreamwing.user.domain.MySupportVO;
 import com.sbsj.dreamwing.user.dto.*;
 
 import java.util.List;
@@ -32,8 +32,8 @@ public interface UserService {
     public UserInfoDTO getUserInfo(long userId);
     public boolean updateUserInfo(long userId, UserUpdateDTO userUpdateDTO);
     public void logout(long userId);
-    public List<UserPointVO> getUserPointList(long userId);
-    public List<UserSupportVO> getUserSupportList(long userId);
+    public List<MyPointVO> getUserPointList(long userId);
+    public List<MySupportVO> getUserSupportList(long userId);
     public Boolean checkExistLoginId(LoginIdDTO loginIdDTO);
     public MyPageDTO getMyPageInfo(long userId);
 }
