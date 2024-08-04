@@ -69,9 +69,19 @@ public class SupportController {
      */
 
 
+//    @GetMapping("/list")
+//    public ResponseEntity<ApiResponse<List<GetSupportListResponseDTO>>> getAllSupportList() throws Exception {
+//        List<GetSupportListResponseDTO> response = service.getAllSupportList();
+//        return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, response));
+//    }
     @GetMapping("/list")
-    public ResponseEntity<ApiResponse<List<GetSupportListResponseDTO>>> getAllSupportList() throws Exception {
-        List<GetSupportListResponseDTO> response = service.getAllSupportList();
+    public ResponseEntity<ApiResponse<List<GetSupportListResponseDTO>>> getSupportListWithPagination(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "2") int size, // Use default size 2
+            @RequestParam int status,
+            @RequestParam int category
+    ) throws Exception {
+        List<GetSupportListResponseDTO> response = service.getSupportListWithFilters(page, size, status, category);
         return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, response));
     }
 
