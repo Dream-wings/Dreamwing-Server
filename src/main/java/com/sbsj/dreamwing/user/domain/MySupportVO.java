@@ -3,7 +3,7 @@ package com.sbsj.dreamwing.user.domain;
 import lombok.Data;
 
 /**
- * 포인트 내역 정보를 담는 VO
+ * 사용자 후원 내역 정보를 담는 VO
  * @author 정은찬
  * @since 2024.07.31
  *
@@ -14,8 +14,8 @@ import lombok.Data;
  * </pre>
  */
 @Data
-public class UserPointVO {
-    String ActivityTitle;
+public class MySupportVO {
+    String title;
     int point;
     String createdDate;
 }
