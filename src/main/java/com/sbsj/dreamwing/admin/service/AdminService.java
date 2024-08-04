@@ -1,10 +1,7 @@
 package com.sbsj.dreamwing.admin.service;
 
 
-import com.sbsj.dreamwing.admin.dto.AdminVolunteerRequestDTO;
-import com.sbsj.dreamwing.admin.dto.AdminVolunteerResponseDTO;
-import com.sbsj.dreamwing.admin.dto.AwardVolunteerPointsRequestDTO;
-import com.sbsj.dreamwing.admin.dto.UpdateVolunteerStatusRequestDTO;
+import com.sbsj.dreamwing.admin.dto.*;
 
 import java.util.List;
 
@@ -22,19 +19,23 @@ import java.util.List;
  * 2024.07.29   정은지        봉사활동 인증 후 포인트 부여 기능 추가
  * 2024.07.30   임재성        봉사 & 멘토링 공고 글 조회 기능 추가
  * 2024.07.30   임재성        봉사 & 멘토링 공고 글 생성/수정/삭제 기능 추가
+ * 2024.08.04   정은지        봉사활동 신청 대기 리스트 목록 조회 추가
  * </pre>
  */
 public interface AdminService {
     boolean approveVolunteerRequest(UpdateVolunteerStatusRequestDTO request) throws Exception;
+
     boolean awardVolunteerPoints(AwardVolunteerPointsRequestDTO request) throws Exception;
-
-
 
     int createVolunteer(AdminVolunteerRequestDTO request);
 
     AdminVolunteerRequestDTO getVolunteerDetails(long volunteerId);
 
-        int updateVolunteer(AdminVolunteerRequestDTO request);
+    int updateVolunteer(AdminVolunteerRequestDTO request);
+
     int deleteVolunteer(long volunteerId);
+
     List<AdminVolunteerResponseDTO> getVolunteerList();
+
+    List<VolunteerRequestPendingListResponseDTO> getVolunteerRequestPendingList(int page, int size) throws Exception;
 }

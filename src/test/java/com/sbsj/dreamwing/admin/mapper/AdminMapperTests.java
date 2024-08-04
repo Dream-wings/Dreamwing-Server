@@ -3,8 +3,10 @@ package com.sbsj.dreamwing.admin.mapper;
 import com.sbsj.dreamwing.admin.dto.AdminVolunteerRequestDTO;
 import com.sbsj.dreamwing.admin.dto.AdminVolunteerResponseDTO;
 import com.sbsj.dreamwing.admin.dto.UpdateVolunteerStatusRequestDTO;
+import com.sbsj.dreamwing.admin.dto.VolunteerRequestPendingListResponseDTO;
 import com.sbsj.dreamwing.mission.domain.QuizVO;
 import com.sbsj.dreamwing.mission.dto.AwardPointsRequestDTO;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -33,6 +35,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * 2024.07.28  	정은지        최초 생성
  * 2024.07.28   정은지        봉사활동 신청 승인 테스트 추가
  * 2024.07.29   정은지        봉사활동 인증 테스트 추가
+ * 2024.08.04   정은지        봉사활동 신청 대기 리스트 목록 조회 테스트 추가
  * </pre>
  */
 
@@ -149,5 +152,20 @@ public class AdminMapperTests {
         // then
         Assertions.assertNotNull(list);
         Assertions.assertFalse(list.isEmpty());
+    }
+
+    @Test
+    @DisplayName("봉사활동 신청 대기 목록 조회 매퍼 테스트")
+    public void testSelectVolunteerRequestPendingList() {
+        // given
+        int offset = 0;
+        int size = 10;
+
+        // when
+        List<VolunteerRequestPendingListResponseDTO> dto
+                = mapper.selectVolunteerRequestPendingList(offset, size);
+
+        // then
+        Assertions.assertNotNull(dto);
     }
 }
