@@ -23,8 +23,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class VolunteerRequestPendingListResponseDTO {
-    private long volunteerID;
-    private int category;
+    private long volunteerId;
+    private int type;
     private String title;
     private String loginId;
 }

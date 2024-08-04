@@ -133,7 +133,7 @@
     <!-- 봉사활동 신청 대기 목록 조회 -->
     <select id="selectVolunteerRequestPendingList">
         SELECT V.VOLUNTEER_ID,
-               V.CATEGORY,
+               V.TYPE,
                V.TITLE,
                UI.LOGIN_ID
         FROM   USER_VOLUNTEER UV
@@ -150,7 +150,7 @@
     <select id="selectVolunteerRequestPendingDetail">
         SELECT V.VOLUNTEER_ID,
                UI.USER_ID,
-               V.CATEGORY,
+               V.TYPE,
                V.TITLE,
                UI.LOGIN_ID,
                UI.NAME,
