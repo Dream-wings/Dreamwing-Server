@@ -1,8 +1,6 @@
 package com.sbsj.dreamwing.mission.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 /**
  * 포인트 부여 요청 DTO
@@ -17,7 +15,8 @@ import lombok.NoArgsConstructor;
  * </pre>
  */
 
-@Data
+@Getter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class AwardPointsRequestDTO {

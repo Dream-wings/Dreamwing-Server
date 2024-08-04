@@ -2,6 +2,7 @@ package com.sbsj.dreamwing.mission.service;
 
 import com.sbsj.dreamwing.mission.domain.QuizVO;
 import com.sbsj.dreamwing.mission.dto.AwardPointsRequestDTO;
+import com.sbsj.dreamwing.mission.dto.CheckDailyMissionRequestDTO;
 
 /**
  * 미션 서비스 인터페이스
@@ -14,10 +15,11 @@ import com.sbsj.dreamwing.mission.dto.AwardPointsRequestDTO;
  * ----------  --------    ---------------------------
  * 2024.07.26  	정은지        최초 생성
  * 2024.07.28   정은지        포인트 부여 메서드 추가
+ * 2024.08.04   정은지
  * </pre>
  */
 public interface MissionService {
 
     QuizVO getDailyQuiz() throws Exception;
-    boolean awardDailyQuizPoints(AwardPointsRequestDTO dto) throws Exception;
+    int awardDailyMissionPoints(AwardPointsRequestDTO dto) throws Exception;
 }

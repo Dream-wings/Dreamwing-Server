@@ -53,11 +53,15 @@ public class MissionController {
      */
     @PostMapping("/point")
     public ResponseEntity<ApiResponse<Void>> awardDailyQuizPoints(@RequestBody AwardPointsRequestDTO dto) throws Exception {
-        boolean success = service.awardDailyQuizPoints(dto);
+        int resultCode = service.awardDailyMissionPoints(dto);
 
-        if (success) {
+        // 포인트 부여 성공 시
+        if (resultCode == 1) {
             return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK));
-        } else {
+        } else if (resultCode == 0) {
+            return ResponseEntity.badRequest().body(ApiResponse.failure(HttpStatus.BAD_REQUEST, "이미 포인트를 받았습니다."));
+        }
+        else {
             return ResponseEntity.badRequest().body(ApiResponse.failure(HttpStatus.BAD_REQUEST, "포인트 부여 실패"));
         }
     }
