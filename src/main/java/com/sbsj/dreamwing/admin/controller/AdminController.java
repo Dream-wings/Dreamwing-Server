@@ -5,15 +5,12 @@ import com.sbsj.dreamwing.admin.service.AdminService;
 import com.sbsj.dreamwing.mission.service.MissionService;
 import com.sbsj.dreamwing.util.ApiResponse;
 import com.sbsj.dreamwing.util.S3Uploader;
-import com.sbsj.dreamwing.volunteer.dto.VolunteerDetailDTO;
-import com.sbsj.dreamwing.volunteer.dto.VolunteerListDTO;
 import com.sbsj.dreamwing.volunteer.service.VolunteerService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,6 +30,7 @@ import java.util.List;
  * 2024.07.30   임재성        봉사 & 멘토링 공고 글 조회 기능 추가
  * 2024.07.30   임재성        봉사 & 멘토링 공고 글 생성/수정/삭제 기능 추가
  * 2024.08.04   정은지        봉사활동 신청 대기 목록, 상세 조회 추가
+ * 2024.08.05   정은지        봉사활동 인증 대기 목록, 상세 조회 추가
  * </pre>
  */
 @RestController
@@ -154,6 +152,7 @@ public class AdminController {
     }
 
     /**
+     * 봉사활동 신청 대기 목록 조회
      * @author 정은지
      * @param page
      * @param size
@@ -161,15 +160,16 @@ public class AdminController {
      * @throws Exception
      */
     @GetMapping("/volunteer/request/list")
-    public ResponseEntity<ApiResponse<List<VolunteerRequestPendingListResponseDTO>>>
+    public ResponseEntity<ApiResponse<List<VolunteerRequestListResponseDTO>>>
                     getVolunteerRequestPendingList(@RequestParam(defaultValue = "0") int page,
                                                    @RequestParam(defaultValue = "10") int size) throws Exception {
-        List<VolunteerRequestPendingListResponseDTO> response =
+        List<VolunteerRequestListResponseDTO> response =
                 service.getVolunteerRequestPendingList(page, size);
         return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, response));
     }
 
     /**
+     * 봉사활동 신청 대기 상세 조회
      * @author 정은지
      * @param volunteerId
      * @param userId
@@ -177,10 +177,42 @@ public class AdminController {
      * @throws Exception
      */
     @GetMapping("/volunteer/request")
-    public ResponseEntity<ApiResponse<VolunteerRequestPendingDetailResponseDTO>>
+    public ResponseEntity<ApiResponse<VolunteerRequestDetailResponseDTO>>
                     getVolunteerRequestPendingDetail(@RequestParam long volunteerId, @RequestParam long userId) throws Exception {
-        VolunteerRequestPendingDetailResponseDTO response =
+        VolunteerRequestDetailResponseDTO response =
                 service.getVolunteerRequestPendingDetail(volunteerId, userId);
+        return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, response));
+    }
+
+    /**
+     * 봉사활동 인증 대기 목록 조회
+     * @param page
+     * @param size
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/volunteer/certification/list")
+    public ResponseEntity<ApiResponse<List<VolunteerRequestListResponseDTO>>>
+    getVolunteerCertificationList(@RequestParam(defaultValue = "0") int page,
+                                   @RequestParam(defaultValue = "10") int size) throws Exception {
+        List<VolunteerRequestListResponseDTO> response =
+                service.getVolunteerCertificationList(page, size);
+        return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, response));
+    }
+
+    /**
+     * 봉사활동 인증 대기 상세 조회
+     * @author 정은지
+     * @param volunteerId
+     * @param userId
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/volunteer/certification")
+    public ResponseEntity<ApiResponse<VolunteerCertificationDetailResponseDTO>>
+    getVolunteerCertificationDetail(@RequestParam long volunteerId, @RequestParam long userId) throws Exception {
+        VolunteerCertificationDetailResponseDTO response =
+                service.getVolunteerCertificationDetail(volunteerId, userId);
         return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, response));
     }
 }

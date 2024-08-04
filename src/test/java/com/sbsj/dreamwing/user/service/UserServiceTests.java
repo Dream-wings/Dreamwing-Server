@@ -97,11 +97,11 @@ public class UserServiceTests {
 //        log.info(userPointList.toString());
 //    }
 
-    @Test
-    public void getSupportListTest() {
-        List<MySupportVO> userSupportList = userService.getUserSupportList(1);
-        log.info(userSupportList.toString());
-    }
+//    @Test
+//    public void getSupportListTest() {
+//        List<MySupportVO> userSupportList = userService.getUserSupportList(1);
+//        log.info(userSupportList.toString());
+//    }
 
     @Test
     public void checkExistLoginIdTest() {
