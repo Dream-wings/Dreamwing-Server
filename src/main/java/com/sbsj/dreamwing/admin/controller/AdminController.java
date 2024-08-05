@@ -149,7 +149,7 @@ public ResponseEntity<ApiResponse<Void>> updateVolunteer(@PathVariable long id,
      * @param volunteerId
      * @return
      */
-    @DeleteMapping("/volunteer/{volunteerId}")
+    @DeleteMapping("/volunteer/delete/{volunteerId}")
     public ResponseEntity<ApiResponse<Void>> deleteVolunteer(
             @PathVariable long volunteerId) {
         int result = service.deleteVolunteer(volunteerId);
@@ -159,6 +159,8 @@ public ResponseEntity<ApiResponse<Void>> updateVolunteer(@PathVariable long id,
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiResponse.failure(HttpStatus.BAD_REQUEST, "봉사 공고 삭제에 실패했습니다."));
         }
     }
+
+
 
     /**
      * 봉사 공고 목록 조회
