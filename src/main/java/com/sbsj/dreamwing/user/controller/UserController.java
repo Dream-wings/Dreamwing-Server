@@ -2,6 +2,7 @@ package com.sbsj.dreamwing.user.controller;
 
 import com.sbsj.dreamwing.user.domain.MyPointVO;
 import com.sbsj.dreamwing.user.domain.MySupportVO;
+import com.sbsj.dreamwing.user.domain.MyVolunteerVO;
 import com.sbsj.dreamwing.user.dto.*;
 import com.sbsj.dreamwing.user.service.UserService;
 import com.sbsj.dreamwing.util.ApiResponse;
@@ -36,7 +37,7 @@ import java.util.List;
  *  2024.08.02      정은찬                       로그인 아이디 존재 여부 확인 API 추가
  *  2024.08.04      정은찬                       마이페이지 사용자 정보 API 추가
  *  2024.08.04      정은찬                       페이징 처리를 위해 포인트 내역 조회 API, 후원 내역 조회 API 수정
- *  2024.08.05      정은찬                       회원 정보 업데이트 API 수정
+ *  2024.08.05      정은찬                       회원 정보 업데이트 API 수정, 봉사 활동 내역 조회 API 추가
 
  * </pre>
  */
@@ -163,7 +164,6 @@ public class UserController {
         return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, pointList));
     }
 
-
     @GetMapping("/getSupportList")
     public ResponseEntity<ApiResponse<List<MySupportVO>>> getUserSupportList(
             @RequestParam(defaultValue = "0") int page,
@@ -176,6 +176,20 @@ public class UserController {
         List<MySupportVO> supportList = userService.getUserSupportList(userId, page, size);
 
         return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, supportList));
+    }
+
+    @GetMapping("/getVolunteerList")
+    public ResponseEntity<ApiResponse<List<MyVolunteerVO>>> getVolunteerList(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "15") int size) {
+        // SecurityContext에서 Authentication 객체를 가져옵니다.
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // UserDetails 객체에서 userId를 가져옵니다.
+        long userId = ((UserDTO) authentication.getPrincipal()).getUserId();
+
+        List<MyVolunteerVO> volunteerList = userService.getUserVolunteerList(userId, page, size);
+
+        return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, volunteerList));
     }
 
     @GetMapping("/checkExistId")

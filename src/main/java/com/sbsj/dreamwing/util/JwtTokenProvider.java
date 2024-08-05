@@ -66,7 +66,6 @@ public class JwtTokenProvider {
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
-        log.info("!!!!! userID : " + userId);
         return userId;
     }
 

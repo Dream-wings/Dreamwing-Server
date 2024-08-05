@@ -42,7 +42,7 @@ import java.util.concurrent.TimeUnit;
  *  2024.08.02      정은찬                      로그인 아이디 존재 여부 확인 기능 추가
  *  2024.08.03      정은찬                      마이페이지 사용자 정보 조회 기능 추가
  *  2024.08.04      정은찬                      페이징 처리를 위해 포인트 내역, 후원 내역 조회 기능 수정
- *  2024.08.05      정은찬                      회원 정보 업데이트 기능 수정
+ *  2024.08.05      정은찬                      회원 정보 업데이트 기능 수정, 봉사 활동 내역 조회 기능 추가
  * </pre>
  */
 @Service
@@ -222,12 +222,17 @@ public class UserServiceImpl implements UserService {
         return userPointList;
     }
 
-
-
     public List<MySupportVO> getUserSupportList(long userId, int page, int size) {
         int offset= page * size;
         List<MySupportVO> userSupportList = userMapper.getUserSupportVOList(userId, offset, size);
         return userSupportList;
+    }
+
+    public List<MyVolunteerVO> getUserVolunteerList(long userId, int page, int size) {
+        int offset = page * size;
+        List<MyVolunteerVO> userVolunteerList = userMapper.getUserVolunteerVOList(userId, offset, size);
+
+        return userVolunteerList;
     }
 
     public Boolean checkExistLoginId(LoginIdDTO loginIdDTO) {

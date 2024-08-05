@@ -2,6 +2,7 @@ package com.sbsj.dreamwing.user.service;
 
 import com.sbsj.dreamwing.user.domain.MyPointVO;
 import com.sbsj.dreamwing.user.domain.MySupportVO;
+import com.sbsj.dreamwing.user.domain.MyVolunteerVO;
 import com.sbsj.dreamwing.user.dto.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,6 +27,7 @@ import java.util.List;
  *  2024.08.02      정은찬                      로그인 아이디 존재 여부 확인 기능 추가
  *  2024.08.03      정은찬                      마이페이지 사용자 정보 조회 기능 추가
  *  2024.08.04      정은찬                      페이징 처리를 위해 포인트 내역, 후원 내역 조회 기능 수정
+ *  2024.08.05      정은찬                      회원 정보 업데이트 기능 수정, 봉사 활동 내역 조회 기능 추가
  * </pre>
  */
 public interface UserService {
@@ -37,8 +39,9 @@ public interface UserService {
     public void logout(long userId);
 
     public List<MyPointVO> getUserPointList(long userId, int page, int size);
-
     public List<MySupportVO> getUserSupportList(long userId, int page, int size);
+    public List<MyVolunteerVO> getUserVolunteerList(long userId, int page, int size);
+
     public Boolean checkExistLoginId(LoginIdDTO loginIdDTO);
     public MyPageDTO getMyPageInfo(long userId);
 }
