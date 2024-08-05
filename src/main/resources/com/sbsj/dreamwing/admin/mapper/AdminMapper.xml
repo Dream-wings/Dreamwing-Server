@@ -201,4 +201,19 @@
         WHERE  UV.USER_ID = #{userId}
           AND  UV.VOLUNTEER_ID = #{volunteerId}
     </select>
+    <select id="selectVolunteerListWithPaging" resultType="com.sbsj.dreamwing.admin.dto.AdminVolunteerResponseDTO">
+        SELECT
+            V.VOLUNTEER_ID AS volunteerId,
+            V.TITLE AS title,
+            V.TYPE AS type,
+            (SELECT COUNT(*) FROM USER_VOLUNTEER UV WHERE UV.VOLUNTEER_ID = V.VOLUNTEER_ID) AS currentCount,
+            V.TOTAL_COUNT AS totalCount
+        FROM VOLUNTEER V
+        ORDER BY V.VOLUNTEER_ID DESC
+        OFFSET #{offset} ROWS FETCH NEXT #{size} ROWS ONLY
+    </select>
+
+
+
+
 </mapper>
