@@ -222,12 +222,17 @@ public class UserServiceImpl implements UserService {
         return userPointList;
     }
 
-
-
     public List<MySupportVO> getUserSupportList(long userId, int page, int size) {
         int offset= page * size;
         List<MySupportVO> userSupportList = userMapper.getUserSupportVOList(userId, offset, size);
         return userSupportList;
+    }
+
+    public List<MyVolunteerVO> getUserVolunteerList(long userId, int page, int size) {
+        int offset = page * size;
+        List<MyVolunteerVO> userVolunteerList = userMapper.getUserVolunteerVOList(userId, offset, size);
+
+        return userVolunteerList;
     }
 
     public Boolean checkExistLoginId(LoginIdDTO loginIdDTO) {

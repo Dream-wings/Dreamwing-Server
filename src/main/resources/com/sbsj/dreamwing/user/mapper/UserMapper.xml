@@ -115,11 +115,14 @@
     </select>
 
     <select id="getUserVolunteerVOList" resultType="MyVolunteerVO">
-        SELECT V.TITLE, V.VOLUNTEER_END_DATE, U_V.VERIFIED
+        SELECT V.TITLE,
+               TO_CHAR(V.VOLUNTEER_END_DATE AT TIME ZONE 'UTC', 'YYYY-MM-DD') AS VOLUNTEER_END_DATE,
+               U_V.VERIFIED
         FROM VOLUNTEER V, USER_VOLUNTEER U_V
-        WHERE V.volunteer_id = U_V.volunteer_id
-              AND U_V.user_id = #{userId}
-              AND U_V.status = 1
-
+        WHERE V.VOLUNTEER_ID = U_V.VOLUNTEER_ID
+          AND U_V.USER_ID = #{userId}
+          AND U_V.STATUS = 1
+        ORDER BY V.VOLUNTEER_END_DATE DESC
+        OFFSET #{offset} ROWS FETCH NEXT #{size} ROWS ONLY
     </select>
 </mapper>

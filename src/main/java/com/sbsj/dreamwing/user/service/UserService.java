@@ -2,6 +2,7 @@ package com.sbsj.dreamwing.user.service;
 
 import com.sbsj.dreamwing.user.domain.MyPointVO;
 import com.sbsj.dreamwing.user.domain.MySupportVO;
+import com.sbsj.dreamwing.user.domain.MyVolunteerVO;
 import com.sbsj.dreamwing.user.dto.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -37,8 +38,9 @@ public interface UserService {
     public void logout(long userId);
 
     public List<MyPointVO> getUserPointList(long userId, int page, int size);
-
     public List<MySupportVO> getUserSupportList(long userId, int page, int size);
+    public List<MyVolunteerVO> getUserVolunteerList(long userId, int page, int size);
+
     public Boolean checkExistLoginId(LoginIdDTO loginIdDTO);
     public MyPageDTO getMyPageInfo(long userId);
 }
