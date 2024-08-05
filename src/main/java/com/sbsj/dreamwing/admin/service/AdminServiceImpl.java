@@ -106,7 +106,8 @@ public int createVolunteer(AdminVolunteerRequestDTO request) {
     }
 
     @Override
-    public int updateVolunteer(AdminVolunteerRequestDTO request) {
+    public int updateVolunteer(long id, AdminVolunteerRequestDTO request) {
+        request.setVolunteerId(id);
         return mapper.updateVolunteer(request);
     }
 

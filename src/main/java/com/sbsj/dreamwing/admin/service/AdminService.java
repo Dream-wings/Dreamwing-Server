@@ -32,7 +32,7 @@ public interface AdminService {
 
     AdminVolunteerRequestDTO getVolunteerDetails(long volunteerId);
 
-    int updateVolunteer(AdminVolunteerRequestDTO request);
+    int updateVolunteer(long id, AdminVolunteerRequestDTO request);
 
     int deleteVolunteer(long volunteerId);
 

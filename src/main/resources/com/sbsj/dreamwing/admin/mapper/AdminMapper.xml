@@ -95,15 +95,34 @@
     </select>
 
     <!-- 봉사 공고 수정 -->
-    <update id="updateVolunteer" parameterType="com.sbsj.dreamwing.admin.dto.AdminVolunteerRequestDTO">
+<!--    <update id="updateVolunteer" parameterType="com.sbsj.dreamwing.admin.dto.AdminVolunteerRequestDTO">-->
+<!--        UPDATE VOLUNTEER-->
+<!--        SET-->
+<!--            TITLE = #{title},-->
+<!--            CONTENT = #{content},-->
+<!--            TYPE = #{type},-->
+<!--            CATEGORY = #{category},-->
+<!--            VOLUNTEER_START_DATE = #{startDate},-->
+<!--            VOLUNTEER_END_DATE = #{endDate},-->
+<!--            ADDRESS = #{address},-->
+<!--            TOTAL_COUNT = #{totalCount},-->
+<!--            STATUS = #{status},-->
+<!--            RECRUIT_START_DATE = #{recruitStartDate},-->
+<!--            RECRUIT_END_DATE = #{recruitEndDate},-->
+<!--            IMAGE_URL = #{imageUrl},-->
+<!--            LATITUDE = #{latitude},-->
+<!--            LONGITUDE = #{longitude}-->
+<!--        WHERE VOLUNTEER_ID = #{volunteerId}-->
+<!--    </update>-->
+    <update id="updateVolunteer">
         UPDATE VOLUNTEER
         SET
             TITLE = #{title},
             CONTENT = #{content},
             TYPE = #{type},
             CATEGORY = #{category},
-            VOLUNTEER_START_DATE = #{startDate},
-            VOLUNTEER_END_DATE = #{endDate},
+            VOLUNTEER_START_DATE = #{volunteerStartDate},
+            VOLUNTEER_END_DATE = #{volunteerEndDate},
             ADDRESS = #{address},
             TOTAL_COUNT = #{totalCount},
             STATUS = #{status},

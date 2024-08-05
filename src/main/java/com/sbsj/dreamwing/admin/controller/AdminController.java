@@ -111,21 +111,38 @@ public class AdminController {
 //
 //    }
 
-    /**
-     * 봉사 공고 수정
-     * @param request
-     * @return
-     */
-    @PutMapping("/volunteer/update")
-    public ResponseEntity<ApiResponse<Void>> updateVolunteer(
-            @RequestBody AdminVolunteerRequestDTO request) {
-        int result = service.updateVolunteer(request);
-        if (result > 0) {
-            return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK));
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiResponse.failure(HttpStatus.BAD_REQUEST, "봉사 공고 수정에 실패했습니다."));
-        }
+
+//    @PutMapping("/volunteer/update")
+//    public ResponseEntity<ApiResponse<Void>> updateVolunteer(
+//            @RequestBody AdminVolunteerRequestDTO request) {
+//        int result = service.updateVolunteer(request);
+//        if (result > 0) {
+//            return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK));
+//        } else {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiResponse.failure(HttpStatus.BAD_REQUEST, "봉사 공고 수정에 실패했습니다."));
+//        }
+//    }
+@PutMapping("/volunteer/update/{id}")
+public ResponseEntity<ApiResponse<Void>> updateVolunteer(@PathVariable long id,
+                                                         @RequestBody AdminVolunteerRequestDTO request) {
+    System.out.println("Updating volunteer with ID: " + id);
+    System.out.println("Received DTO: " + request);
+
+    if (request.getImageFile() != null && !request.getImageFile().isEmpty()) {
+        String imageUrl = s3Uploader.uploadFile(request.getImageFile());
+        request.setImageUrl(imageUrl);
     }
+
+    int result = service.updateVolunteer(id, request);
+    if (result > 0) {
+        return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK));
+    } else {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ApiResponse.failure(HttpStatus.BAD_REQUEST, "봉사 공고 수정에 실패했습니다."));
+    }
+}
+
+
 
     /**
      * 봉사 공고 삭제
