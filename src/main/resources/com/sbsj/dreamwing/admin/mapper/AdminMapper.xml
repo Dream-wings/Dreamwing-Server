@@ -52,25 +52,25 @@
             IMAGE_URL,
             LATITUDE,
             LONGITUDE
-        )
-        VALUES (
-                   SEQ_VOLUNTEER.NEXTVAL,
-                   #{title},
-                   #{content},
-                   #{type},
-                   #{category},
-                   #{startDate},
-                   #{endDate},
-                   #{address},
-                   #{totalCount},
-                   #{status},
-                   #{recruitStartDate},
-                   #{recruitEndDate},
-                   #{imageUrl},
-                   #{latitude},
-                   #{longitude}
-               )
+        ) VALUES (
+                     SEQ_VOLUNTEER.NEXTVAL,
+                     #{title, jdbcType=VARCHAR},
+                     #{content, jdbcType=VARCHAR},
+                     #{type, jdbcType=INTEGER},
+                     #{category, jdbcType=INTEGER},
+                     #{volunteerStartDate, jdbcType=TIMESTAMP},
+                     #{volunteerEndDate, jdbcType=TIMESTAMP},
+                     #{address, jdbcType=VARCHAR},
+                     #{totalCount, jdbcType=INTEGER},
+                     #{status, jdbcType=INTEGER},
+                     #{recruitStartDate, jdbcType=TIMESTAMP},
+                     #{recruitEndDate, jdbcType=TIMESTAMP},
+                     #{imageUrl, jdbcType=VARCHAR},
+                     #{latitude, jdbcType=DOUBLE},
+                     #{longitude, jdbcType=DOUBLE}
+                 )
     </insert>
+
 
 
     <select id="selectVolunteerById" parameterType="long" resultType="com.sbsj.dreamwing.admin.dto.AdminVolunteerRequestDTO">
@@ -95,15 +95,34 @@
     </select>
 
     <!-- 봉사 공고 수정 -->
-    <update id="updateVolunteer" parameterType="com.sbsj.dreamwing.admin.dto.AdminVolunteerRequestDTO">
+<!--    <update id="updateVolunteer" parameterType="com.sbsj.dreamwing.admin.dto.AdminVolunteerRequestDTO">-->
+<!--        UPDATE VOLUNTEER-->
+<!--        SET-->
+<!--            TITLE = #{title},-->
+<!--            CONTENT = #{content},-->
+<!--            TYPE = #{type},-->
+<!--            CATEGORY = #{category},-->
+<!--            VOLUNTEER_START_DATE = #{startDate},-->
+<!--            VOLUNTEER_END_DATE = #{endDate},-->
+<!--            ADDRESS = #{address},-->
+<!--            TOTAL_COUNT = #{totalCount},-->
+<!--            STATUS = #{status},-->
+<!--            RECRUIT_START_DATE = #{recruitStartDate},-->
+<!--            RECRUIT_END_DATE = #{recruitEndDate},-->
+<!--            IMAGE_URL = #{imageUrl},-->
+<!--            LATITUDE = #{latitude},-->
+<!--            LONGITUDE = #{longitude}-->
+<!--        WHERE VOLUNTEER_ID = #{volunteerId}-->
+<!--    </update>-->
+    <update id="updateVolunteer">
         UPDATE VOLUNTEER
         SET
             TITLE = #{title},
             CONTENT = #{content},
             TYPE = #{type},
             CATEGORY = #{category},
-            VOLUNTEER_START_DATE = #{startDate},
-            VOLUNTEER_END_DATE = #{endDate},
+            VOLUNTEER_START_DATE = #{volunteerStartDate},
+            VOLUNTEER_END_DATE = #{volunteerEndDate},
             ADDRESS = #{address},
             TOTAL_COUNT = #{totalCount},
             STATUS = #{status},
