@@ -80,7 +80,8 @@
 
     <update id="updateUserInfo" parameterType="UserVO">
         UPDATE USER_INFO
-        SET PASSWORD = #{password},
+        SET LOGIN_ID = #{loginId},
+            PASSWORD = #{password},
             NAME = #{name},
             PHONE = #{phone},
             PROFILE_IMAGE_URL=#{profileImageUrl}

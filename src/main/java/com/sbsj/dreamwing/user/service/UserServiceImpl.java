@@ -42,6 +42,7 @@ import java.util.concurrent.TimeUnit;
  *  2024.08.02      정은찬                      로그인 아이디 존재 여부 확인 기능 추가
  *  2024.08.03      정은찬                      마이페이지 사용자 정보 조회 기능 추가
  *  2024.08.04      정은찬                      페이징 처리를 위해 포인트 내역, 후원 내역 조회 기능 수정
+ *  2024.08.05      정은찬                      회원 정보 업데이트 기능 수정
  * </pre>
  */
 @Service
@@ -152,20 +153,49 @@ public class UserServiceImpl implements UserService {
     }
 
     public boolean updateUserInfo(long userId, UserUpdateDTO userUpdateDTO) {
-        userUpdateDTO.setPassword(passwordEncoder.encode(userUpdateDTO.getPassword()));
+        UserDTO userDTO = userMapper.selectUserByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("잘못된 아이디입니다"));
 
+        String loginId = userUpdateDTO.getLoginId();
+        String password = userUpdateDTO.getPassword();
+        String name = userUpdateDTO.getName();
+        String phone = userUpdateDTO.getPhone();
         MultipartFile imageFile = userUpdateDTO.getImageFile();
+        String profileImageUrl = userUpdateDTO.getProfileImageUrl();
+
+        if(loginId == null || loginId.isEmpty()) {
+            loginId = userDTO.getLoginId();
+        }
+        if(password == null || password.isEmpty()) {
+            password = userDTO.getPassword();
+        }
+        else {
+            password = passwordEncoder.encode(userUpdateDTO.getPassword());
+        }
+        if(name == null || name.isEmpty()) {
+            name = userDTO.getName();
+        }
+        if(phone == null || phone.isEmpty()) {
+            phone = userDTO.getPhone();
+        }
+        if(profileImageUrl == null || profileImageUrl.isEmpty()) {
+            profileImageUrl = userDTO.getProfileImageUrl();
+        }
+
         if (imageFile != null && !imageFile.isEmpty()) {
-            String imageUrl = s3Uploader.uploadFile(userUpdateDTO.getImageFile());
-            userUpdateDTO.setProfileImageUrl(imageUrl);
+            profileImageUrl = s3Uploader.uploadFile(userUpdateDTO.getImageFile());
+        }
+        else {
+            profileImageUrl = userDTO.getProfileImageUrl();
         }
 
         UserVO userVO = UserVO.builder()
                 .userId(userId)
-                .name(userUpdateDTO.getName())
-                .password(userUpdateDTO.getPassword())
-                .phone(userUpdateDTO.getPhone())
-                .profileImageUrl(userUpdateDTO.getProfileImageUrl())
+                .loginId(loginId)
+                .name(name)
+                .password(password)
+                .phone(phone)
+                .profileImageUrl(profileImageUrl)
                 .build();
 
         int result = userMapper.updateUserInfo(userVO);
