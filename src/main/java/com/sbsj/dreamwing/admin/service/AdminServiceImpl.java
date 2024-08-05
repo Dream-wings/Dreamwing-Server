@@ -174,4 +174,10 @@ public int createVolunteer(AdminVolunteerRequestDTO request) {
     public VolunteerCertificationDetailResponseDTO getVolunteerCertificationDetail(long volunteerId, long userId) throws Exception {
         return mapper.selectVolunteerCertificationDetail(volunteerId, userId);
     }
+
+    @Override
+    public List<AdminVolunteerResponseDTO> getVolunteerListWithPaging(int page, int size) {
+        int offset = page * size;  // 페이징을 위한 오프셋 계산
+        return mapper.selectVolunteerListWithPaging(offset, size);
+    }
 }

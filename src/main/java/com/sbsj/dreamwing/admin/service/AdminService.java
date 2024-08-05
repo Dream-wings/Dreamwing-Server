@@ -37,6 +37,8 @@ public interface AdminService {
     int deleteVolunteer(long volunteerId);
 
     List<AdminVolunteerResponseDTO> getVolunteerList();
+    List<AdminVolunteerResponseDTO> getVolunteerListWithPaging(int page, int size);  // 새로운 메소드 추가
+
 
     List<VolunteerRequestListResponseDTO> getVolunteerRequestPendingList(int page, int size) throws Exception;
 

@@ -49,4 +49,7 @@ public interface AdminMapper {
 
     VolunteerCertificationDetailResponseDTO selectVolunteerCertificationDetail(
             @Param("volunteerId") long volunteerId, @Param("userId") long userId);
+
+    List<AdminVolunteerResponseDTO> selectVolunteerListWithPaging(@Param("offset") int offset, @Param("size") int size);
+
 }

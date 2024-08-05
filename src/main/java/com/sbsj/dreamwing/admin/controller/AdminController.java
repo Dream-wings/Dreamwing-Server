@@ -215,4 +215,19 @@ public class AdminController {
                 service.getVolunteerCertificationDetail(volunteerId, userId);
         return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, response));
     }
+
+
+    /**
+     * 봉사 공고 목록 조회 (페이징)
+     * @param page
+     * @param size
+     * @return
+     */
+    @GetMapping("/volunteer/adminList")
+    public ResponseEntity<ApiResponse<List<AdminVolunteerResponseDTO>>> getVolunteerListWithPaging(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size) {
+        List<AdminVolunteerResponseDTO> response = service.getVolunteerListWithPaging(page, size);
+        return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, response));
+    }
 }
