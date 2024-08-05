@@ -2,32 +2,24 @@ package com.sbsj.dreamwing.admin.service;
 
 import com.sbsj.dreamwing.admin.dto.*;
 import com.sbsj.dreamwing.admin.mapper.AdminMapper;
-import com.sbsj.dreamwing.mission.domain.QuizVO;
 import com.sbsj.dreamwing.util.S3Uploader;
-import com.sbsj.dreamwing.volunteer.mapper.VolunteerMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.*;
 
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.mock.web.MockMultipartFile;
@@ -53,19 +45,13 @@ import org.springframework.mock.web.MockMultipartFile;
 @SpringBootTest
 public class AdminServiceTests {
 
-//    @Mock
-//    private AdminService service;
-
     @Autowired
-    private AdminMapper mapper;
+    private AdminService service;
 
     @Autowired
     private S3Uploader s3Uploader;
 
     private AdminVolunteerRequestDTO request;
-
-    @Autowired
-    private AdminServiceImpl service;
 
     @BeforeEach
     public void setUp() {
@@ -226,14 +212,14 @@ public class AdminServiceTests {
 
     @Test
     @DisplayName("봉사활동 신청 대기 리스트 조회 서비스 테스트")
-    public void testGetVolunteerRequestPendingList() {
+    public void testGetVolunteerRequestPendingList() throws Exception {
         // given
         int page = 1;
         int size = 10;
 
         // when
-        List<VolunteerRequestPendingListResponseDTO> dto
-                = mapper.selectVolunteerRequestPendingList(page, size);
+        List<VolunteerRequestListResponseDTO> dto
+                = service.getVolunteerRequestPendingList(page, size);
 
         // then
         Assertions.assertNotNull(dto);
@@ -241,14 +227,44 @@ public class AdminServiceTests {
 
     @Test
     @DisplayName("봉사활동 신청 대기 상세 조회 서비스 테스트")
-    public void testGetVolunteerRequestPendingDetail() {
+    public void testGetVolunteerRequestPendingDetail() throws Exception  {
+        // given
+        long volunteerId = 1;
+        long userId = 1;
+
+        // when
+        VolunteerRequestDetailResponseDTO dto
+                = service.getVolunteerRequestPendingDetail(volunteerId, userId);
+
+        // then
+        assertThat(dto.getUserId()).isEqualTo(userId);
+    }
+
+    @Test
+    @DisplayName("봉사활동 인증 대기 목록 조회 서비스 테스트")
+    public void testGetVolunteerCertificationPendingList() throws Exception {
+        // given
+        int offset = 0;
+        int size = 10;
+
+        // when
+        List<VolunteerRequestListResponseDTO> dto
+                = service.getVolunteerCertificationList(offset, size);
+
+        // then
+        Assertions.assertNotNull(dto);
+    }
+
+    @Test
+    @DisplayName("봉사활동 인증 대기 상세 조회 서비스 테스트")
+    public void testGetVolunteerCetificationDetail() throws Exception  {
         // given
         int volunteerId = 1;
         int userId = 1;
 
         // when
-        VolunteerRequestPendingDetailResponseDTO dto
-                = mapper.selectVolunteerRequestPendingDetail(volunteerId, userId);
+        VolunteerCertificationDetailResponseDTO dto
+                = service.getVolunteerCertificationDetail(volunteerId, userId);
 
         // then
         assertThat(dto.getUserId()).isEqualTo(userId);

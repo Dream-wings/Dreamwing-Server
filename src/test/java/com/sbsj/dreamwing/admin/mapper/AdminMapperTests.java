@@ -1,9 +1,6 @@
 package com.sbsj.dreamwing.admin.mapper;
 
 import com.sbsj.dreamwing.admin.dto.*;
-import com.sbsj.dreamwing.mission.domain.QuizVO;
-import com.sbsj.dreamwing.mission.dto.AwardPointsRequestDTO;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -12,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -159,7 +154,7 @@ public class AdminMapperTests {
         int size = 10;
 
         // when
-        List<VolunteerRequestPendingListResponseDTO> dto
+        List<VolunteerRequestListResponseDTO> dto
                 = mapper.selectVolunteerRequestPendingList(offset, size);
 
         // then
@@ -174,8 +169,38 @@ public class AdminMapperTests {
         long userId = 1L;
 
         // when
-        VolunteerRequestPendingDetailResponseDTO dto
+        VolunteerRequestDetailResponseDTO dto
                 = mapper.selectVolunteerRequestPendingDetail(volunteerId, userId);
+
+        // then
+        assertThat(dto.getUserId()).isEqualTo(userId);
+    }
+
+    @Test
+    @DisplayName("봉사활동 신청 대기 목록 조회 매퍼 테스트")
+    public void testSelectVolunteerCertificationList() {
+        // given
+        int offset = 0;
+        int size = 10;
+
+        // when
+        List<VolunteerRequestListResponseDTO> dto
+                = mapper.selectVolunteerCertificationList(offset, size);
+
+        // then
+        Assertions.assertNotNull(dto);
+    }
+
+    @Test
+    @DisplayName("봉사활동 신청 대기 상세 조회 매퍼 테스트")
+    public void testSelectVolunteerCertificationDetail() {
+        // given
+        long volunteerId = 1L;
+        long userId = 1L;
+
+        // when
+        VolunteerCertificationDetailResponseDTO dto
+                = mapper.selectVolunteerCertificationDetail(volunteerId, userId);
 
         // then
         assertThat(dto.getUserId()).isEqualTo(userId);

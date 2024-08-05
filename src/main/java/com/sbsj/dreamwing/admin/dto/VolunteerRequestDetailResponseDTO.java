@@ -21,10 +21,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class VolunteerRequestPendingDetailResponseDTO {
+public class VolunteerRequestDetailResponseDTO {
     private long volunteerId;
     private long userId;
-    private int category;
+    private int type;
     private String title;
     private String loginId;
     private String name;

@@ -20,6 +20,7 @@ import java.util.List;
  * 2024.07.30   임재성        봉사 & 멘토링 공고 글 조회 기능 추가
  * 2024.07.30   임재성        봉사 & 멘토링 공고 글 생성/수정/삭제 기능 추가
  * 2024.08.04   정은지        봉사활동 신청 대기 목록, 상세 조회 추가
+ * 2024.08.05   정은지        봉사활동 인증 대기 목록, 상세 조회 추가
  * </pre>
  */
 public interface AdminService {
@@ -37,7 +38,12 @@ public interface AdminService {
 
     List<AdminVolunteerResponseDTO> getVolunteerList();
 
-    List<VolunteerRequestPendingListResponseDTO> getVolunteerRequestPendingList(int page, int size) throws Exception;
+    List<VolunteerRequestListResponseDTO> getVolunteerRequestPendingList(int page, int size) throws Exception;
 
-    VolunteerRequestPendingDetailResponseDTO getVolunteerRequestPendingDetail(long volunteerId, long userId) throws Exception;
+    VolunteerRequestDetailResponseDTO getVolunteerRequestPendingDetail(long volunteerId, long userId) throws Exception;
+
+    List<VolunteerRequestListResponseDTO> getVolunteerCertificationList(int page, int size) throws Exception;
+
+    VolunteerCertificationDetailResponseDTO getVolunteerCertificationDetail(long volunteerId, long userId) throws Exception;
+
 }

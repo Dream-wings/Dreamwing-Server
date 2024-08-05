@@ -1,6 +1,7 @@
 package com.sbsj.dreamwing.support.service;
 
 
+import com.sbsj.dreamwing.support.dto.GetDetailSupportResponseDTO;
 import com.sbsj.dreamwing.support.dto.GetSupportListResponseDTO;
 import com.sbsj.dreamwing.support.dto.GetTotalSupportResponseDTO;
 import com.sbsj.dreamwing.support.dto.PostSupportGiveRequestDTO;
@@ -29,5 +30,6 @@ public interface SupportService {
     List<GetSupportListResponseDTO> getSupportListWithFilters(int page, int size, int status, int category);
 
         boolean SupportGivePoints(PostSupportGiveRequestDTO request) throws Exception;
+    GetDetailSupportResponseDTO getSupportDetail(long supportId) throws Exception;
 
 }
