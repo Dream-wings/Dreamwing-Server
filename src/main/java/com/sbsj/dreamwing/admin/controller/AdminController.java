@@ -85,7 +85,9 @@ public class AdminController {
      */
     @PostMapping("/volunteer/create")
     public ResponseEntity<ApiResponse<Void>> createVolunteer(
-            @ModelAttribute AdminVolunteerRequestDTO request) {
+            @RequestBody AdminVolunteerRequestDTO request) {
+        System.out.println("Received DTO: " + request);
+
         if (request.getImageFile() != null && !request.getImageFile().isEmpty()) {
             String imageUrl = s3Uploader.uploadFile(request.getImageFile());
             request.setImageUrl(imageUrl);

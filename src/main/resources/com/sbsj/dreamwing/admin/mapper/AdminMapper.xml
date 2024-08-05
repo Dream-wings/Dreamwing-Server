@@ -52,25 +52,25 @@
             IMAGE_URL,
             LATITUDE,
             LONGITUDE
-        )
-        VALUES (
-                   SEQ_VOLUNTEER.NEXTVAL,
-                   #{title},
-                   #{content},
-                   #{type},
-                   #{category},
-                   #{startDate},
-                   #{endDate},
-                   #{address},
-                   #{totalCount},
-                   #{status},
-                   #{recruitStartDate},
-                   #{recruitEndDate},
-                   #{imageUrl},
-                   #{latitude},
-                   #{longitude}
-               )
+        ) VALUES (
+                     SEQ_VOLUNTEER.NEXTVAL,
+                     #{title, jdbcType=VARCHAR},
+                     #{content, jdbcType=VARCHAR},
+                     #{type, jdbcType=INTEGER},
+                     #{category, jdbcType=INTEGER},
+                     #{volunteerStartDate, jdbcType=TIMESTAMP},
+                     #{volunteerEndDate, jdbcType=TIMESTAMP},
+                     #{address, jdbcType=VARCHAR},
+                     #{totalCount, jdbcType=INTEGER},
+                     #{status, jdbcType=INTEGER},
+                     #{recruitStartDate, jdbcType=TIMESTAMP},
+                     #{recruitEndDate, jdbcType=TIMESTAMP},
+                     #{imageUrl, jdbcType=VARCHAR},
+                     #{latitude, jdbcType=DOUBLE},
+                     #{longitude, jdbcType=DOUBLE}
+                 )
     </insert>
+
 
 
     <select id="selectVolunteerById" parameterType="long" resultType="com.sbsj.dreamwing.admin.dto.AdminVolunteerRequestDTO">

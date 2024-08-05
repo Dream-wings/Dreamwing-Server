@@ -95,7 +95,7 @@ public int createVolunteer(AdminVolunteerRequestDTO request) {
 
     // 데이터베이스에 봉사 공고 삽입
     int result = mapper.insertVolunteer(request);
-    log.info("봉사 공고 데이터베이스에 삽입됨. 결과: {}", result);
+    log.info("봉사 공고 데이터베이스에 삽입됨. 결과: 2024-08-05 15:03:15.157  9271-9472  okhttp.OkHttpClient     com.sbsj.dreamwing                   I  {\"address\":\"seorul\",\"category\":1,\"content\":\"content\",\"imageUrl\":\"content://com.google.android.apps.photos.contentprovider/-1/1/content%3A%2F%2Fmedia%2Fexternal%2Fimages%2Fmedia%2F44/ORIGINAL/NONE/image%2Fjpeg/630300757\",\"latitude\":374.85315,\"longitude\":24677.35285,\"recruitEndDate\":\"2024-08-30T00:00:00\",\"recruitStartDate\":\"2024-08-10T00:00:00\",\"status\":0,\"title\":\"title\",\"totalCount\":20,\"type\":0,\"volunteerEndDate\":\"2024-09-22T00:00:00\",\"volunteerId\":0,\"volunteerStartDate\":\"2024-09-10T00:00:00\"}\n{}", result);
 
     return result;
 }
