@@ -41,7 +41,7 @@ public interface UserMapper {
     int updateUserInfo(UserVO userVO);
     List<MyPointVO> getUserPointVOList(long userId, int offset, int size);
     List<MySupportVO> getUserSupportVOList(long userId, int offset, int size);
-    int selectTotalSupportPoint(long userId);
+    Integer selectTotalSupportPoint(long userId);
     List<MyVolunteerVO> getUserVolunteerVOList(long userId, int offset, int size);
 
 }
