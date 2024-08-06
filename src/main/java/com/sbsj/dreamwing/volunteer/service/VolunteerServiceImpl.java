@@ -1,6 +1,7 @@
 package com.sbsj.dreamwing.volunteer.service;
 
 
+import com.sbsj.dreamwing.user.dto.UserDTO;
 import com.sbsj.dreamwing.util.S3Uploader;
 import com.sbsj.dreamwing.volunteer.dto.CertificationVolunteerRequestDTO;
 import com.sbsj.dreamwing.volunteer.dto.PostApplyVolunteerRequestDTO;
@@ -9,6 +10,8 @@ import com.sbsj.dreamwing.volunteer.mapper.VolunteerMapper;
 import com.sbsj.dreamwing.volunteer.dto.VolunteerDetailDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -106,9 +109,12 @@ public List<VolunteerListDTO> getVolunteerListWithFilters(int page, int size, in
             imageUrl = s3Uploader.uploadFile(imageFile);
         }
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        long userId = ((UserDTO) authentication.getPrincipal()).getUserId();
+
         CertificationVolunteerRequestDTO request =
                 CertificationVolunteerRequestDTO.builder()
-                        .userId(certificationVolunteerRequestDTO.getUserId())
+                        .userId(userId)
                         .volunteerId(certificationVolunteerRequestDTO.getVolunteerId())
                         .imageUrl(imageUrl)
                         .build();

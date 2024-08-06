@@ -28,6 +28,7 @@ import java.util.List;
  * ----------  --------    ---------------------------
  * 2024.07.26  	임재성        최초 생성
  * 2024.07.28   임재성        봉사 모집공고 게시판 리스트 & 상세 페이지 조회 기능 추가
+ * 2024.08.03   정은지        봉사활동 인증 기능 추가
  * </pre>
  */
 
@@ -99,7 +100,7 @@ public ResponseEntity<ApiResponse<List<VolunteerListDTO>>> getVolunteerListWithF
     }
 
     /**
-     * 봉사활동 인증 테스트
+     * 봉사활동 인증
      *
      * @param request
      * @param imageFile
