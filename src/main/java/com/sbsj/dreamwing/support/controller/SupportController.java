@@ -8,12 +8,15 @@ import com.sbsj.dreamwing.support.dto.GetSupportListResponseDTO;
 import com.sbsj.dreamwing.support.dto.GetTotalSupportResponseDTO;
 import com.sbsj.dreamwing.support.dto.PostSupportGiveRequestDTO;
 import com.sbsj.dreamwing.support.service.SupportService;
+import com.sbsj.dreamwing.user.dto.UserDTO;
 import com.sbsj.dreamwing.util.ApiResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -94,9 +97,12 @@ public class SupportController {
      */
     @PostMapping("/donate")
     public ResponseEntity<ApiResponse<Void>> supportGivePoints(
+
             @RequestParam("supportId") long supportId,
-            @RequestParam("userId") long userId,
             @RequestParam("amount") int amount) throws Exception {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // UserDetails 객체에서 userId를 가져옵니다. userId를 가져옴
+        long userId = ((UserDTO) authentication.getPrincipal()).getUserId();
 
         PostSupportGiveRequestDTO request = new PostSupportGiveRequestDTO(supportId, userId, amount);
 
