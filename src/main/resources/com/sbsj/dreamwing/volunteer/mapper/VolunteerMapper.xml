@@ -20,7 +20,7 @@
         <if test="type != null">
             AND TYPE = #{type}
         </if>
-        ORDER BY VOLUNTEER_START_DATE DESC
+        ORDER BY VOLUNTEER_START_DATE asc
         OFFSET #{offset} ROWS FETCH NEXT #{size} ROWS ONLY
     </select>
 
