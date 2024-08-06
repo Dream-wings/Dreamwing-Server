@@ -77,6 +77,35 @@
         SET    CURRENT_POINT = CURRENT_POINT + #{pointsToAdd}
         WHERE  SUPPORT_ID = #{supportId}
     </update>
+    <insert id ="insertSupportHistory">
+        INSERT INTO SUPPORT_HISTORY(
+                HISTORY_ID,
+                USER_ID,
+                SUPPORT_ID,
+                POINT,
+                CREATED_DATE)
+            VALUES (SEQ_SUPPORT_HISTORY.NEXTVAL,
+                #{userId},
+                #{supportId},
+                #{pointsToAdd},
+                SYSTIMESTAMP)
+    </insert>
+    <insert id ="insertPointHistory">
+        INSERT INTO POINT_HISTORY(
+                POINT_ID,
+                USER_ID,
+                ACTIVITY_TYPE,
+                ACTIVITY_TITLE,
+                POINT,
+                CREATED_DATE)
+        VALUES(SEQ_POINT_HISTORY.NEXTVAL,
+               #{userId},
+               #{type},
+               #{title},
+               #{pointsToAdd},
+                SYSTIMESTAMP)
+    </insert>
+
 
     <select id="selectSupportDetail" resultType="GetDetailSupportResponseDTO">
         SELECT SUPPORT_ID,

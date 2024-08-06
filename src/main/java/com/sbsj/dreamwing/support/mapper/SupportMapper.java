@@ -51,4 +51,13 @@ List<GetSupportListResponseDTO> selectSupportListWithFilters(
 );
     GetDetailSupportResponseDTO selectSupportDetail(@Param("supportId") long supportId);
 
+    int insertSupportHistory(@Param("userId") long userId,
+                             @Param("supportId")long supportId,
+                             @Param("pointsToAdd") int amount);
+
+    int insertPointHistory(@Param("userId")long userId,
+                           @Param("supportId")long supportId,
+                           @Param("pointsToAdd")int amount,
+                           @Param("title")String title,
+                           @Param("type")int type);
 }
