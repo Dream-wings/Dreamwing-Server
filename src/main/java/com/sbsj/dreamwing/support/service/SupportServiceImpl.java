@@ -5,8 +5,11 @@ import com.sbsj.dreamwing.support.dto.GetSupportListResponseDTO;
 import com.sbsj.dreamwing.support.dto.GetTotalSupportResponseDTO;
 import com.sbsj.dreamwing.support.dto.PostSupportGiveRequestDTO;
 import com.sbsj.dreamwing.support.mapper.SupportMapper;
+import com.sbsj.dreamwing.user.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -74,6 +77,7 @@ public List<GetSupportListResponseDTO> getSupportListWithFilters(int page, int s
         // 기부 내역 업데이트
         mapper.updateSupportPoints(request.getSupportId(), request.getAmount());
 
+        mapper.insertSupportHistory(request.getUserId(),request.getSupportId(),request.getAmount());
         return true;
     }
 

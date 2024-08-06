@@ -51,4 +51,5 @@ List<GetSupportListResponseDTO> selectSupportListWithFilters(
 );
     GetDetailSupportResponseDTO selectSupportDetail(@Param("supportId") long supportId);
 
+    int insertSupportHistory(@Param("userId") long userId, @Param("supportId")long supportId, @Param("pointsToAdd") int amount);
 }
