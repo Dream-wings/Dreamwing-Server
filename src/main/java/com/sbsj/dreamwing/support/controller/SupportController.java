@@ -91,7 +91,7 @@ public class SupportController {
 
     /**
      * 포인트 기부
-     * @param request
+     * @param
      * @return
      * @throws Exception
      */
@@ -99,12 +99,14 @@ public class SupportController {
     public ResponseEntity<ApiResponse<Void>> supportGivePoints(
 
             @RequestParam("supportId") long supportId,
-            @RequestParam("amount") int amount) throws Exception {
+            @RequestParam("amount") int amount,
+            @RequestParam("activityTitle") String title,
+            @RequestParam("activityType") int type) throws Exception {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         // UserDetails 객체에서 userId를 가져옵니다. userId를 가져옴
         long userId = ((UserDTO) authentication.getPrincipal()).getUserId();
 
-        PostSupportGiveRequestDTO request = new PostSupportGiveRequestDTO(supportId, userId, amount);
+        PostSupportGiveRequestDTO request = new PostSupportGiveRequestDTO(supportId, userId, amount, title,type);
 
         boolean success = service.SupportGivePoints(request);
 

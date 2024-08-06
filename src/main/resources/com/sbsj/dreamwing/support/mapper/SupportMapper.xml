@@ -90,6 +90,21 @@
                 #{pointsToAdd},
                 SYSTIMESTAMP)
     </insert>
+    <insert id ="insertPointHistory">
+        INSERT INTO POINT_HISTORY(
+                POINT_ID,
+                USER_ID,
+                ACTIVITY_TYPE,
+                ACTIVITY_TITLE,
+                POINT,
+                CREATED_DATE)
+        VALUES(SEQ_POINT_HISTORY.NEXTVAL,
+               #{userId},
+               #{type},
+               #{title},
+               #{pointsToAdd},
+                SYSTIMESTAMP)
+    </insert>
 
 
     <select id="selectSupportDetail" resultType="GetDetailSupportResponseDTO">

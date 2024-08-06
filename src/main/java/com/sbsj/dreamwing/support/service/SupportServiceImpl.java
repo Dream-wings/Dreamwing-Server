@@ -72,12 +72,22 @@ public List<GetSupportListResponseDTO> getSupportListWithFilters(int page, int s
         }
 
         // 사용자의 포인트 차감
-        mapper.updateUserPoints(request.getUserId(), request.getAmount());
+        mapper.updateUserPoints(request.getUserId(),
+                request.getAmount());
 
         // 기부 내역 업데이트
-        mapper.updateSupportPoints(request.getSupportId(), request.getAmount());
+        mapper.updateSupportPoints(request.getSupportId(),
+                request.getAmount());
 
-        mapper.insertSupportHistory(request.getUserId(),request.getSupportId(),request.getAmount());
+        mapper.insertSupportHistory(request.getUserId(),
+                request.getSupportId(),
+                request.getAmount());
+
+        mapper.insertPointHistory(request.getUserId(),
+                request.getSupportId(),
+                -(request.getAmount()),
+                request.getTitle(),
+                request.getType());
         return true;
     }
 

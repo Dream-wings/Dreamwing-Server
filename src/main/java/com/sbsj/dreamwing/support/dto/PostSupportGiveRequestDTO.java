@@ -23,10 +23,14 @@ public class PostSupportGiveRequestDTO {
     private long supportId; // 사용자의 ID
     private long userId; // 지원 항목의 ID
     private int amount; // 기부할 포인트
+    private String title;
+    private int type;
 
-    public PostSupportGiveRequestDTO(Long supportId, Long userId, Integer amount) {
+    public PostSupportGiveRequestDTO(Long supportId, Long userId, Integer amount, String title, int type) {
         this.supportId = supportId;
         this.userId = userId;
         this.amount = amount;
+        this.title = title;
+        this.type = type;
     }
 }
