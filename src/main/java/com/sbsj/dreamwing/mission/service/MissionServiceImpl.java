@@ -46,6 +46,8 @@ public class MissionServiceImpl implements MissionService{
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             long userId = ((UserDTO) authentication.getPrincipal()).getUserId();
 
+            dto.setUserId(userId);
+
             CheckDailyMissionRequestDTO requestDTO = CheckDailyMissionRequestDTO.builder()
                     .userId(userId)
                     .activityType(dto.getActivityType())

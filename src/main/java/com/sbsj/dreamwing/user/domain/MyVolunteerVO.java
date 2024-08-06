@@ -15,6 +15,7 @@ import lombok.Data;
  */
 @Data
 public class MyVolunteerVO {
+    private long volunteerId;
     private String title;
     private String volunteerEndDate;
     private int verified;
