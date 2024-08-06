@@ -46,7 +46,7 @@ public class SupportController {
      * @return
      * @throws Exception
      */
-        @GetMapping("/total")
+    @GetMapping("/total")
     public ResponseEntity<ApiResponse<GetTotalSupportResponseDTO>> getTotalSupport() throws Exception {
         GetTotalSupportResponseDTO response = service.getTotalSupport();
         return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, response));

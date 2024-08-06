@@ -8,6 +8,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import com.sbsj.dreamwing.user.dto.UserDTO;
 
 import java.util.Random;
 
@@ -40,14 +43,16 @@ public class MissionServiceImpl implements MissionService{
     @Override
     public int awardDailyMissionPoints(AwardPointsRequestDTO dto) throws Exception {
         try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            long userId = ((UserDTO) authentication.getPrincipal()).getUserId();
 
             CheckDailyMissionRequestDTO requestDTO = CheckDailyMissionRequestDTO.builder()
-                    .userId(dto.getUserId())
+                    .userId(userId)
                     .activityType(dto.getActivityType())
                     .activityTitle(dto.getActivityTitle())
                     .build();
-            log.info("CheckDailyMissionRequestDTO: " + requestDTO.getUserId() + " " + requestDTO.getActivityType() + " " + requestDTO.getActivityTitle());
 
+            log.info("CheckDailyMissionRequestDTO: " + requestDTO.getUserId() + " " + requestDTO.getActivityType() + " " + requestDTO.getActivityTitle());
 
             if (mapper.selectDailyMissionHistory(requestDTO) == 0) {
                 mapper.callAwardPointsProcedure(dto);

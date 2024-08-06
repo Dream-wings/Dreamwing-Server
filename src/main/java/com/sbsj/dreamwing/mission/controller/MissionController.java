@@ -3,6 +3,7 @@ package com.sbsj.dreamwing.mission.controller;
 import com.sbsj.dreamwing.mission.domain.QuizVO;
 import com.sbsj.dreamwing.mission.dto.AwardPointsRequestDTO;
 import com.sbsj.dreamwing.mission.service.MissionService;
+import com.sbsj.dreamwing.user.dto.UserDTO;
 import com.sbsj.dreamwing.util.ApiResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -54,7 +57,6 @@ public class MissionController {
     @PostMapping("/point")
     public ResponseEntity<ApiResponse<Void>> awardDailyQuizPoints(@RequestBody AwardPointsRequestDTO dto) throws Exception {
         int resultCode = service.awardDailyMissionPoints(dto);
-
         // 포인트 부여 성공 시
         if (resultCode == 1) {
             return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK));
