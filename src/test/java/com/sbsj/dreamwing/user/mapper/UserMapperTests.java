@@ -96,6 +96,17 @@ public class UserMapperTests {
         Assertions.assertEquals(result, 1);
     }
 
+    @Test
+    public void selectTotalSupportPoint() {
+        int userId = 45;
+        Integer result = userMapper.selectTotalSupportPoint(userId);
+
+        if(result == null) {
+            result = 0;
+        }
+        Assertions.assertEquals(result, 0);
+    }
+
 //    @Test
 //    public void getUserPointVOListTest() {
 //        List<MyPointVO> userPointVOList = userMapper.getUserPointVOList(1);

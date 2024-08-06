@@ -250,8 +250,11 @@ public class UserServiceImpl implements UserService {
         UserDTO userDTO = userMapper.selectUserByUserId(userId)
                 .orElseThrow(() -> new RuntimeException("잘못된 아이디입니다"));
 
-        int totalSupportPoint = userMapper.selectTotalSupportPoint(userId);
+        Integer totalSupportPoint = userMapper.selectTotalSupportPoint(userId);
 
+        if(totalSupportPoint==null) {
+            totalSupportPoint = 0;
+        }
         MyPageDTO myPageDTO = MyPageDTO.builder()
                 .name(userDTO.getName())
                 .phone(userDTO.getPhone())

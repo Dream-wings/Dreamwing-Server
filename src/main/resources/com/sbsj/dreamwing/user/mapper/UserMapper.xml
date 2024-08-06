@@ -108,7 +108,7 @@
         OFFSET #{offset} ROWS FETCH NEXT #{size} ROWS ONLY
     </select>
 
-    <select id="selectTotalSupportPoint">
+    <select id="selectTotalSupportPoint" resultType="java.lang.Integer">
         SELECT SUM(POINT)        AS TOTAL_SUPPORT_POINT
         FROM   SUPPORT_HISTORY
         WHERE USER_ID = #{userId}
