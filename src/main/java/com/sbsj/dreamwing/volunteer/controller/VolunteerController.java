@@ -3,6 +3,7 @@ package com.sbsj.dreamwing.volunteer.controller;
 import com.sbsj.dreamwing.admin.dto.UpdateVolunteerStatusRequestDTO;
 import com.sbsj.dreamwing.mission.domain.QuizVO;
 import com.sbsj.dreamwing.support.dto.PostSupportGiveRequestDTO;
+import com.sbsj.dreamwing.user.dto.UserDTO;
 import com.sbsj.dreamwing.util.ApiResponse;
 import com.sbsj.dreamwing.volunteer.dto.CertificationVolunteerRequestDTO;
 import com.sbsj.dreamwing.volunteer.dto.PostApplyVolunteerRequestDTO;
@@ -13,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -64,8 +67,12 @@ public ResponseEntity<ApiResponse<List<VolunteerListDTO>>> getVolunteerListWithF
     }
     // New endpoint to check if a user has applied
     @GetMapping("/check-application")
-    public ResponseEntity<ApiResponse<Boolean>> checkApplicationStatus(@RequestParam long volunteerId, @RequestParam long userId) {
-        boolean hasApplied = volunteerService.hasUserApplied(volunteerId, userId);
+    public ResponseEntity<ApiResponse<Boolean>> checkApplicationStatus(@RequestParam long volunteerId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // UserDetails 객체에서 userId를 가져옵니다. userId를 가져옴
+        long userId = ((UserDTO) authentication.getPrincipal()).getUserId();
+
+    boolean hasApplied = volunteerService.hasUserApplied(volunteerId, userId);
         return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, hasApplied));
     }
 
@@ -81,7 +88,11 @@ public ResponseEntity<ApiResponse<List<VolunteerListDTO>>> getVolunteerListWithF
 
     @PostMapping("/apply")
     public ResponseEntity<ApiResponse<Void>> applyVolunteer(@RequestBody PostApplyVolunteerRequestDTO request) throws Exception {
-        boolean success = volunteerService.applyVolunteer(request);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // UserDetails 객체에서 userId를 가져옵니다. userId를 가져옴
+        long userId = ((UserDTO) authentication.getPrincipal()).getUserId();
+        request.setUserId(userId);
+    boolean success = volunteerService.applyVolunteer(request);
         if (success) {
             return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK));
         } else {
@@ -90,7 +101,11 @@ public ResponseEntity<ApiResponse<List<VolunteerListDTO>>> getVolunteerListWithF
     }
     @PostMapping("/cancel-application")
     public ResponseEntity<ApiResponse<Void>> cancelVolunteer(@RequestBody PostApplyVolunteerRequestDTO request) throws Exception {
-        boolean success = volunteerService.cancelApplication(request);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // UserDetails 객체에서 userId를 가져옵니다. userId를 가져옴
+        long userId = ((UserDTO) authentication.getPrincipal()).getUserId();
+        request.setUserId(userId);
+    boolean success = volunteerService.cancelApplication(request);
         if (success) {
             return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK));
         } else {
@@ -117,7 +132,11 @@ public ResponseEntity<ApiResponse<List<VolunteerListDTO>>> getVolunteerListWithF
 
     // New endpoint to get the status of a volunteer application
     @GetMapping("/check-status")
-    public ResponseEntity<ApiResponse<Integer>> getApplicationStatus(@RequestParam long volunteerId, @RequestParam long userId) {
+
+    public ResponseEntity<ApiResponse<Integer>> getApplicationStatus(@RequestParam long volunteerId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // UserDetails 객체에서 userId를 가져옵니다. userId를 가져옴
+        long userId = ((UserDTO) authentication.getPrincipal()).getUserId();
         int status = volunteerService.getApplicationStatus(volunteerId, userId);
         return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, status));
     }
