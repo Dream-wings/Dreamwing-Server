@@ -91,7 +91,7 @@
     <select id="getUserPointVOList" resultType="MyPointVO">
         SELECT ACTIVITY_TITLE,
                POINT,
-               TO_CHAR(CREATED_DATE AT TIME ZONE 'UTC', 'YYYY.MM.DD') AS CREATED_DATE
+               TO_CHAR(CREATED_DATE, 'YYYY.MM.DD') AS CREATED_DATE
         FROM POINT_HISTORY
         WHERE USER_ID = #{userId}
         ORDER BY CREATED_DATE DESC
@@ -101,7 +101,7 @@
     <select id="getUserSupportVOList" resultType="MySupportVO">
         SELECT S.TITLE,
                S_HIST.POINT,
-               TO_CHAR(S_HIST.CREATED_DATE AT TIME ZONE 'UTC', 'YYYY-MM-DD') AS CREATED_DATE
+               TO_CHAR(S_HIST.CREATED_DATE, 'YYYY-MM-DD') AS CREATED_DATE
         FROM SUPPORT S, SUPPORT_HISTORY S_HIST
         WHERE S.SUPPORT_ID = S_HIST.SUPPORT_ID AND S_HIST.USER_ID = #{userId}
         ORDER BY CREATED_DATE DESC
@@ -117,7 +117,7 @@
     <select id="getUserVolunteerVOList" resultType="MyVolunteerVO">
         SELECT V.VOLUNTEER_ID,
                V.TITLE,
-               TO_CHAR(V.VOLUNTEER_END_DATE AT TIME ZONE 'UTC', 'YYYY-MM-DD') AS VOLUNTEER_END_DATE,
+               TO_CHAR(V.VOLUNTEER_END_DATE, 'YYYY-MM-DD') AS VOLUNTEER_END_DATE,
                U_V.VERIFIED
         FROM VOLUNTEER V, USER_VOLUNTEER U_V
         WHERE V.VOLUNTEER_ID = U_V.VOLUNTEER_ID

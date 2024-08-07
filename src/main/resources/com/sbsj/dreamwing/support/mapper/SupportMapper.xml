@@ -32,7 +32,7 @@
                IMAGE_URL,
                SYSDATE+9/24 - END_DATE AS DDAY
         FROM SUPPORT
-        ORDER BY DDAY
+        ORDER BY DDAY DESC
         FETCH FIRST 5 ROWS ONLY
     </select>
 
@@ -47,7 +47,7 @@
         FROM SUPPORT
         WHERE STATUS = #{status}
           AND CATEGORY = #{category}
-        ORDER BY DDAY
+        ORDER BY DDAY DESC
         OFFSET #{offset} ROWS FETCH NEXT #{size} ROWS ONLY
     </select>
 
