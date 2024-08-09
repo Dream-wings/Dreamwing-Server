@@ -23,10 +23,13 @@ import java.util.List;
  *
  * <pre>
  * 수정일        	수정자        수정내용
- * ----------  --------    ---------------------------
+ * ----------  --------    ---------------------------------------------------------------------------------------------
  * 2024.07.28  	정은찬         최초 생성
- * 2024.07.29   정은찬         testCheckLoginIdExistence 테스트 코드 작성
- * 2024.07.30   정은찬         testFindUserByLoginId 테스트 코드 작성
+ * 2024.07.29   정은찬         로그인 존재 여부 테스트 작성
+ * 2024.07.30   정은찬         userId를 통해 회원 정보 가져오기 테스트, 로그인 존재 여부 확인 테스트 작성
+ * 2024.07.31   정은찬         회원정보 업데이트 테스트, 회원탈퇴 테스트, 회원 정보 수정 테스트, 포인트 내역, 후원 내역 조히 테스트 작성
+ * 2024.08.03   정은찬         loginId를 통해 회원 정보 가져오기 테스트, 회원탈퇴 테스트, 회원 정보 수정 테스트 작성
+ * 2024.08.03   정은찬         회원 총 후원 포인트 조회 및 봉사 활동 내역 조회 테스트 작성
  * </pre>
  */
 @Slf4j
@@ -107,15 +110,15 @@ public class UserMapperTests {
         Assertions.assertEquals(result, 0);
     }
 
-//    @Test
-//    public void getUserPointVOListTest() {
-//        List<MyPointVO> userPointVOList = userMapper.getUserPointVOList(1);
-//        log.info(userPointVOList.toString());
-//    }
+    @Test
+    public void getUserPointVOListTest() {
+        List<MyPointVO> userPointVOList = userMapper.getUserPointVOList(1, 2, 2);
+        log.info(userPointVOList.toString());
+    }
 
-//    @Test
-//    public void getUserSupportVOListTest() {
-//        List<MySupportVO> userSupportVOList = userMapper.getUserSupportVOList(1);
-//        log.info(userSupportVOList.toString());
-//    }
+    @Test
+    public void getUserSupportVOListTest() {
+        List<MySupportVO> userSupportVOList = userMapper.getUserSupportVOList(1, 2, 2);
+        log.info(userSupportVOList.toString());
+    }
 }

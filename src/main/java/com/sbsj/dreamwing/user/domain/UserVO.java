@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.Builder;
 
 /**
- * 사용자 정보를 담는 VO
+ * 회원 정보를 담는 VO
  * @author 정은찬
  * @since 2024.07.28
  *
