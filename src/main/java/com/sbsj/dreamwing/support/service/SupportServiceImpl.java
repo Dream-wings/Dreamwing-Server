@@ -26,7 +26,9 @@ import java.util.List;
  * ----------  --------    ---------------------------
  * 2024.07.28  	정은지        최초 생성
  * 2024.07.28   정은지        후원 총 횟수,금액 조회/후원 리스트 조회 추가
- * 2024.07.28   임재성        모든 후원 리스트 조회 추가
+ * 2024.07.29   임재성        모든 후원 리스트 조회 추가(페이징,무한스크롤)
+ * 2024.07.29   임재성        포인트 후원하기 기능 추가
+ * 2024.07.29   임재성        후원 상세페이지 조회 기능 추가
  * </pre>
  */
 @Slf4j
@@ -58,22 +60,28 @@ public class SupportServiceImpl implements SupportService {
         return mapper.selectSupportList();
     }
 
-//    @Override
-//    public List<GetSupportListResponseDTO> getAllSupportList() throws Exception {
-//        return mapper.selectAllSupportList();
-//    }
-
-//    @Override
-//    public List<GetSupportListResponseDTO> getSupportListWithPagination(int page, int size) {
-//        int offset = page * size;
-//    return mapper.selectSupportListWithPagination(offset, size);
-//}
-@Override
-public List<GetSupportListResponseDTO> getSupportListWithFilters(int page, int size, int status, int category) {
-    int offset = page * size;
+    /**
+     * 후원 페이지 내 후원 리스트 조회(페이징, 무한스크롤 처리)
+     * @author 임재성
+     * @param page
+     * @param size
+     * @param status
+     * @param category
+     * @return List
+     */
+    @Override
+    public List<GetSupportListResponseDTO> getSupportListWithFilters(int page, int size, int status, int category) {
+        int offset = page * size;
     return mapper.selectSupportListWithFilters(offset, size, status, category);
-}
+    }
 
+    /**
+     * 후원하기
+     * @author 임재성
+     * @param request
+     * @return boolean
+     * @throws Exception
+     */
     @Transactional
     @Override
     public boolean SupportGivePoints(PostSupportGiveRequestDTO request) throws Exception {
@@ -103,6 +111,13 @@ public List<GetSupportListResponseDTO> getSupportListWithFilters(int page, int s
         return true;
     }
 
+    /**
+     * 후원 상세페이지 조회
+     * @author 임재성
+     * @param supportId
+     * @return GetDetailSupportResponseDTO
+     * @throws Exception
+     */
     @Override
     public GetDetailSupportResponseDTO getSupportDetail(long supportId) throws Exception {
         return mapper.selectSupportDetail(supportId);

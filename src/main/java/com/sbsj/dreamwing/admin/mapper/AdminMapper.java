@@ -74,7 +74,6 @@ public interface AdminMapper {
      */
     List<AdminVolunteerResponseDTO> selectVolunteerList();
 
-//    AdminVolunteerRequestDTO selectVolunteerById(long volunteerId);
 
     /**
      * @author 정은지

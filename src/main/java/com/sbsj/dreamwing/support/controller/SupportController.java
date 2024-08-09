@@ -70,16 +70,10 @@ public class SupportController {
 
     /**
      * 모든 후원 리스트 조회
-     * @return
+     * @author 임재성
+     * @return ResponseEntity<ApiResponse<List<GetSupportListResponseDTO>>>
      * @throws Exception
      */
-
-
-//    @GetMapping("/list")
-//    public ResponseEntity<ApiResponse<List<GetSupportListResponseDTO>>> getAllSupportList() throws Exception {
-//        List<GetSupportListResponseDTO> response = service.getAllSupportList();
-//        return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, response));
-//    }
     @GetMapping("/list")
     public ResponseEntity<ApiResponse<List<GetSupportListResponseDTO>>> getSupportListWithPagination(
             @RequestParam(defaultValue = "0") int page,
@@ -93,8 +87,12 @@ public class SupportController {
 
     /**
      * 포인트 기부
-     * @param
-     * @return
+     * @author 임재성
+     * @param supportId
+     * @param amount
+     * @param title
+     * @param type
+     * @return ResponseEntity<ApiResponse<Void>>
      * @throws Exception
      */
     @PostMapping("/donate")
@@ -122,6 +120,10 @@ public class SupportController {
 
     /**
      * 후원 상세 정보 조회
+     * @author 임재성
+     * @param supportId
+     * @return ResponseEntity<ApiResponse<GetDetailSupportResponseDTO>>
+     * @throws Exception
      */
     @GetMapping("/detail")
     public ResponseEntity<ApiResponse<GetDetailSupportResponseDTO>> getSupportDetail(@RequestParam long supportId) throws Exception {
