@@ -17,12 +17,15 @@
 * </pre>
 -->
 <mapper namespace="com.sbsj.dreamwing.support.mapper.SupportMapper">
+
+    <!-- 후원 총 횟수, 금액 조회 -->
     <select id="selectTotalSupport" resultType="GetTotalSupportResponseDTO">
         SELECT COUNT(HISTORY_ID) AS TOTALCOUNT,
                SUM(POINT)        AS TOTALPOINTS
         FROM   SUPPORT_HISTORY
     </select>
 
+    <!-- 후원 리스트 조회 -->
     <select id="selectSupportList" resultType="GetSupportListResponseDTO">
         SELECT SUPPORT_ID,
                GOAL_POINT,

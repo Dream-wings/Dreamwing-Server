@@ -18,12 +18,26 @@ import java.util.List;
  * 수정일        	수정자        수정내용
  * ----------  --------    ---------------------------
  * 2024.07.28   정은지        최초 생성
- * 2024.07.28   정은지        후원 총 횟수,금액 조회/후원 리스트 조회 추가
+ * 2024.07.28   정은지        후원 총 횟수, 금액 조회/후원 리스트 조회 추가
  * 2024.07.28   임재성        모든 후원 리스트 조회 추가
  * </pre>
  */
 public interface SupportService {
+
+    /**
+     * 후원 총 횟수, 금액 조회
+     * @author 정은지
+     * @return GetTotalSupportResponseDTO
+     * @throws Exception
+     */
     GetTotalSupportResponseDTO getTotalSupport() throws Exception;
+
+    /**
+     * 후원 리스트 조회
+     * @author 정은지
+     * @return List<GetSupportListResponseDTO>
+     * @throws Exception
+     */
     List<GetSupportListResponseDTO> getSupportList() throws Exception;
     //List<GetSupportListResponseDTO> getAllSupportList() throws Exception;
     //List<GetSupportListResponseDTO> getSupportListWithPagination(int page, int size);

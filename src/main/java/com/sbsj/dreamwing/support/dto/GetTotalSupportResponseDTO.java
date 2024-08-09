@@ -1,6 +1,6 @@
 package com.sbsj.dreamwing.support.dto;
 
-import lombok.Data;
+import lombok.*;
 
 /**
  * 후원 총 횟수 및 금액 조회 DTO
@@ -14,7 +14,11 @@ import lombok.Data;
  * 2024.07.28  	정은지        최초 생성
  * </pre>
  */
-@Data
+
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class GetTotalSupportResponseDTO {
     private int totalCount;
     private long totalPoints;

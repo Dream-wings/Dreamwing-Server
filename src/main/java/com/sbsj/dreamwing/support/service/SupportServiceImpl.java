@@ -36,11 +36,23 @@ public class SupportServiceImpl implements SupportService {
 
     private final SupportMapper mapper;
 
+    /**
+     * 후원 총 횟수, 금액 조회
+     * @author 정은지
+     * @return GetTotalSupportResponseDTO
+     * @throws Exception
+     */
     @Override
     public GetTotalSupportResponseDTO getTotalSupport() throws Exception {
         return mapper.selectTotalSupport();
     }
 
+    /**
+     * 후원 리스트 조회
+     * @author 정은지
+     * @return List<GetSupportListResponseDTO>
+     * @throws Exception
+     */
     @Override
     public List<GetSupportListResponseDTO> getSupportList() throws Exception {
         return mapper.selectSupportList();

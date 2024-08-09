@@ -35,7 +35,6 @@ public class SupportServiceTests {
 
     @Autowired
     private SupportService service;
-    @Autowired
     private SupportMapper mapper; // 매퍼 주입
 
     @Test
