@@ -43,16 +43,42 @@ public interface AdminService {
      */
     boolean awardVolunteerPoints(AwardVolunteerPointsRequestDTO awardVolunteerPointsRequestDTO) throws Exception;
 
+    /**
+     * 봉사활동 생성
+     * @author 임재성
+     * @param request
+     * @return int
+     */
     int createVolunteer(AdminVolunteerRequestDTO request);
 
-    AdminVolunteerRequestDTO getVolunteerDetails(long volunteerId);
+//    AdminVolunteerRequestDTO getVolunteerDetails(long volunteerId);
 
+    /**
+     * 봉사활동 수정
+     * @author
+     * @param id
+     * @param request
+     * @return int
+     */
     int updateVolunteer(long id, AdminVolunteerRequestDTO request);
 
+    /**
+     * 봉사활동 삭제
+     * @author 임재성
+     * @param volunteerId
+     * @return int
+     */
     int deleteVolunteer(long volunteerId);
 
-    List<AdminVolunteerResponseDTO> getVolunteerList();
+//    List<AdminVolunteerResponseDTO> getVolunteerList();
 
+    /**
+     * 봉사활동 리스트 조회
+     * @author 임재성
+     * @param page
+     * @param size
+     * @return
+     */
     List<AdminVolunteerResponseDTO> getVolunteerListWithPaging(int page, int size);  // 새로운 메소드 추가
 
     /**

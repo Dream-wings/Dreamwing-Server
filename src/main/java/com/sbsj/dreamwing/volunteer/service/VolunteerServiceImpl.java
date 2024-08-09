@@ -21,8 +21,8 @@ import java.util.List;
 
 /**
  * 봉사 매퍼 인터페이스
+ *
  * @author 임재성
- * @since 2024.07.26
  * @version 1.0
  *
  * <pre>
@@ -30,32 +30,57 @@ import java.util.List;
  * ----------  --------    ---------------------------
  * 2024.07.26  	임재성        최초 생성
  * 2024.07.28   임재성        봉사 모집공고 리스트 & 상세페이지 조회 메서드 추가
+ * 2024.07.31   임재성        봉사 신청 메서드 추가
  * 2025.08.03   정은지        봉사활동 인증 메서드 추가
+ * 2024.08.03   임재성        봉사활동 신청 상태 확인 메서드 추가
+ * 2024.08.04   임재성        봉사활동 필터 메서드 추가
+ * 2024.08.06   임재성        봉사활동 신청 승인 상태 확인 메서드 추가
  * </pre>
+ * @since 2024.07.26
  */
 
 
 @Service
 @AllArgsConstructor
-public class VolunteerServiceImpl implements VolunteerService{
+public class VolunteerServiceImpl implements VolunteerService {
 
     private final VolunteerMapper volunteerMapper;
     private final S3Uploader s3Uploader;
 
-
-@Override
-public List<VolunteerListDTO> getVolunteerListWithFilters(int page, int size, int status, Integer type) {
-    int offset = page * size;
-    // Delegate filtering to the mapper
-    return volunteerMapper.getVolunteerListWithFilters(offset, size, status, type);
-}
-
-
+    /**
+     * 봉사 리스트 조회
+     * @author 임재성
+     * @param page
+     * @param size
+     * @param status
+     * @param type
+     * @return VolunteerListDTO
+     */
     @Override
-    public VolunteerDetailDTO getVolunteerDetail(long volunteerId) throws Exception{
+    public List<VolunteerListDTO> getVolunteerListWithFilters(int page, int size, int status, Integer type) {
+        int offset = page * size;
+        // Delegate filtering to the mapper
+        return volunteerMapper.getVolunteerListWithFilters(offset, size, status, type);
+    }
+
+    /**
+     * 봉사 상세 페이지 조회
+     * @author 임재성
+     * @param volunteerId
+     * @return VolunteerDetailDTO
+     * @throws Exception
+     */
+    @Override
+    public VolunteerDetailDTO getVolunteerDetail(long volunteerId) throws Exception {
         return volunteerMapper.getVolunteerDetail(volunteerId);
     }
 
+    /**
+     * 봉사활동 신청
+     * @author 임재성
+     * @param request
+     * @return boolean
+     */
     @Override
     @Transactional
     public boolean applyVolunteer(PostApplyVolunteerRequestDTO request) {
@@ -73,19 +98,24 @@ public List<VolunteerListDTO> getVolunteerListWithFilters(int page, int size, in
         return result > 0;
     }
 
-//    @Override
-//    public boolean cancelVolunteerApplication(PostApplyVolunteerRequestDTO request) {
-//        // 봉사 신청 취소
-//        int result = volunteerMapper.deleteVolunteerApplication(request);
-//        return result > 0;
-//    }
-
-    // New method to check if a user has applied
+    /**
+     * 봉사 신청 여부 확인
+     * @author 임재성
+     * @param volunteerId
+     * @param userId
+     * @return boolean
+     */
     @Override
     public boolean hasUserApplied(long volunteerId, long userId) {
         return volunteerMapper.existsByVolunteerIdAndUserId(volunteerId, userId);
     }
 
+    /**
+     * 봉사활동 신청 취소
+     * @author 임재성
+     * @param request
+     * @return boolean
+     */
     @Override
     @Transactional
     public boolean cancelApplication(PostApplyVolunteerRequestDTO request) {
@@ -98,7 +128,14 @@ public List<VolunteerListDTO> getVolunteerListWithFilters(int page, int size, in
         }
     }
 
-
+    /**
+     * 봉사활동 인증
+     * @author 정은지
+     * @param certificationVolunteerRequestDTO
+     * @param imageFile
+     * @return boolean
+     * @throws Exception
+     */
     @Override
     public boolean certificationVolunteer(
             CertificationVolunteerRequestDTO certificationVolunteerRequestDTO, MultipartFile imageFile) throws Exception {
@@ -122,6 +159,13 @@ public List<VolunteerListDTO> getVolunteerListWithFilters(int page, int size, in
         return volunteerMapper.updateImageUserVolunteer(request) == 1;
     }
 
+    /**
+     * 봉사활동 신청 승인 상태 확인
+     * @author 임재성
+     * @param volunteerId
+     * @param userId
+     * @return int
+     */
     @Override
     public int getApplicationStatus(long volunteerId, long userId) {
         return volunteerMapper.getApplicationStatus(volunteerId, userId);
