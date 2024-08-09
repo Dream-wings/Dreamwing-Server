@@ -18,6 +18,7 @@
 * </pre>
 -->
 <mapper namespace="com.sbsj.dreamwing.mission.mapper.MissionMapper">
+    <!-- 데일리 퀴즈 조회 -->
     <select id="selectQuiz" resultType="QuizVO">
         SELECT QUIZ_ID,
                QUESTION,
@@ -31,6 +32,7 @@
         WHERE  QUIZ_DATE = TO_DATE(SYSDATE+9/24)
     </select>
 
+    <!-- 포인트 지급 -->
     <insert id="callAwardPointsProcedure" statementType="CALLABLE">
         {CALL PROC_AWARD_POINTS(
                 #{userId, jdbcType=NUMERIC},
@@ -40,6 +42,7 @@
               )}
     </insert>
 
+    <!-- 데일리 미션 중복 확인 -->
     <select id="selectDailyMissionHistory" parameterType="CheckDailyMissionRequestDTO">
         SELECT COUNT(*)
         FROM   POINT_HISTORY
