@@ -75,47 +75,7 @@
 
 
 
-    <select id="selectVolunteerById" parameterType="long" resultType="com.sbsj.dreamwing.admin.dto.AdminVolunteerRequestDTO">
-        SELECT
-            VOLUNTEER_ID,
-            TITLE,
-            CONTENT,
-            TYPE,
-            CATEGORY,
-            VOLUNTEER_START_DATE,
-            VOLUNTEER_END_DATE,
-            ADDRESS,
-            TOTAL_COUNT,
-            STATUS,
-            RECRUIT_START_DATE,
-            RECRUIT_END_DATE,
-            IMAGE_URL,
-            LATITUDE,
-            LONGITUDE
-        FROM VOLUNTEER
-        WHERE VOLUNTEER_ID = #{volunteerId}
-    </select>
-
     <!-- 봉사 공고 수정 -->
-<!--    <update id="updateVolunteer" parameterType="com.sbsj.dreamwing.admin.dto.AdminVolunteerRequestDTO">-->
-<!--        UPDATE VOLUNTEER-->
-<!--        SET-->
-<!--            TITLE = #{title},-->
-<!--            CONTENT = #{content},-->
-<!--            TYPE = #{type},-->
-<!--            CATEGORY = #{category},-->
-<!--            VOLUNTEER_START_DATE = #{startDate},-->
-<!--            VOLUNTEER_END_DATE = #{endDate},-->
-<!--            ADDRESS = #{address},-->
-<!--            TOTAL_COUNT = #{totalCount},-->
-<!--            STATUS = #{status},-->
-<!--            RECRUIT_START_DATE = #{recruitStartDate},-->
-<!--            RECRUIT_END_DATE = #{recruitEndDate},-->
-<!--            IMAGE_URL = #{imageUrl},-->
-<!--            LATITUDE = #{latitude},-->
-<!--            LONGITUDE = #{longitude}-->
-<!--        WHERE VOLUNTEER_ID = #{volunteerId}-->
-<!--    </update>-->
     <update id="updateVolunteer">
         UPDATE VOLUNTEER
         SET
@@ -223,6 +183,7 @@
           AND  UV.VOLUNTEER_ID = #{volunteerId}
     </select>
 
+    <!-- 관리자 페이지 내 봉사 리스트 조회(페이징, 무한스크롤처리) -->
     <select id="selectVolunteerListWithPaging" resultType="com.sbsj.dreamwing.admin.dto.AdminVolunteerResponseDTO">
         SELECT
             V.VOLUNTEER_ID AS volunteerId,
