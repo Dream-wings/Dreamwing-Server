@@ -22,12 +22,12 @@ import java.util.List;
  * 수정일        	수정자        수정내용
  * ----------  --------    ---------------------------
  * 2024.07.28  	정은지        최초 생성
- * 2024.07.28   정은지        봉사활동 승인 기능 추가
- * 2024.07.29   정은지        봉사활동 인증 후 포인트 부여 기능 추가
+ * 2024.07.28   정은지        봉사활동 승인 메서드 추가
+ * 2024.07.29   정은지        봉사활동 인증 후 포인트 지급 메서드 추가
  * 2024.07.30   임재성        봉사 & 멘토링 공고 글 조회 기능 추가
  * 2024.07.30   임재성        봉사 & 멘토링 공고 글 생성/수정/삭제 기능 추가
- * 2024.08.04   정은지        봉사활동 신청 대기 목록, 상세 조회 추가
- * 2024.08.05   정은지        봉사활동 인증 대기 목록, 상세 조회 추가
+ * 2024.08.04   정은지        봉사활동 신청 대기 목록, 상세 조회 메서드 추가
+ * 2024.08.05   정은지        봉사활동 인증 대기 목록, 상세 조회 메서드 추가
  * </pre>
  */
 @Slf4j
@@ -40,35 +40,37 @@ public class AdminServiceImpl implements AdminService {
     private final S3Uploader s3Uploader;
 
     /**
-     * @author 정은지
      * 봉사활동 신청 승인
-     *
-     * @param request
-     * @return
+     * @author 정은지
+     * @param updateVolunteerStatusRequestDTO
+     * @return boolean
      * @throws Exception
      */
     @Override
-    public boolean approveVolunteerRequest(UpdateVolunteerStatusRequestDTO request) throws Exception {
-        return mapper.updateVolunteerStatus(request) == 1;
+    public boolean approveVolunteerRequest(UpdateVolunteerStatusRequestDTO updateVolunteerStatusRequestDTO) throws Exception {
+        return mapper.updateVolunteerStatus(updateVolunteerStatusRequestDTO) == 1;
     }
 
     /**
+     * 봉사활동 인증 및 포인트 지급
      * @author 정은지
-     * 봉사활동 인증 및 포인트 부여
-     *
-     * @param request
-     * @return
+     * @param awardVolunteerPointsRequestDTO
+     * @return boolean
      * @throws Exception
      */
     @Transactional
     @Override
-    public boolean awardVolunteerPoints(AwardVolunteerPointsRequestDTO request) throws Exception {
+    public boolean awardVolunteerPoints(AwardVolunteerPointsRequestDTO awardVolunteerPointsRequestDTO) throws Exception {
         try {
             mapper.updateVolunteerVerified(new UpdateVolunteerStatusRequestDTO(
-                    request.getVolunteerId(), request.getUserId()));
+                    awardVolunteerPointsRequestDTO.getVolunteerId(), awardVolunteerPointsRequestDTO.getUserId()));
 
             missionMapper.callAwardPointsProcedure(new AwardPointsRequestDTO(
-                    request.getUserId(), request.getActivityType(), request.getActivityTitle(), request.getPoint()));
+                    awardVolunteerPointsRequestDTO.getUserId(),
+                    awardVolunteerPointsRequestDTO.getActivityType(),
+                    awardVolunteerPointsRequestDTO.getActivityTitle(),
+                    awardVolunteerPointsRequestDTO.getPoint()));
+
             return true;
         } catch (Exception e) {
             log.error(e.getMessage());
@@ -126,12 +128,11 @@ public int createVolunteer(AdminVolunteerRequestDTO request) {
     }
 
     /**
-     * @author 정은지
      * 봉사활동 신청 대기 목록 조회
-     *
+     * @author 정은지
      * @param page
      * @param size
-     * @return
+     * @return List<VolunteerRequestListResponseDTO>
      * @throws Exception
      */
     @Override
@@ -141,12 +142,11 @@ public int createVolunteer(AdminVolunteerRequestDTO request) {
     }
 
     /**
-     * @author 정은지
      * 봉사활동 신청 대기 상세 조회
-     *
+     * @author 정은지
      * @param volunteerId
      * @param userId
-     * @return
+     * @return VolunteerRequestDetailResponseDTO
      * @throws Exception
      */
     @Override
@@ -155,12 +155,11 @@ public int createVolunteer(AdminVolunteerRequestDTO request) {
     }
 
     /**
-     * @author 정은지
      * 봉사활동 인증 대기 목록 조회
-     *
+     * @author 정은지
      * @param page
      * @param size
-     * @return
+     * @return List<VolunteerRequestListResponseDTO>
      * @throws Exception
      */
     @Override
@@ -170,12 +169,11 @@ public int createVolunteer(AdminVolunteerRequestDTO request) {
     }
 
     /**
-     * @author 정은지
      * 봉사활동 인증 대기 상세 조회
-     *
+     * @author 정은지
      * @param volunteerId
      * @param userId
-     * @return
+     * @return VolunteerCertificationDetailResponseDTO
      * @throws Exception
      */
     @Override

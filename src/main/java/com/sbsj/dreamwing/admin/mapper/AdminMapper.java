@@ -16,21 +16,32 @@ import java.util.List;
  * 수정일        	수정자        수정내용
  * ----------  --------    ---------------------------
  * 2024.07.28  	정은지        최초 생성
- * 2024.07.28   정은지        봉사활동 신청 승인 기능 추가
- * 2024.07.29   정은지        봉사활동 인증 기능 추가
+ * 2024.07.28   정은지        봉사활동 신청 승인 메서드 추가
+ * 2024.07.29   정은지        봉사활동 인증 메서드 추가
  * 2024.07.30   임재성        봉사 & 멘토링 공고 글 조회 기능 추가
  * 2024.07.30   임재성        봉사 & 멘토링 공고 글 생성/수정/삭제 기능 추가
- * 2024.08.04   정은지        봉사활동 신청 대기 리스트 조회, 상세 조회 추가
- * 2024.08.05   정은지        봉사활동 인증 대기 리스트 조회, 상세 조회 추가
+ * 2024.08.04   정은지        봉사활동 신청 대기 리스트 조회, 상세 조회 메서드 추가
+ * 2024.08.05   정은지        봉사활동 인증 대기 리스트 조회, 상세 조회 메서드 추가
  * </pre>
  */
 @Mapper
 public interface AdminMapper {
-    // 봉사활동 신청 승인
-    int updateVolunteerStatus(UpdateVolunteerStatusRequestDTO request);
 
-    // 봉사활동 인증
-    int updateVolunteerVerified(UpdateVolunteerStatusRequestDTO request);
+    /**
+     * 봉사활동 신청 승인
+     * @author 정은지
+     * @param updateVolunteerStatusRequestDTO
+     * @return int
+     */
+    int updateVolunteerStatus(UpdateVolunteerStatusRequestDTO updateVolunteerStatusRequestDTO);
+
+    /**
+     * 봉사활동 인증
+     * @author 정은지
+     * @param updateVolunteerStatusRequestDTO
+     * @return int
+     */
+    int updateVolunteerVerified(UpdateVolunteerStatusRequestDTO updateVolunteerStatusRequestDTO);
 
     int insertVolunteer(AdminVolunteerRequestDTO request);
 
@@ -42,17 +53,41 @@ public interface AdminMapper {
 
     AdminVolunteerRequestDTO selectVolunteerById(long volunteerId);
 
-    // 봉사활동 신청 대기 목록
+    /**
+     * @author 정은지
+     * 봉사활동 대기 목록 조회
+     * @param offset
+     * @param size
+     * @return List<VolunteerRequestListResponseDTO>
+     */
     List<VolunteerRequestListResponseDTO> selectVolunteerRequestPendingList(@Param("offset") int offset, @Param("size") int size);
 
-    // 봉사활동 신청 대기 상세
+    /**
+     * 봉사활동 대기 상세 조회
+     * @author 정은지
+     * @param volunteerId
+     * @param userId
+     * @return VolunteerRequestDetailResponseDTO
+     */
     VolunteerRequestDetailResponseDTO selectVolunteerRequestPendingDetail(
             @Param("volunteerId") long volunteerId, @Param("userId") long userId);
 
-    // 봉사활동 인증 대기 목록
+    /**
+     * 봉사활동 인증 대기 목록 조회
+     * @author 정은지
+     * @param offset
+     * @param size
+     * @return List<VolunteerRequestListResponseDTO>
+     */
     List<VolunteerRequestListResponseDTO> selectVolunteerCertificationList(@Param("offset") int offset, @Param("size") int size);
 
-    // 봉사활동 인증 대기 상세
+    /**
+     * 봉사활동 인증 대기 상세 조회
+     * @author 정은지
+     * @param volunteerId
+     * @param userId
+     * @return VolunteerCertificationDetailResponseDTO
+     */
     VolunteerCertificationDetailResponseDTO selectVolunteerCertificationDetail(
             @Param("volunteerId") long volunteerId, @Param("userId") long userId);
 

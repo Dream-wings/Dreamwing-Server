@@ -25,12 +25,12 @@ import java.util.List;
  * 수정일        	수정자        수정내용
  * ----------  --------    ---------------------------
  * 2024.07.28   정은지        최초 생성
- * 2024.07.28   정은지        봉사활동 승인 기능 추가
- * 2024.07.29   정은지        봉사활동 인증 후 포인트 부여 기능 추가
+ * 2024.07.28   정은지        봉사활동 승인 메서드 추가
+ * 2024.07.29   정은지        봉사활동 인증 후 포인트 부여 메서드 추가
  * 2024.07.30   임재성        봉사 & 멘토링 공고 글 조회 기능 추가
  * 2024.07.30   임재성        봉사 & 멘토링 공고 글 생성/수정/삭제 기능 추가
- * 2024.08.04   정은지        봉사활동 신청 대기 목록, 상세 조회 추가
- * 2024.08.05   정은지        봉사활동 인증 대기 목록, 상세 조회 추가
+ * 2024.08.04   정은지        봉사활동 신청 대기 목록, 상세 조회 메서드 추가
+ * 2024.08.05   정은지        봉사활동 인증 대기 목록, 상세 조회 메서드 추가
  * </pre>
  */
 @RestController
@@ -46,33 +46,31 @@ public class AdminController {
 
 
     /**
+     * 사용자 봉사활동 신청 승인 API
      * @author 정은지
-     * 사용자 봉사활동 신청 승인
-     *
-     * @param request
-     * @return
+     * @param updateVolunteerStatusRequestDTO
+     * @return ResponseEntity<ApiResponse<Void>>
      * @throws Exception    
      */
     @PatchMapping("/volunteer/approve")
     public ResponseEntity<ApiResponse<Void>> approveVolunteerRequest(
-            @RequestBody UpdateVolunteerStatusRequestDTO request) throws Exception {
-        return service.approveVolunteerRequest(request) ?
+            @RequestBody UpdateVolunteerStatusRequestDTO updateVolunteerStatusRequestDTO) throws Exception {
+        return service.approveVolunteerRequest(updateVolunteerStatusRequestDTO) ?
                     ResponseEntity.ok(ApiResponse.success(HttpStatus.OK)) :
                     ResponseEntity.badRequest().body(ApiResponse.failure(HttpStatus.BAD_REQUEST, "봉사활동 요청 승인 실패"));
     }
 
     /**
+     * 봉사활동 인증 처리 및 포인트 부여 API
      * @author 정은지
-     * 봉사활동 포인트 부여
-     *
-     * @param request
-     * @return
+     * @param awardVolunteerPointsRequestDTO
+     * @return ResponseEntity<ApiResponse<Void>>
      * @throws Exception
      */
     @PostMapping("/volunteer/point")
     public ResponseEntity<ApiResponse<Void>> awardVolunteerPoints(
-            @RequestBody AwardVolunteerPointsRequestDTO request) throws Exception {
-        return service.awardVolunteerPoints(request) ?
+            @RequestBody AwardVolunteerPointsRequestDTO awardVolunteerPointsRequestDTO) throws Exception {
+        return service.awardVolunteerPoints(awardVolunteerPointsRequestDTO) ?
                 ResponseEntity.ok(ApiResponse.success(HttpStatus.OK)) :
                 ResponseEntity.badRequest().body(ApiResponse.failure(HttpStatus.BAD_REQUEST, "봉사활동 인증 포인트 부여 실패"));
     }
@@ -173,12 +171,11 @@ public ResponseEntity<ApiResponse<Void>> updateVolunteer(@PathVariable long id,
     }
 
     /**
+     * 봉사활동 신청 대기 목록 조회 API
      * @author 정은지
-     * 봉사활동 신청 대기 목록 조회
-     *
      * @param page
      * @param size
-     * @return
+     * @return ResponseEntity<ApiResponse<List<VolunteerRequestListResponseDTO>>>
      * @throws Exception
      */
     @GetMapping("/volunteer/request/list")
@@ -191,12 +188,11 @@ public ResponseEntity<ApiResponse<Void>> updateVolunteer(@PathVariable long id,
     }
 
     /**
+     * 봉사활동 신청 대기 상세 조회 API
      * @author 정은지
-     * 봉사활동 신청 대기 상세 조회
-     *
      * @param volunteerId
      * @param userId
-     * @return
+     * @return ResponseEntity<ApiResponse<VolunteerRequestDetailResponseDTO>>
      * @throws Exception
      */
     @GetMapping("/volunteer/request")
@@ -208,12 +204,11 @@ public ResponseEntity<ApiResponse<Void>> updateVolunteer(@PathVariable long id,
     }
 
     /**
+     * 봉사활동 인증 대기 목록 조회 API
      * @author 정은지
-     * 봉사활동 인증 대기 목록 조회
-     *
      * @param page
      * @param size
-     * @return
+     * @return ResponseEntity<ApiResponse<List<VolunteerRequestListResponseDTO>>>
      * @throws Exception
      */
     @GetMapping("/volunteer/certification/list")
@@ -226,11 +221,11 @@ public ResponseEntity<ApiResponse<Void>> updateVolunteer(@PathVariable long id,
     }
 
     /**
-     * 봉사활동 인증 대기 상세 조회
+     * 봉사활동 인증 대기 상세 조회 API
      * @author 정은지
      * @param volunteerId
      * @param userId
-     * @return
+     * @return ResponseEntity<ApiResponse<VolunteerCertificationDetailResponseDTO>>
      * @throws Exception
      */
     @GetMapping("/volunteer/certification")

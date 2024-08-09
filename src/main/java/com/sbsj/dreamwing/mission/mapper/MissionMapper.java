@@ -22,12 +22,25 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface MissionMapper {
 
-    // 퀴즈 조회
+    /**
+     * 데일리 퀴즈 조회
+     * @author 정은지
+     * @return QuizVO
+     */
     QuizVO selectQuiz();
 
-    // 포인트 지급
-    void callAwardPointsProcedure(AwardPointsRequestDTO dto);
+    /**
+     * 포인트 지급 처리
+     * @author 정은지
+     * @param awardPointsRequestDTO
+     */
+    void callAwardPointsProcedure(AwardPointsRequestDTO awardPointsRequestDTO);
 
-    // 데일리 미션 중복 확인
-    int selectDailyMissionHistory(CheckDailyMissionRequestDTO dto);
+    /**
+     * 데일리 미션 중복 확인
+     * @author 정은지
+     * @param checkDailyMissionRequestDTO
+     * @return int
+     */
+    int selectDailyMissionHistory(CheckDailyMissionRequestDTO checkDailyMissionRequestDTO);
 }
