@@ -30,16 +30,16 @@ import java.util.concurrent.TimeUnit;
  * <pre>
  * 수정일        		수정자       				    수정내용
  * ----------  ----------------    ---------------------------------
- *  2024.07.28     	정은찬        		       최초 생성 및 회원가입 기능 추가
- *  2024.07.29      정은찬                      로그인 기능 추가
- *  2024.07.31      정은찬                      회원탈퇴 기능 및 회원 정보 가져오기 기능 추가
- *  2024.07.31      정은찬                      회원 정보 업데이트 기능 및 로그아웃 기능 추가
- *  2024.07.31      정은찬                      포인트 내역 조회 기능 및 후원 내역 조회 기능 추가
- *  2024.07.31      정은찬                      회원가입 및 회원 정보 업데이트 프로필 이미지 S3 업로드 기능 추가
- *  2024.08.02      정은찬                      로그인 아이디 존재 여부 확인 기능 추가
- *  2024.08.03      정은찬                      마이페이지 회원 정보 조회 기능 추가
- *  2024.08.04      정은찬                      페이징 처리를 위해 포인트 내역, 후원 내역 조회 기능 수정
- *  2024.08.05      정은찬                      회원 정보 업데이트 기능 수정, 봉사 활동 내역 조회 기능 추가
+ *  2024.07.28     	정은찬        		       최초 생성 및 회원가입 메서드 추가
+ *  2024.07.29      정은찬                      로그인 메서드 추가
+ *  2024.07.31      정은찬                      회원탈퇴 메서드 및 회원 정보 조회 메서드 추가
+ *  2024.07.31      정은찬                      회원 정보 업데이트 메서드 및 로그아웃 메서드 추가
+ *  2024.07.31      정은찬                      포인트 내역 조회 메서드 및 후원 내역 조회 메서드 추가
+ *  2024.07.31      정은찬                      회원가입 및 회원 정보 업데이트 프로필 이미지 S3 업로드 메서드 추가
+ *  2024.08.02      정은찬                      로그인 아이디 존재 여부 확인 메서드 추가
+ *  2024.08.03      정은찬                      마이페이지 회원 정보 조회 메서드 추가
+ *  2024.08.04      정은찬                      페이징 처리를 위해 포인트 내역, 후원 내역 조회 메서드 수정
+ *  2024.08.05      정은찬                      회원 정보 업데이트 메서드 수정, 봉사 활동 내역 조회 메서드 추가
  * </pre>
  */
 @Service
@@ -52,8 +52,11 @@ public class UserServiceImpl implements UserService {
     private final RedisTemplate<String, String> redisTemplate;
     private final S3Uploader s3Uploader;
 
-    /*
+    /**
      * 회원가입 메서드
+     * @author 정은찬
+     * @param signUpRequestDTO
+     * @return SignUpRequestDTO
      */
     @Transactional
     public String signUp(SignUpRequestDTO signUpRequestDTO) {
@@ -102,8 +105,12 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    /*
-     * 회원 로그인 메서드
+    /**
+     * 로그인 메서드
+     * @author 정은찬
+     * @param loginRequestDTO
+     * @return LoginRequestDTO
+     * @throws Exception
      */
     public String login(LoginRequestDTO loginRequestDTO) throws Exception {
         // 로그인 ID로 회원 정보를 조회, 없으면 예외 발생
@@ -142,8 +149,11 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    /*
+    /**
      * 회원 탈퇴 메서드
+     * @author 정은찬
+     * @param userId
+     * @return boolean
      */
     public boolean withdraw(long userId) {
         int result = userMapper.withdraw(userId);
@@ -156,8 +166,11 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    /*
+    /**
      * 회원 정보 조회 메서드
+     * @author 정은찬
+     * @param userId
+     * @return UserInfoDTO
      */
     @Override
     public UserInfoDTO getUserInfo(long userId) {
@@ -173,8 +186,11 @@ public class UserServiceImpl implements UserService {
         return userInfoDTO;
     }
 
-    /*
+    /**
      * 회원 정보 업데이트 메서드
+     * @author 정은찬
+     * @param userId
+     * @param userUpdateDTO
      */
     public boolean updateUserInfo(long userId, UserUpdateDTO userUpdateDTO) {
         // 주어진 userId로 사용자 정보를 조회, 없으면 예외 발생
@@ -247,8 +263,10 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    /*
-     * 회원 로그아웃 메서드
+    /**
+     * 로그아웃 메서드
+     * @author 정은찬
+     * @param userId
      */
     public void logout(long userId) {
         // Redis에서 해당 사용자의 JWT 토큰이 존재하는지 확인
@@ -258,8 +276,13 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    /*
-     * 회원의 포인트 내역을 페이징 처리하여 조회하는 메서드
+    /**
+     * 회원 포인트 내역 조회 메서드
+     * @author 정은찬
+     * @param userId
+     * @param page
+     * @param size
+     * @return List<MyPointVO>
      */
     public List<MyPointVO> getUserPointList(long userId, int page, int size) {
         // 페이지 번호와 페이지 크기를 기반으로 조회할 데이터의 시작 위치(offset) 계산
@@ -270,8 +293,13 @@ public class UserServiceImpl implements UserService {
         return userPointList;
     }
 
-    /*
-     * 회원의 후원 내역을 페이징 처리하여 조회하는 메서드
+    /**
+     * 회원 후원 내역 조회 메서드
+     * @author 정은찬
+     * @param userId
+     * @param page
+     * @param size
+     * @return List<MySupportVO>
      */
     public List<MySupportVO> getUserSupportList(long userId, int page, int size) {
         // 페이지 번호와 페이지 크기를 기반으로 조회할 데이터의 시작 위치(offset) 계산
@@ -282,8 +310,13 @@ public class UserServiceImpl implements UserService {
         return userSupportList;
     }
 
-    /*
-     * 회원의 봉사 활동 내역을 페이징 처리하여 조회하는 메서드
+    /**
+     * 회원 봉사 활동 내역 조회 메서드
+     * @author 정은찬
+     * @param userId
+     * @param page
+     * @param size
+     * @return List<MyVolunteerVO>
      */
     public List<MyVolunteerVO> getUserVolunteerList(long userId, int page, int size) {
         // 페이지 번호와 페이지 크기를 기반으로 조회할 데이터의 시작 위치(offset) 계산
@@ -294,8 +327,11 @@ public class UserServiceImpl implements UserService {
         return userVolunteerList;
     }
 
-    /*
-     * 로그인 ID 존재 여부를 확인하는 메서드
+    /**
+     * 로그인 아이디 존재 여부 확인 메서드
+     * @author 정은찬
+     * @param loginIdDTO
+     * @return Boolean
      */
     public Boolean checkExistLoginId(LoginIdDTO loginIdDTO) {
         // 주어진 로그인 ID로 DB에서 존재 여부를 확인
@@ -309,9 +345,12 @@ public class UserServiceImpl implements UserService {
             return false;
         }
     }
-    
-    /*
-     * 마이페이지 회원 정보를 조회하는 메서드
+
+    /**
+     * 마이페이지 회원 정보 조회 메서드
+     * @author 정은찬
+     * @param userId
+     * @return MyPageDTO
      */
     public MyPageDTO getMyPageInfo(long userId) {
         // 주어진 userId로 사용자 정보를 조회, 없으면 예외 발생

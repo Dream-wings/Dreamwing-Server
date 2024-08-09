@@ -26,14 +26,14 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
-
     private final UserMapper userMapper;
 
     /**
      * 사용자 ID를 통해 사용자 정보를 로드하는 메서드
-     * @param userId 사용자 ID
-     * @return 사용자 정보(UserDetails)
-     * @throws UsernameNotFoundException 사용자 정보를 찾을 수 없을 때 발생
+     * @author 정은찬
+     * @param userId
+     * @return UserDetails
+     * @throws UsernameNotFoundException
      */
     @Override
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
@@ -44,8 +44,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     /**
      * 사용자 권한을 설정하는 메서드
-     * @param userDTO 사용자 정보 DTO
-     * @return 권한이 추가된 사용자 정보 DTO
+     * @author 정은찬
+     * @param userDTO
+     * @return UserDTO
      */
     private UserDTO addAuthorities(UserDTO userDTO) {
 
@@ -55,8 +56,6 @@ public class CustomUserDetailsService implements UserDetailsService {
         else {
             userDTO.setAuthorities(Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN")));
         }
-
-
         return userDTO;
     }
 }

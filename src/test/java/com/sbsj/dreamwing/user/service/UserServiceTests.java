@@ -21,9 +21,13 @@ import java.util.List;
  * 수정일        	수정자        수정내용
  * ----------  --------    ---------------------------
  * 2024.07.28  	정은찬        최초 생성
- * 2024.07.30   정은찬        로그인 서비스 테스트 코드 작성
+ * 2024.07.30   정은찬        로그인 메서드 테스트 작성
+ * 2024.07.31   정은찬        회원탈퇴 메서드 및 회원 정보 조회 메서드 테스트 작성
+ * 2024.07.31   정은찬        회원 정보 업데이트 메서드 및 로그아웃 메서드 테스트 작성
+ * 2024.08.02  정은찬        로그인 아이디 존재 여부 확인 메서드 테스트 작성
  * </pre>
  */
+
 @Slf4j
 @SpringBootTest
 public class UserServiceTests {
@@ -91,17 +95,17 @@ public class UserServiceTests {
         Assertions.assertEquals(result, true);
     }
 
-//    @Test
-//    public void getPointListTest() {
-//        List<MyPointVO> userPointList = userService.getUserPointList(8);
-//        log.info(userPointList.toString());
-//    }
+    @Test
+    public void getPointListTest() {
+        List<MyPointVO> userPointList = userService.getUserPointList(8, 2, 2);
+        log.info(userPointList.toString());
+    }
 
-//    @Test
-//    public void getSupportListTest() {
-//        List<MySupportVO> userSupportList = userService.getUserSupportList(1);
-//        log.info(userSupportList.toString());
-//    }
+    @Test
+    public void getSupportListTest() {
+        List<MySupportVO> userSupportList = userService.getUserSupportList(1, 2, 2);
+        log.info(userSupportList.toString());
+    }
 
     @Test
     public void checkExistLoginIdTest() {
