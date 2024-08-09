@@ -1,6 +1,6 @@
 package com.sbsj.dreamwing.support.dto;
 
-import lombok.Data;
+import lombok.*;
 
 import java.util.Date;
 
@@ -16,7 +16,10 @@ import java.util.Date;
  * 2024.07.28  	정은지        최초 생성
  * </pre>
  */
-@Data
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class GetSupportListResponseDTO {
     private long supportId;
     private int goalPoint;

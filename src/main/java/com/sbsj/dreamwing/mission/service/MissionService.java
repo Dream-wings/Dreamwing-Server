@@ -19,6 +19,20 @@ import com.sbsj.dreamwing.mission.dto.CheckDailyMissionRequestDTO;
  */
 public interface MissionService {
 
+    /**
+     * 데일리 퀴즈 조회
+     * @author 정은지
+     * @return QuizVO
+     * @throws Exception
+     */
     QuizVO getDailyQuiz() throws Exception;
-    int awardDailyMissionPoints(AwardPointsRequestDTO dto) throws Exception;
+
+    /**
+     * 포인트 지급 처리
+     * @author 정은지
+     * @param awardPointsRequestDTO
+     * @return int
+     * @throws Exception
+     */
+    int awardDailyMissionPoints(AwardPointsRequestDTO awardPointsRequestDTO) throws Exception;
 }
