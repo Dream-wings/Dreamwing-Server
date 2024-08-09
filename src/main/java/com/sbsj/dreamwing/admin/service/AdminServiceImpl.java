@@ -41,6 +41,8 @@ public class AdminServiceImpl implements AdminService {
 
     /**
      * @author 정은지
+     * 봉사활동 신청 승인
+     *
      * @param request
      * @return
      * @throws Exception
@@ -51,7 +53,9 @@ public class AdminServiceImpl implements AdminService {
     }
 
     /**
-     * author 정은지
+     * @author 정은지
+     * 봉사활동 인증 및 포인트 부여
+     *
      * @param request
      * @return
      * @throws Exception
@@ -122,8 +126,9 @@ public int createVolunteer(AdminVolunteerRequestDTO request) {
     }
 
     /**
-     * 봉사활동 신청 대기 목록 조회
      * @author 정은지
+     * 봉사활동 신청 대기 목록 조회
+     *
      * @param page
      * @param size
      * @return
@@ -136,8 +141,9 @@ public int createVolunteer(AdminVolunteerRequestDTO request) {
     }
 
     /**
-     * 봉사활동 신청 대기 상세 조회
      * @author 정은지
+     * 봉사활동 신청 대기 상세 조회
+     *
      * @param volunteerId
      * @param userId
      * @return
@@ -149,8 +155,9 @@ public int createVolunteer(AdminVolunteerRequestDTO request) {
     }
 
     /**
-     * 봉사활동 인증 대기 목록 조회
      * @author 정은지
+     * 봉사활동 인증 대기 목록 조회
+     *
      * @param page
      * @param size
      * @return
@@ -162,10 +169,10 @@ public int createVolunteer(AdminVolunteerRequestDTO request) {
         return mapper.selectVolunteerCertificationList(offset, size);
     }
 
-
     /**
-     * 봉사활동 인증 대기 상세 조회
      * @author 정은지
+     * 봉사활동 인증 대기 상세 조회
+     *
      * @param volunteerId
      * @param userId
      * @return

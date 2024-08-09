@@ -16,7 +16,7 @@ import java.util.List;
  * 수정일        	수정자        수정내용
  * ----------  --------    ---------------------------
  * 2024.07.28  	정은지        최초 생성
- * 2024.07.28   정은지        봉사활동 승인 기능 추가
+ * 2024.07.28   정은지        봉사활동 신청 승인 기능 추가
  * 2024.07.29   정은지        봉사활동 인증 기능 추가
  * 2024.07.30   임재성        봉사 & 멘토링 공고 글 조회 기능 추가
  * 2024.07.30   임재성        봉사 & 멘토링 공고 글 생성/수정/삭제 기능 추가
@@ -26,8 +26,10 @@ import java.util.List;
  */
 @Mapper
 public interface AdminMapper {
+    // 봉사활동 신청 승인
     int updateVolunteerStatus(UpdateVolunteerStatusRequestDTO request);
 
+    // 봉사활동 인증
     int updateVolunteerVerified(UpdateVolunteerStatusRequestDTO request);
 
     int insertVolunteer(AdminVolunteerRequestDTO request);
@@ -40,13 +42,17 @@ public interface AdminMapper {
 
     AdminVolunteerRequestDTO selectVolunteerById(long volunteerId);
 
+    // 봉사활동 신청 대기 목록
     List<VolunteerRequestListResponseDTO> selectVolunteerRequestPendingList(@Param("offset") int offset, @Param("size") int size);
 
+    // 봉사활동 신청 대기 상세
     VolunteerRequestDetailResponseDTO selectVolunteerRequestPendingDetail(
             @Param("volunteerId") long volunteerId, @Param("userId") long userId);
 
+    // 봉사활동 인증 대기 목록
     List<VolunteerRequestListResponseDTO> selectVolunteerCertificationList(@Param("offset") int offset, @Param("size") int size);
 
+    // 봉사활동 인증 대기 상세
     VolunteerCertificationDetailResponseDTO selectVolunteerCertificationDetail(
             @Param("volunteerId") long volunteerId, @Param("userId") long userId);
 

@@ -46,10 +46,7 @@ public class AdminServiceTests {
 
     @Autowired
     private AdminService service;
-
-    @Autowired
     private S3Uploader s3Uploader;
-
     private AdminVolunteerRequestDTO request;
 
     @BeforeEach
@@ -71,18 +68,14 @@ public class AdminServiceTests {
 //        request.setLongitude("127.0276");
     }
 
-
-
-
-
-
     @Test
     @DisplayName("봉사활동 신청 승인 서비스 테스트")
     public void testApproveVolunteerRequest() throws Exception {
         // given
-        UpdateVolunteerStatusRequestDTO dto = new UpdateVolunteerStatusRequestDTO();
-        dto.setVolunteerId(3L);
-        dto.setUserId(1L);
+        UpdateVolunteerStatusRequestDTO dto = UpdateVolunteerStatusRequestDTO.builder()
+                .volunteerId(3L)
+                .userId(1L)
+                .build();
 
         // when
         boolean success = service.approveVolunteerRequest(dto);
@@ -95,12 +88,14 @@ public class AdminServiceTests {
     @DisplayName("봉사활동 인증 포인트 부여 서비스 테스트")
     public void testVerifyVolunteerRequest() throws Exception {
         // given
-        AwardVolunteerPointsRequestDTO dto = new AwardVolunteerPointsRequestDTO();
-        dto.setVolunteerId(3L);
-        dto.setUserId(1L);
-        dto.setActivityType(1);
-        dto.setActivityTitle("봉사활동");
-        dto.setPoint(5000);
+        AwardVolunteerPointsRequestDTO dto =
+                AwardVolunteerPointsRequestDTO.builder()
+                        .volunteerId(3L)
+                        .userId(1L)
+                        .activityType(1)
+                        .activityTitle("봉사활동")
+                        .point(5000)
+                        .build();
 
         // when
         boolean success = service.awardVolunteerPoints(dto);
@@ -256,7 +251,7 @@ public class AdminServiceTests {
 
     @Test
     @DisplayName("봉사활동 인증 대기 상세 조회 서비스 테스트")
-    public void testGetVolunteerCetificationDetail() throws Exception  {
+    public void testGetVolunteerCertificationDetail() throws Exception  {
         // given
         int volunteerId = 1;
         int userId = 1;

@@ -42,14 +42,13 @@ public class AdminController {
     private final AdminService service;
     private final MissionService missionService;
     private final VolunteerService volunteerService;
-
-    //사진업로드 위한 s3
     private final S3Uploader s3Uploader;
 
 
     /**
-     * 사용자 봉사활동 신청 승인
      * @author 정은지
+     * 사용자 봉사활동 신청 승인
+     *
      * @param request
      * @return
      * @throws Exception    
@@ -63,8 +62,9 @@ public class AdminController {
     }
 
     /**
-     * 봉사활동 포인트 부여
      * @author 정은지
+     * 봉사활동 포인트 부여
+     *
      * @param request
      * @return
      * @throws Exception
@@ -173,8 +173,9 @@ public ResponseEntity<ApiResponse<Void>> updateVolunteer(@PathVariable long id,
     }
 
     /**
-     * 봉사활동 신청 대기 목록 조회
      * @author 정은지
+     * 봉사활동 신청 대기 목록 조회
+     *
      * @param page
      * @param size
      * @return
@@ -190,8 +191,9 @@ public ResponseEntity<ApiResponse<Void>> updateVolunteer(@PathVariable long id,
     }
 
     /**
-     * 봉사활동 신청 대기 상세 조회
      * @author 정은지
+     * 봉사활동 신청 대기 상세 조회
+     *
      * @param volunteerId
      * @param userId
      * @return
@@ -206,7 +208,9 @@ public ResponseEntity<ApiResponse<Void>> updateVolunteer(@PathVariable long id,
     }
 
     /**
+     * @author 정은지
      * 봉사활동 인증 대기 목록 조회
+     *
      * @param page
      * @param size
      * @return
