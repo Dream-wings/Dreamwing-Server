@@ -44,6 +44,13 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
+    /**
+     * @author 정은찬
+     * 회원가입 API
+     * 
+     * @param signUpRequestDTO
+     * @return ResponseEntity<ApiResponse<Void>> 회원가입 성공 여부
+     */
     @PostMapping(value = "/signUp", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ApiResponse<Void>> signUp(@ModelAttribute SignUpRequestDTO signUpRequestDTO) {
 
@@ -61,7 +68,9 @@ public class UserController {
     }
 
     /**
+     * @author 정은찬
      * 로그인 API
+     *
      * @param LoginRequestDTO
      * @return ResponseEntity<ApiResponse<Void>> 로그인 성공여부
      */
@@ -82,7 +91,9 @@ public class UserController {
     }
 
     /**
+     * @author 정은찬
      * 회원탈퇴 API
+     *
      * @return ResponseEntity<ApiResponse<Void>> 회원탈퇴 성공 여부
      */
     @PostMapping("/withdraw")
@@ -102,7 +113,9 @@ public class UserController {
     }
 
     /**
+     * @author 정은찬
      * 회원 정보 조회 API
+     *
      * @return ResponseEntity<ApiResponse<UserInfoDTO>> 회원 정보
      * @throws Exception
      */
@@ -119,7 +132,9 @@ public class UserController {
     }
 
     /**
+     * @author 정은찬
      * 회원 정보 업데이트 API
+     *
      * @param userUpdateDTO
      * @return  ResponseEntity<ApiResponse<Void>> 업데이트 성공 여부
      * @throws Exception
@@ -142,7 +157,9 @@ public class UserController {
     }
 
     /**
+     * @author 정은찬
      * 로그아웃 API
+     *
      * @return ResponseEntity<ApiResponse<Void>> 로그아웃 성공 여부
      */
     @PostMapping("/logout")
@@ -152,7 +169,6 @@ public class UserController {
             // SecurityContext에서 Authentication 객체를 가져옵니다.
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             // UserDetails 객체에서 userId를 가져옵니다.
-            // 여기서는 UserDetails의 `getUsername` 메서드를 사용한다고 가정합니다.
             long userId = ((UserDTO) authentication.getPrincipal()).getUserId();
 
             userService.logout(userId);
@@ -164,7 +180,9 @@ public class UserController {
     }
 
     /**
+     * @author 정은찬
      * 회원 포인트 내역 조회 API
+     *
      * @param page
      * @param size
      * @return ResponseEntity<ApiResponse<List<MyPointVO>>> 회원 포인트 내역 리스트
@@ -176,7 +194,6 @@ public class UserController {
 
         // SecurityContext에서 인증 객체를 가져옵니다.
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
         // 인증 객체에서 사용자 ID를 가져옵니다.
         long userId = ((UserDTO) authentication.getPrincipal()).getUserId();
 
@@ -186,7 +203,9 @@ public class UserController {
     }
 
     /**
+     * @author 정은찬
      * 회원 후원 내역 조회 API
+     *
      * @param page
      * @param size
      * @return ResponseEntity<ApiResponse<List<MySupportVO>>> 회원 후원 내역 리스트
@@ -206,7 +225,9 @@ public class UserController {
     }
 
     /**
+     * @author 정은찬
      * 회원 봉사 활동 내역 조회 API
+     *
      * @param page
      * @param size
      * @return ResponseEntity<ApiResponse<List<MyVolunteerVO>>> 회원 봉사 활동 내역 리스트
@@ -226,7 +247,9 @@ public class UserController {
     }
 
     /**
+     * @author 정은찬
      * 로그인 아이디 존재 여부 확인 API
+     *
      * @param loginId
      * @return  ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, result)) 로그인 아이디 존재 여부
      */
@@ -240,7 +263,9 @@ public class UserController {
     }
 
     /**
+     * @author 정은찬
      * 마이페이지 회원 정보 조회 API
+     *
      * @return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, myPageDTO)) 마이페이지 회원 정보
      */
     @GetMapping("/getMyPageInfo")
@@ -254,5 +279,4 @@ public class UserController {
 
         return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, myPageDTO));
     }
-
 }

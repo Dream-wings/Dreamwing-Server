@@ -55,12 +55,6 @@ public class UserServiceImpl implements UserService {
     /*
      * 회원가입 메서드
      */
-
-    /**
-     *
-     * @param signUpRequestDTO
-     * @return
-     */
     @Transactional
     public String signUp(SignUpRequestDTO signUpRequestDTO) {
         // 로그인 ID 중복 여부 확인
@@ -317,7 +311,7 @@ public class UserServiceImpl implements UserService {
     }
     
     /*
-     * 마이페이지 정보를 조회하는 메서드
+     * 마이페이지 회원 정보를 조회하는 메서드
      */
     public MyPageDTO getMyPageInfo(long userId) {
         // 주어진 userId로 사용자 정보를 조회, 없으면 예외 발생
