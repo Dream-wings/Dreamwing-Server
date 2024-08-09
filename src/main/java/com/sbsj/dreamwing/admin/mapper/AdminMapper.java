@@ -43,15 +43,38 @@ public interface AdminMapper {
      */
     int updateVolunteerVerified(UpdateVolunteerStatusRequestDTO updateVolunteerStatusRequestDTO);
 
+    /**
+     * 봉사활동 생성
+     * @author 임재성
+     * @param request
+     * @return int
+     */
     int insertVolunteer(AdminVolunteerRequestDTO request);
 
+    /**
+     * 봉사활동 수정
+     * author 임재성
+     * @param request
+     * @return int
+     */
     int updateVolunteer(AdminVolunteerRequestDTO request);
 
+    /**
+     * 봉사활동 삭제
+     * @author 임재성
+     * @param volunteerId
+     * @return int
+     */
     int deleteVolunteer(long volunteerId);
 
+    /**
+     * 봉사활동 리스트 조회
+     * @author 임재성
+     * @return List
+     */
     List<AdminVolunteerResponseDTO> selectVolunteerList();
 
-    AdminVolunteerRequestDTO selectVolunteerById(long volunteerId);
+//    AdminVolunteerRequestDTO selectVolunteerById(long volunteerId);
 
     /**
      * @author 정은지
@@ -91,6 +114,13 @@ public interface AdminMapper {
     VolunteerCertificationDetailResponseDTO selectVolunteerCertificationDetail(
             @Param("volunteerId") long volunteerId, @Param("userId") long userId);
 
+    /**
+     * 봉사활동 리스트 조회 (페이징)
+     * @author 임재성
+     * @param offset
+     * @param size
+     * @return List
+     */
     List<AdminVolunteerResponseDTO> selectVolunteerListWithPaging(@Param("offset") int offset, @Param("size") int size);
 
 }

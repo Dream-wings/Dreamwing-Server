@@ -78,12 +78,14 @@ public class AdminServiceImpl implements AdminService {
         }
     }
 
-//    @Override
-//    @Transactional
-//    public int createVolunteer(AdminVolunteerRequestDTO request) {
-//        return mapper.insertVolunteer(request);
-//    }
-@Transactional
+    /**
+     * 봉사활동 생성
+     * @author 임재성
+     * @param request
+     * @return
+     */
+    @Transactional
+@Override
 public int createVolunteer(AdminVolunteerRequestDTO request) {
     // 로그 추가
     log.info("createVolunteer 호출됨");
@@ -106,26 +108,39 @@ public int createVolunteer(AdminVolunteerRequestDTO request) {
     return result;
 }
 
-    @Override
-    public AdminVolunteerRequestDTO getVolunteerDetails(long volunteerId) {
-        return mapper.selectVolunteerById(volunteerId);
-    }
+//    @Override
+//    public AdminVolunteerRequestDTO getVolunteerDetails(long volunteerId) {
+//        return mapper.selectVolunteerById(volunteerId);
+//    }
 
+    /**
+     * 봉사활동 수정
+     * @author 임재성
+     * @param id
+     * @param request
+     * @return int
+     */
     @Override
     public int updateVolunteer(long id, AdminVolunteerRequestDTO request) {
         request.setVolunteerId(id);
         return mapper.updateVolunteer(request);
     }
 
+    /**
+     * 봉사활동 삭제
+     * @author 임재성
+     * @param volunteerId
+     * @return int
+     */
     @Override
     public int deleteVolunteer(long volunteerId) {
         return mapper.deleteVolunteer(volunteerId);
     }
 
-    @Override
-    public List<AdminVolunteerResponseDTO> getVolunteerList() {
-        return mapper.selectVolunteerList();
-    }
+//    @Override
+//    public List<AdminVolunteerResponseDTO> getVolunteerList() {
+//        return mapper.selectVolunteerList();
+//    }
 
     /**
      * 봉사활동 신청 대기 목록 조회
@@ -181,6 +196,13 @@ public int createVolunteer(AdminVolunteerRequestDTO request) {
         return mapper.selectVolunteerCertificationDetail(volunteerId, userId);
     }
 
+    /**
+     * 봉사활동 리스트 조회
+     * @author 임재성
+     * @param page
+     * @param size
+     * @return List<AdminVolunteerResponseDTO>
+     */
     @Override
     public List<AdminVolunteerResponseDTO> getVolunteerListWithPaging(int page, int size) {
         int offset = page * size;  // 페이징을 위한 오프셋 계산

@@ -2,9 +2,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sbsj.dreamwing.volunteer.mapper.VolunteerMapper">
-
-
-
+<!--
+* 봉사 Mybatis 매퍼
+* @author 임재성
+* @since 2024.07.26
+* @version 1.0
+*
+* <pre>
+* 수정일        	수정자        수정내용
+* ==========  =========    =========
+* 2024.07.26   임재성        최초 생성
+* 2024.07.28   임재성        봉사 모집공고 게시판 리스트 & 상세 페이지 조회 기능 추가
+* 2024.07.31   임재성        봉사 & 멘토링 리스트 페이징 처리 기능 추가
+* 2024.08.03   정은지        봉사활동 인증 기능 추가
+* 2024.08.03   임재성        봉사활동 신청 상태 확인 기능 추가
+* 2024.08.04   임재성        봉사활동 필터 기능 추가
+* 2024.08.06   임재성        봉사활동 신청 승인 상태 확인 기능 추가
+*
+* </pre>
+-->
+    <!-- 봉사활동 리스트 조회 -->
     <select id="getVolunteerListWithFilters" parameterType="map" resultType="com.sbsj.dreamwing.volunteer.dto.VolunteerListDTO">
         SELECT VOLUNTEER_ID,
         TITLE,
@@ -52,42 +69,33 @@
     </select>
 
 
-    <!-- 봉사 신청하기 -->
+    <!-- 봉사 신청 -->
     <insert id="insertVolunteerApplication" parameterType="com.sbsj.dreamwing.volunteer.dto.PostApplyVolunteerRequestDTO">
         INSERT INTO USER_VOLUNTEER (VOLUNTEER_ID, USER_ID,  STATUS, VERIFIED)
         VALUES (#{volunteerId},#{userId},  DEFAULT, DEFAULT)
     </insert>
 
-<!--    &lt;!&ndash; 이미 신청했는지 체크 &ndash;&gt;-->
-<!--    &lt;!&ndash; Check if application exists &ndash;&gt;-->
-<!--    <select id="checkIfApplicationExists" parameterType="com.sbsj.dreamwing.volunteer.dto.PostApplyVolunteerRequestDTO" resultType="boolean">-->
-<!--        SELECT COUNT(*)-->
-<!--        FROM USER_VOLUNTEER-->
-<!--        WHERE VOLUNTEER_ID = #{volunteerId} AND USER_ID = #{userId}-->
-<!--    </select>-->
-
-
-    <!-- Delete application -->
+    <!-- 봉사 신청 취소 -->
     <delete id="deleteApplication" parameterType="com.sbsj.dreamwing.volunteer.dto.PostApplyVolunteerRequestDTO">
         DELETE FROM USER_VOLUNTEER
         WHERE VOLUNTEER_ID = #{volunteerId} AND USER_ID = #{userId}
     </delete>
 
 
-    <!-- Check if User Applied -->
+    <!-- 봉사 신청 여부 확인 -->
     <select id="existsByVolunteerIdAndUserId" resultType="boolean">
         SELECT COUNT(*)
         FROM USER_VOLUNTEER
         WHERE VOLUNTEER_ID = #{volunteerId} AND USER_ID = #{userId}
     </select>
-    <!-- Check if application exists -->
+    <!-- 봉사 신청 여부 확인 -->
     <select id="checkIfAlreadyApplied" parameterType="com.sbsj.dreamwing.volunteer.dto.PostApplyVolunteerRequestDTO" resultType="int">
         SELECT COUNT(*)
         FROM USER_VOLUNTEER
         WHERE VOLUNTEER_ID = #{volunteerId} AND USER_ID = #{userId}
     </select>
 
-    <!-- Check if application exists -->
+    <!-- 봉사 신청 여부 확인 -->
     <select id="checkIfApplicationExists" parameterType="com.sbsj.dreamwing.volunteer.dto.PostApplyVolunteerRequestDTO" resultType="int">
         SELECT COUNT(*)
         FROM USER_VOLUNTEER
@@ -100,7 +108,7 @@
         SET IMAGE_URL = #{imageUrl}
         where VOLUNTEER_ID = #{volunteerId} and user_id = #{userId}
     </update>
-
+    <!-- 봉사활동 신청 승인 상태 확인 -->
     <select id="getApplicationStatus" parameterType="map" resultType="int">
         SELECT STATUS
         FROM USER_VOLUNTEER

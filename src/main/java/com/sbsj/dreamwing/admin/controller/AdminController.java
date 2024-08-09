@@ -77,9 +77,10 @@ public class AdminController {
 
 
     /**
-     * 봉사 공고 생성
+     * 봉사 공고 생성 API
+     * @author 임재성
      * @param request
-     * @return
+     * @return ResponseEntity<ApiResponse<Void>>
      */
     @PostMapping("/volunteer/create")
     public ResponseEntity<ApiResponse<Void>> createVolunteer(
@@ -98,29 +99,15 @@ public class AdminController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiResponse.failure(HttpStatus.BAD_REQUEST, "봉사 공고 생성에 실패했습니다."));
         }
     }
-    // 봉사 공고 상세 조회
-    // 봉사 공고 상세 조회
-//    @GetMapping("/detail")
-//    public ResponseEntity<ApiResponse<AdminVolunteerRequestDTO>> getVolunteerDetail(@RequestParam long volunteerId) throws Exception{
-//        // 서비스 호출
-//        VolunteerDetailDTO volunteerDetailDTO = volunteerService.getVolunteerDetail(volunteerId);
-//        // 상세 조회 결과에 대한 응답 반환
-//        return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, volunteerDetailDTO));
-//
-//    }
 
-
-//    @PutMapping("/volunteer/update")
-//    public ResponseEntity<ApiResponse<Void>> updateVolunteer(
-//            @RequestBody AdminVolunteerRequestDTO request) {
-//        int result = service.updateVolunteer(request);
-//        if (result > 0) {
-//            return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK));
-//        } else {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiResponse.failure(HttpStatus.BAD_REQUEST, "봉사 공고 수정에 실패했습니다."));
-//        }
-//    }
-@PutMapping("/volunteer/update/{id}")
+    /**
+     * 봉사활동 공고 수정 API
+     * @author 임재성
+     * @param id
+     * @param request
+     * @return ResponseEntity<ApiResponse<Void>>
+     */
+    @PutMapping("/volunteer/update/{id}")
 public ResponseEntity<ApiResponse<Void>> updateVolunteer(@PathVariable long id,
                                                          @RequestBody AdminVolunteerRequestDTO request) {
     System.out.println("Updating volunteer with ID: " + id);
@@ -143,9 +130,10 @@ public ResponseEntity<ApiResponse<Void>> updateVolunteer(@PathVariable long id,
 
 
     /**
-     * 봉사 공고 삭제
+     * 봉사 공고 삭제 API
+     * @author 임재성
      * @param volunteerId
-     * @return
+     * @return ResponseEntity<ApiResponse<Void>>
      */
     @DeleteMapping("/volunteer/delete/{volunteerId}")
     public ResponseEntity<ApiResponse<Void>> deleteVolunteer(
@@ -156,18 +144,6 @@ public ResponseEntity<ApiResponse<Void>> updateVolunteer(@PathVariable long id,
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiResponse.failure(HttpStatus.BAD_REQUEST, "봉사 공고 삭제에 실패했습니다."));
         }
-    }
-
-
-
-    /**
-     * 봉사 공고 목록 조회
-     * @return
-     */
-    @GetMapping("/volunteer/list")
-    public ResponseEntity<ApiResponse<List<AdminVolunteerResponseDTO>>> getVolunteerList() {
-        List<AdminVolunteerResponseDTO> response = service.getVolunteerList();
-        return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, response));
     }
 
     /**
@@ -238,10 +214,11 @@ public ResponseEntity<ApiResponse<Void>> updateVolunteer(@PathVariable long id,
 
 
     /**
-     * 봉사 공고 목록 조회 (페이징)
+     * 봉사 공고 목록 조회 (페이징) API
+     * @author 임재성
      * @param page
      * @param size
-     * @return
+     * @return ResponseEntity<ApiResponse<List<AdminVolunteerResponseDTO>>>
      */
     @GetMapping("/volunteer/adminList")
     public ResponseEntity<ApiResponse<List<AdminVolunteerResponseDTO>>> getVolunteerListWithPaging(
