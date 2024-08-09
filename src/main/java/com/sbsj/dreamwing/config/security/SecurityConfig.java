@@ -12,8 +12,19 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+/**
+ * Spring Security 설정을 위한 구성 클래스
+ * @author 정은찬
+ * @since 2024.07.28
+ *
+ * <pre>
+ * 수정일            수정자       				    수정내용
+ * -------------  ----------------    ---------------------------------------------
+ *  2024.07.28     	정은찬        		        최초 생성 및 기본 보안 설정 작성
+ *  2024.07.31      정은찬                       '/user/auth/**' 경로 USER 권한만 허용
+ * </pre>
+ */
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
