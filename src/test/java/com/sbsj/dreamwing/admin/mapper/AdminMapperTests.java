@@ -73,54 +73,55 @@ public class AdminMapperTests {
 
 
     @Test
+    @DisplayName("봉사 공고 생성 매퍼 테스트")
     public void testInsertVolunteer() {
-//        AdminVolunteerRequestDTO request = new AdminVolunteerRequestDTO();
-//        request.setTitle("환경 보호 봉사");
-//        request.setContent("환경 정화를 위한 봉사활동입니다.");
-//        request.setType(1);
-//        request.setCategory(2);
-//        request.setStartDate(LocalDateTime.of(2024, 8, 1, 9, 0));
-//        request.setEndDate(LocalDateTime.of(2024, 8, 1, 18, 0));
-//        request.setAddress("서울시 강남구");
-//        request.setTotalCount(100);
-//        request.setStatus(1);
-//        request.setRecruitStartDate(LocalDateTime.of(2024, 7, 20, 9, 0));
-//        request.setRecruitEndDate(LocalDateTime.of(2024, 7, 31, 18, 0));
-//        request.setImageUrl("https://s3-url/image.jpg");
-//        request.setLatitude("37.4979");
-//        request.setLongitude("127.0276");
+        AdminVolunteerRequestDTO request = new AdminVolunteerRequestDTO();
+        request.setTitle("환경 보호 봉사");
+        request.setContent("환경 정화를 위한 봉사활동입니다.");
+        request.setType(1);
+        request.setCategory(2);
+        request.setVolunteerStartDate(LocalDateTime.of(2024, 8, 1, 9, 0));
+        request.setVolunteerEndDate(LocalDateTime.of(2024, 8, 1, 18, 0));
+        request.setAddress("서울시 강남구");
+        request.setTotalCount(100);
+        request.setStatus(1);
+        request.setRecruitStartDate(LocalDateTime.of(2024, 7, 20, 9, 0));
+        request.setRecruitEndDate(LocalDateTime.of(2024, 7, 31, 18, 0));
+        request.setImageUrl("https://s3-url/image.jpg");
+        request.setLatitude(37.12312);
+        request.setLongitude(147.234);
 
-//        int result = mapper.insertVolunteer(request);
-//
-//        assertEquals(1, result);
+        int result = mapper.insertVolunteer(request);
+
+        assertEquals(1, result);
     }
 
     @Test
     @DisplayName("봉사 공고 수정 매퍼 테스트")
     public void testUpdateVolunteer() {
         // given
-//        AdminVolunteerRequestDTO dto = new AdminVolunteerRequestDTO();
-//        dto.setVolunteerId(11L); // Assuming this ID exists
-//        dto.setTitle("수정된 봉사 공고");
-//        dto.setContent("수정된 봉사 공고 내용");
-//        dto.setType(1);
-//        dto.setCategory(2);
-//        dto.setStartDate(Timestamp.valueOf("2024-08-01 09:00:00").toLocalDateTime());
-//        dto.setEndDate(Timestamp.valueOf("2024-08-01 12:00:00").toLocalDateTime());
-//        dto.setAddress("수정된 주소");
-//        dto.setTotalCount(30);
-//        dto.setStatus(1);
-//        dto.setRecruitStartDate(Timestamp.valueOf("2024-07-01 00:00:00").toLocalDateTime());
-//        dto.setRecruitEndDate(Timestamp.valueOf("2024-07-31 23:59:59").toLocalDateTime());
-//        dto.setImageUrl("https://example.com/new_image.jpg");
-//        dto.setLatitude("37.567");
-//        dto.setLongitude("126.979");
+        AdminVolunteerRequestDTO dto = new AdminVolunteerRequestDTO();
+        dto.setVolunteerId(11L); // Assuming this ID exists
+        dto.setTitle("수정된 봉사 공고");
+        dto.setContent("수정된 봉사 공고 내용");
+        dto.setType(1);
+        dto.setCategory(2);
+        dto.setVolunteerStartDate(Timestamp.valueOf("2024-08-01 09:00:00").toLocalDateTime());
+        dto.setVolunteerEndDate(Timestamp.valueOf("2024-08-01 12:00:00").toLocalDateTime());
+        dto.setAddress("수정된 주소");
+        dto.setTotalCount(30);
+        dto.setStatus(1);
+        dto.setRecruitStartDate(Timestamp.valueOf("2024-07-01 00:00:00").toLocalDateTime());
+        dto.setRecruitEndDate(Timestamp.valueOf("2024-07-31 23:59:59").toLocalDateTime());
+        dto.setImageUrl("https://example.com/new_image.jpg");
+        dto.setLatitude(37.12312);
+        dto.setLongitude(147.234);
 
-        // when
-//        int success = mapper.updateVolunteer(dto);
+         //when
+        int success = mapper.updateVolunteer(dto);
 
-        // then
-//        assertEquals(1, success);
+         //then
+        assertEquals(1, success);
     }
 
     @Test

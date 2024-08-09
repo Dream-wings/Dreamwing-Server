@@ -5,6 +5,19 @@ import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 import java.time.LocalDateTime;
 
+
+/**
+ * 관리자 봉사활동 생성,수정 요청 DTO
+ * @author 임재성
+ * @since 2024.07.30
+ * @version 1.0
+ *
+ * <pre>
+ * 수정일        	수정자        수정내용
+ * ----------  --------    ---------------------------
+ * 2024.07.30  	임재성        최초 생성
+ * </pre>
+ */
 @Data
 public class AdminVolunteerRequestDTO {
     private long volunteerId; // 봉사 ID (수정 시 필요)

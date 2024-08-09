@@ -17,15 +17,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * 봉사 매퍼 테스트 클래스
- * @author
- * @since
+ * @author 임재성
+ * @since 2024.07.26
  * @version 1.0
  *
  * <pre>
  * 수정일        	수정자        수정내용
  * ----------  --------    ---------------------------
- * 2024.08.03   정은지       봉사활동 인증 매퍼 테스트 추가
- * </pre>
+ * 2024.07.26   임재성        최초생성
+ * 2024.07.28   임재성        봉사 모집공고 게시판 리스트 & 상세 페이지 조회 기능 매퍼 테스트 추가
+ * 2024.07.31   임재성        봉사 & 멘토링 리스트 페이징 처리 기능 매퍼 테스트 추가
+ * 2024.08.03   정은지        봉사활동 인증 매퍼 테스트 추가
+ * 2024.08.03   임재성        봉사활동 신청 상태 확인 기능 매퍼 테스트 추가
+ * 2024.08.04   임재성        봉사활동 필터 기능 매퍼 테스트 추가
+ * * </pre>
  */
 @Slf4j
 @SpringBootTest
@@ -34,23 +39,26 @@ public class VolunteerMapperTests {
     @Autowired
     private VolunteerMapper mapper;
 
-//    @Test
-//    public void testGetVolunteerList() {
-//
-//        int offset = 0;
-//        int size =2;
-//        int status=1;
-//        // when
-//        List<VolunteerListDTO> volunteerDTO = mapper.getVolunteerList(offset,size,status);
-//
-//        // then
-//        log.info(String.valueOf(volunteerDTO));
-//        assertThat(volunteerDTO).isNotNull();
-//    }
 
     @Test
-    public void testGetVolunteerDetail() {
+    @DisplayName("봉사 모집공고 게시판 리스트 조회 테스트")
+    public void testGetVolunteerListWithFilters() {
 
+        int offset = 0;
+        int size =2;
+        int status=1;
+        Integer type = 0;
+        // when
+        List<VolunteerListDTO> volunteerDTO = mapper.getVolunteerListWithFilters(offset,size,status,type);
+
+        // then
+        log.info(String.valueOf(volunteerDTO));
+        assertThat(volunteerDTO).isNotNull();
+    }
+
+    @Test
+    @DisplayName("봉사 모집공고 상세 페이지 조회 테스트")
+    public void testGetVolunteerDetail() {
 
         long volunteerId =5L;
         // when
@@ -62,6 +70,7 @@ public class VolunteerMapperTests {
     }
 
     @Test
+    @DisplayName("봉사 신청 테스트")
     public void testInsertVolunteerApplication() {
         PostApplyVolunteerRequestDTO request = new PostApplyVolunteerRequestDTO();
         request.setVolunteerId(1L);
@@ -75,6 +84,7 @@ public class VolunteerMapperTests {
     }
 
     @Test
+    @DisplayName("봉사 신청 상태 여부 테스트")
     public void testCheckIfAlreadyApplied() {
         PostApplyVolunteerRequestDTO request = new PostApplyVolunteerRequestDTO();
         request.setVolunteerId(3L);
@@ -88,6 +98,7 @@ public class VolunteerMapperTests {
     }
 
     @Test
+    @DisplayName("봉사 신청 취소 테스트")
     public void testDeleteVolunteerApplication() {
         PostApplyVolunteerRequestDTO request = new PostApplyVolunteerRequestDTO();
         request.setVolunteerId(1L);
