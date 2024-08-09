@@ -12,8 +12,19 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+/**
+ * Spring Security 설정을 위한 구성 클래스
+ * @author 정은찬
+ * @since 2024.07.28
+ *
+ * <pre>
+ * 수정일            수정자       				    수정내용
+ * -------------  ----------------    ---------------------------------------------
+ *  2024.07.28      정은찬        		        최초 생성 및 기본 보안 설정 작성
+ *  2024.07.31      정은찬                       '/user/auth/**' 경로 USER 권한만 허용
+ * </pre>
+ */
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -36,10 +47,8 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable()) // CSRF 보호 비활성화
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션 관리 없음
                 .authorizeHttpRequests(authorize -> authorize
-//                        .requestMatchers("/user/withdraw").hasRole("USER") // /user/withdraw 경로는 USER 역할을 가진 사용자만 접근 가능
-//                        .requestMatchers("/user/login", "/user/join").permitAll() // /login 및 /join 경로는 인증 없이 접근 가능
-                        .requestMatchers(new AntPathRequestMatcher("/**")).permitAll()
-                        .anyRequest().authenticated() // 나머지 모든 경로는 인증 필요
+                        .requestMatchers("/user/auth/**").hasRole("USER") // /user/auth/** 경로는 USER 역할을 가진 사용자만 접근 가능
+                        .anyRequest().permitAll()
                 )
                 .exceptionHandling(exceptions -> exceptions
                         .accessDeniedHandler(customAccessDeniedHandler)

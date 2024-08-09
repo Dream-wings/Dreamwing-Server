@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * 사용자 로그인 정보를 담는 DTO 클래스
+ * 회원 로그인 정보를 담는 DTO 클래스
  * @author 정은찬
  * @since 2024.07.29
  *
