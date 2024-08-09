@@ -20,7 +20,6 @@ import java.io.IOException;
 
 /**
  * JWT 필터 클래스
- * @apiNote JWT 토큰을 활용하여 사용자의 인증 정보를 확인하고, 이를 Security Context에 저장하는 역할을 수행
  * @author 정은찬
  * @since 2024.07.31
  *

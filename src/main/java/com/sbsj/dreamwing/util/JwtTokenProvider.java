@@ -15,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.time.Duration;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
@@ -27,7 +26,7 @@ import java.util.List;
  * @version 1.0
  *
  * <pre>
- * 수정일        	수정자        수정내용
+ * 수정일        수정자        수정내용
  * ----------  --------    ---------------------------
  * 2024.07.30   정은찬        최초 생성
  * </pre>
@@ -51,7 +50,13 @@ public class JwtTokenProvider {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes()); // SecretKey Base64로 인코딩
     }
 
-    // JWT 토큰 생성
+    /**
+     * JWT 토큰 생성 메서드
+     * @author 정은찬
+     * @param userId
+     * @param roles
+     * @return String
+     */
     public String createToken(Long userId, List<String> roles) {
         Claims claims = Jwts.claims().setSubject(Long.toString(userId));
         claims.put("roles", roles);
@@ -65,14 +70,24 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    // JWT 토큰에서 인증 정보 조회
+    /**
+     * JWT 토큰에서 인증 정보 조회 메서드
+     * @author 정은찬
+     * @param token
+     * @return
+     */
     public Authentication getAuthentication(String token) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserId(token));
 
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
-    // 유저 이름 추출
+    /**
+     * 유저 이름 추출 메서드
+     * @author 정은찬
+     * @param token
+     * @return String
+     */
     public String getUserId(String token) {
         String userId = Jwts.parser()
                 .setSigningKey(secretKey)
@@ -82,7 +97,12 @@ public class JwtTokenProvider {
         return userId;
     }
 
-    // Request header에서 token 꺼내옴
+    /**
+     * 요청 헤더에서 JWT 토큰 추출 메서드
+     * @author 정은찬
+     * @param request
+     * @return String
+     */
     public String resolveToken(HttpServletRequest request) {
         String token = request.getHeader("Authorization");
 
@@ -94,7 +114,12 @@ public class JwtTokenProvider {
         return null;
     }
 
-    // JWT 토큰 유효성 체크
+    /**
+     * JWT 토큰의 유효성 검사 메서드
+     * @author 정은찬
+     * @param token
+     * @return boolean
+     */
     public boolean validateToken(String token) {
         try {
             Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
@@ -111,6 +136,12 @@ public class JwtTokenProvider {
         return false;
     }
 
+    /**
+     * JWT토큰 만료일 반환 메서드
+     * @author 정은찬
+     * @param token
+     * @return Date
+     */
     public Date getExpiration(String token) {
         Claims claims = Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody();
         return claims.getExpiration();
