@@ -5,7 +5,7 @@ import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
- * 사용자 업데이트 정보를 담는 DTO 클래스
+ * 회원 업데이트 정보를 담는 DTO 클래스
  * @author 정은찬
  * @since 2024.07.31
  *

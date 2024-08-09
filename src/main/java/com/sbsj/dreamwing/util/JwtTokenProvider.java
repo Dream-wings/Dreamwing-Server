@@ -19,6 +19,19 @@ import java.time.Duration;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
+
+/**
+ * JWT Token Provider 클래스
+ * @author 정은찬
+ * @since 2024.07.30
+ * @version 1.0
+ *
+ * <pre>
+ * 수정일        	수정자        수정내용
+ * ----------  --------    ---------------------------
+ * 2024.07.30   정은찬        최초 생성
+ * </pre>
+ */
 @Slf4j
 @Component
 @RequiredArgsConstructor

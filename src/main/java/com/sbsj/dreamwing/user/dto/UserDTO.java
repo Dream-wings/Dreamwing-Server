@@ -13,7 +13,7 @@ import java.util.Collection;
 
 
 /**
- * 사용자 정보를 담는 DTO 클래스
+ * 회원 정보를 담는 DTO 클래스
  * @author 정은찬
  * @since 2024.07.29
  *
