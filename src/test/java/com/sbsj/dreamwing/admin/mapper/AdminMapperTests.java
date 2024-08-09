@@ -43,10 +43,10 @@ public class AdminMapperTests {
     public void testUpdateVolunteerStatus() {
 
         // given
-        UpdateVolunteerStatusRequestDTO dto = new UpdateVolunteerStatusRequestDTO();
-        dto.setVolunteerId(2L);
-        dto.setUserId(1L);
-
+        UpdateVolunteerStatusRequestDTO dto = UpdateVolunteerStatusRequestDTO.builder()
+                        .volunteerId(2L)
+                        .userId(1L)
+                        .build();
         // when
         int success = mapper.updateVolunteerStatus(dto);
 
@@ -59,9 +59,10 @@ public class AdminMapperTests {
     public void testUpdateVolunteerVerified() {
 
         // given
-        UpdateVolunteerStatusRequestDTO dto = new UpdateVolunteerStatusRequestDTO();
-        dto.setVolunteerId(2L);
-        dto.setUserId(1L);
+        UpdateVolunteerStatusRequestDTO dto = UpdateVolunteerStatusRequestDTO.builder()
+                .volunteerId(2L)
+                .userId(1L)
+                .build();
 
         // when
         int success = mapper.updateVolunteerVerified(dto);
@@ -168,6 +169,7 @@ public class AdminMapperTests {
         long volunteerId = 1L;
         long userId = 1L;
 
+
         // when
         VolunteerRequestDetailResponseDTO dto
                 = mapper.selectVolunteerRequestPendingDetail(volunteerId, userId);
@@ -177,7 +179,7 @@ public class AdminMapperTests {
     }
 
     @Test
-    @DisplayName("봉사활동 신청 대기 목록 조회 매퍼 테스트")
+    @DisplayName("봉사활동 인증 대기 목록 조회 매퍼 테스트")
     public void testSelectVolunteerCertificationList() {
         // given
         int offset = 0;
@@ -192,7 +194,7 @@ public class AdminMapperTests {
     }
 
     @Test
-    @DisplayName("봉사활동 신청 대기 상세 조회 매퍼 테스트")
+    @DisplayName("봉사활동 인증 대기 상세 조회 매퍼 테스트")
     public void testSelectVolunteerCertificationDetail() {
         // given
         long volunteerId = 1L;

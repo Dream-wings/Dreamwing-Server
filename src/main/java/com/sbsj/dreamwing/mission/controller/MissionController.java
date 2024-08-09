@@ -35,9 +35,8 @@ public class MissionController {
 
     /**
      * @author 정은지
-     * 데일리 퀴즈 조회
-     *
-     * @return
+     * 데일리 퀴즈 조회 API
+     * @return ResponseEntity<ApiResponse<QuizVO>>
      * @throws Exception
      */
     @GetMapping("/quiz")
@@ -49,15 +48,14 @@ public class MissionController {
 
     /**
      * @author 정은지
-     * 포인트 부여
-     *
-     * @param dto
-     * @return
+     * 포인트 부여 API
+     * @param awardPointsRequestDTO
+     * @return ResponseEntity<ApiResponse<Void>>
      * @throws Exception
      */
     @PostMapping("/point")
-    public ResponseEntity<ApiResponse<Void>> awardDailyQuizPoints(@RequestBody AwardPointsRequestDTO dto) throws Exception {
-        int resultCode = service.awardDailyMissionPoints(dto);
+    public ResponseEntity<ApiResponse<Void>> awardDailyQuizPoints(@RequestBody AwardPointsRequestDTO awardPointsRequestDTO) throws Exception {
+        int resultCode = service.awardDailyMissionPoints(awardPointsRequestDTO);
         // 포인트 부여 성공 시
         if (resultCode == 1) {
             return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK));

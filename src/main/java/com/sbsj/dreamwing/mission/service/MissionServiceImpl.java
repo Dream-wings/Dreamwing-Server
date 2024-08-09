@@ -12,8 +12,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import com.sbsj.dreamwing.user.dto.UserDTO;
 
-import java.util.Random;
-
 /**
  * 미션 서비스 구현체
  * @author 정은지
@@ -24,7 +22,7 @@ import java.util.Random;
  * 수정일        	수정자        수정내용
  * ----------  --------    ---------------------------
  * 2024.07.26  	정은지        최초 생성
- * 2024.07.28   정은지        포인트 지급 기능 추가, 퀴즈 조회 방식 변경
+ * 2024.07.28   정은지        포인트 지급 메서드 추가, 퀴즈 조회 방식 변경
  * </pre>
  */
 @Slf4j
@@ -34,32 +32,43 @@ public class MissionServiceImpl implements MissionService{
 
     private final MissionMapper mapper;
 
-    // 데일리 퀴즈 조회
+    /**
+     * 데일리 퀴즈 조회
+     * @author 정은지
+     * @return QuizVO
+     * @throws Exception
+     */
     @Override
     public QuizVO getDailyQuiz() throws Exception {
         return mapper.selectQuiz();
     }
 
-    // 포인트 지급
+    /**
+     * 포인트 지급 처리
+     * @author 정은지
+     * @param awardPointsRequestDTO
+     * @return int
+     * @throws Exception
+     */
     @Transactional
     @Override
-    public int awardDailyMissionPoints(AwardPointsRequestDTO dto) throws Exception {
+    public int awardDailyMissionPoints(AwardPointsRequestDTO awardPointsRequestDTO) throws Exception {
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             long userId = ((UserDTO) authentication.getPrincipal()).getUserId();
 
-            dto.setUserId(userId);
+            awardPointsRequestDTO.setUserId(userId);
 
             CheckDailyMissionRequestDTO requestDTO = CheckDailyMissionRequestDTO.builder()
                     .userId(userId)
-                    .activityType(dto.getActivityType())
-                    .activityTitle(dto.getActivityTitle())
+                    .activityType(awardPointsRequestDTO.getActivityType())
+                    .activityTitle(awardPointsRequestDTO.getActivityTitle())
                     .build();
 
             log.info("CheckDailyMissionRequestDTO: " + requestDTO.getUserId() + " " + requestDTO.getActivityType() + " " + requestDTO.getActivityTitle());
 
             if (mapper.selectDailyMissionHistory(requestDTO) == 0) {
-                mapper.callAwardPointsProcedure(dto);
+                mapper.callAwardPointsProcedure(awardPointsRequestDTO);
                 return 1;
             } else {
                 return 0;

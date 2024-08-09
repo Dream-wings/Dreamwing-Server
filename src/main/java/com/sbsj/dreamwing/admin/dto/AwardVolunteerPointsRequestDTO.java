@@ -1,6 +1,8 @@
 package com.sbsj.dreamwing.admin.dto;
 
+import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 
 /**
  * 봉사활동 포인트 부여 요청 DTO
@@ -14,6 +16,9 @@ import lombok.Data;
  * 2024.07.26  	정은지        최초 생성
  * </pre>
  */
+
+@Getter
+@Builder
 @Data
 public class AwardVolunteerPointsRequestDTO {
     private long volunteerId;

@@ -1,8 +1,6 @@
 package com.sbsj.dreamwing.admin.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 /**
  * 봉사활동 승인 요청 DTO
@@ -16,7 +14,9 @@ import lombok.NoArgsConstructor;
  * 2024.07.26  	정은지        최초 생성
  * </pre>
  */
-@Data
+
+@Getter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateVolunteerStatusRequestDTO {
