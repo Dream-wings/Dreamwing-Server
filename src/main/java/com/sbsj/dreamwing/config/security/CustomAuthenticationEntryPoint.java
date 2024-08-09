@@ -10,7 +10,6 @@ import java.io.IOException;
 
 /**
  * CustomAuthenticationEntryPoint 클래스
- * @apiNote 인증되지 않은 사용자가 보호된 리소스에 접근하려고 할 때, 401 Unauthorized 응답을 반환하는 역할을 수행
  * @author 정은찬
  * @since 2024.07.31
  *

@@ -11,7 +11,6 @@ import java.io.IOException;
 
 /**
  * CustomAccessDeniedHandler 클래스
- * @apiNote 인증된 사용자가 권한이 없는 리소스에 접근하려고 할 때, Forbidden 응답을 반환하는 역할을 수행
  * @author 정은찬
  * @since 2024.07.31
  *
