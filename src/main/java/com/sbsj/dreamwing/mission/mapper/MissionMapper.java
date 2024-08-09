@@ -15,16 +15,19 @@ import org.apache.ibatis.annotations.Mapper;
  * 수정일        	수정자        수정내용
  * ----------  --------    ---------------------------
  * 2024.07.26  	정은지        최초 생성
- * 2024.07.28   정은지        포인트 부여 메서드 추가
+ * 2024.07.28   정은지        포인트 지급 메서드 추가
  * 2024.08.04   정은지        데일리 미션 중복 확인 메서드 추가
  * </pre>
  */
 @Mapper
 public interface MissionMapper {
 
+    // 퀴즈 조회
     QuizVO selectQuiz();
 
+    // 포인트 지급
     void callAwardPointsProcedure(AwardPointsRequestDTO dto);
 
+    // 데일리 미션 중복 확인
     int selectDailyMissionHistory(CheckDailyMissionRequestDTO dto);
 }
