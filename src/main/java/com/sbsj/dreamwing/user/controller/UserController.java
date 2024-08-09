@@ -95,7 +95,7 @@ public class UserController {
      * @author 정은찬
      * @return ResponseEntity<ApiResponse<Void>>
      */
-    @PostMapping("/withdraw")
+    @PostMapping("/auth/withdraw")
     public ResponseEntity<ApiResponse<Void>> withdraw() {
         // SecurityContext에서 Authentication 객체 가져움
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -140,7 +140,7 @@ public class UserController {
      * @return  ResponseEntity<ApiResponse<Void>>
      * @throws Exception
      */
-    @PostMapping(value = "/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/auth/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ApiResponse<Void>> update(@ModelAttribute UserUpdateDTO userUpdateDTO) throws Exception {
         // SecurityContext에서 Authentication 객체 가져옴
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -164,7 +164,7 @@ public class UserController {
      * @author 정은찬
      * @return ResponseEntity<ApiResponse<Void>>
      */
-    @PostMapping("/logout")
+    @PostMapping("/auth/logout")
     public ResponseEntity<ApiResponse<Void>> logout() {
         try {
             // SecurityContext에서 Authentication 객체 가져옴
@@ -190,7 +190,7 @@ public class UserController {
      * @param size
      * @return ResponseEntity<ApiResponse<List<MyPointVO>>>
      */
-    @GetMapping("/getPointList")
+    @GetMapping("/auth/getPointList")
     public ResponseEntity<ApiResponse<List<MyPointVO>>> getUserPointList(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "15") int size) {
@@ -214,7 +214,7 @@ public class UserController {
      * @param size
      * @return ResponseEntity<ApiResponse<List<MySupportVO>>>
      */
-    @GetMapping("/getSupportList")
+    @GetMapping("/auth/getSupportList")
     public ResponseEntity<ApiResponse<List<MySupportVO>>> getUserSupportList(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "15") int size) {
@@ -237,7 +237,7 @@ public class UserController {
      * @param size
      * @return ResponseEntity<ApiResponse<List<MyVolunteerVO>>>
      */
-    @GetMapping("/getVolunteerList")
+    @GetMapping("/auth/getVolunteerList")
     public ResponseEntity<ApiResponse<List<MyVolunteerVO>>> getVolunteerList(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "15") int size) {
@@ -278,7 +278,7 @@ public class UserController {
      * @author 정은찬
      * @return ResponseEntity<ApiResponse<MyPageDTO>>
      */
-    @GetMapping("/getMyPageInfo")
+    @GetMapping("/auth/getMyPageInfo")
     public ResponseEntity<ApiResponse<MyPageDTO>> getMyPageInfo() {
         // SecurityContext에서 Authentication 객체 가져옴
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
